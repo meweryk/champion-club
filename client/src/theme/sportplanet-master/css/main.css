@@ -1,0 +1,112 @@
+@import url('footer.css');
+@import url('animate.css');
+@import url('connection.css');
+
+body{
+    font-family: 'Roboto', -apple-system, system-ui, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+}
+.container-fluid{
+    padding: 0;
+    overflow-x: hidden;
+}
+.navbar-collapse>ul>li>a{
+    font-size: 15px;
+    cursor: default;
+    pointer-events: none;
+}
+.head{
+    height: 100hv;
+    padding-top: 115px;
+    text-align: center;
+}
+.fb{
+    font-size: 40px;
+}
+.logo-fb{
+    color: white;
+}
+.brand{
+    font-weight: 800;
+    font-size: 60px;
+    color: rgb(0, 183, 255);
+}
+@media (max-width: 998px) {
+    .brand{
+        font-size: 25px;
+    }
+}
+.logo-img{
+    width: 50%;
+}
+@media (max-width: 998px) {
+    .logo-img{
+        width: 75%;
+    }
+}
+.club-img{
+    width: 100%;
+}
+.massage-img{
+    width: 100%;
+}
+.about{
+    text-align: justify;
+    background-color: rgb(253, 215, 110);
+    padding: 25px;
+}
+.section{
+    margin-top: 15px;
+}
+.training{
+    text-align: justify;
+    background-color: rgb(148, 253, 77);
+    padding: 25px;
+}
+.class, .table{
+    font-size: 18px;
+    font-weight: 600;
+}
+.massage{
+    text-align: justify;
+    background-color:  rgb(148, 253, 77);
+    padding: 25px;
+}
+.cost{
+    text-align: justify;
+    background-color: rgb(253, 215, 110);
+    padding: 25px;
+}
+.hidden{
+	opacity: 0;
+}
+.visible{
+	opacity: 1;
+}
+.card-body{
+    height: 215px;
+    font-size: 14px;
+}
+.card-title{
+    text-align: center;
+}  
+.col-sm>ul>li{
+    text-align: left;
+    margin-left: -20px;
+}  
+.card{
+    margin: 15px;
+}
+@media (min-width: 500px) {
+    .connect{
+        display: none;
+    }
+}
+.time{
+    font-size: 12px;
+}
+.mas{
+    font-weight: 600;
+}
+.price{
+    font-weight: 600;
+}
