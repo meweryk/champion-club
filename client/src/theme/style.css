@@ -1,0 +1,129 @@
+/* Custom Stylesheet */
+/**
+ * Use this file to override Materialize files so you can update
+ * the core Materialize files in the future
+ *
+ * Made By MaterializeCSS.com
+ */
+
+nav ul a,
+nav .brand-logo {
+  color: #ff9800;
+}
+
+p {
+  line-height: 2rem;
+}
+
+.sidenav-trigger {
+  color: #ff9800;
+}
+
+.parallax-container {
+  min-height: 380px;
+  line-height: 0;
+  height: auto;
+  color: rgba(255,255,255,.9);
+}
+.parallax-container .section {
+  width: 100%;
+}
+
+@media only screen and (max-width : 992px) {
+  .parallax-container .section {
+    position: absolute;
+    top: 40%;
+  }
+  #index-banner .section {
+    top: 10%;
+  }
+}
+
+@media only screen and (max-width : 600px) {
+  #index-banner .section {
+    top: 0;
+  }
+}
+
+.green-footer {
+  margin-top: -35px;
+}
+
+.green-footer .col {
+  min-height: 120px;
+  padding-top: 0px;
+}
+
+.green-footer .col p,
+.green-footer .col a {
+  font-size: 15px;
+  font-weight: bold;
+}
+
+.green-footer h6 {
+  font-size: 20px;
+  margin-top: -20px;
+  line-height: 0;
+}
+
+.round-icon {
+  border-radius: 100%;
+  height: 60px;
+  width: 60px;
+  position: relative;
+  top: -30px;
+  margin: 0 auto;
+}
+
+.icon-block {
+  padding: 0 15px;
+}
+.icon-block .material-icons {
+  font-size: inherit;
+}
+
+footer.page-footer {
+  margin: 0;
+}
+
+.footer-posts span {
+  color: #b3b3b3;
+}
+
+.footer-post-author {
+  color: #63AD5A !important;
+}
+
+footer table td span {
+  color: #6ABD62;
+  font-size: 18px;
+}
+
+footer table tr td {
+  padding: 15px;
+}
+
+footer table tr td:last-child {
+  text-align: right;
+}
+
+footer table tr td:first-child {
+  padding: 0;
+}
+
+footer table {
+  width: 100%;
+}
+
+footer tr {
+  border-bottom: 1px solid rgb(92, 92, 92);
+}
+
+footer tr:last-child {
+  border-bottom: none;
+}
+
+footer p {
+  font-size: 14px;
+  line-height: 1.6;
+}

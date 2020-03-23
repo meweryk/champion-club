@@ -292,7 +292,7 @@ header .white-header ul li:last-child {
     min-height: 232px;
     margin-left: 25px;
     margin-top: 15px;
-    margin-right: 25px;  
+    margin-right: 25px;
 }
 
 .quotes h1 {
@@ -330,14 +330,14 @@ header .white-header ul li:last-child {
 }
 
 .news .instructor-description {
-   margin-top: -15px; 
+   margin-top: -15px;
 }
 
 .green-footer .col-md-4 {
     min-height: 140px;
     background-color: #74D66B;
     text-align: center;
-    color: #FFFFFF; 
+    color: #FFFFFF;
 }
 
 .green-footer .col-md-4:first-child, .green-footer .col-md-4:last-child {
@@ -361,7 +361,6 @@ header .white-header ul li:last-child {
     width: 70px;
     position: relative;
     top: -35px;
-    background-color: #6EC565;
     margin: 0 auto;
 }
 
@@ -406,7 +405,7 @@ footer {
 }
 
 .post-1 {
-    border-bottom: 1px solid #2C2D2C; 
+    border-bottom: 1px solid #2C2D2C;
 }
 
 .footer-posts {
@@ -452,6 +451,7 @@ footer p {
 .footer-address {
     padding-top: 15px;
 }
+
 
 .wrapper {
     margin: 0 -15px;
