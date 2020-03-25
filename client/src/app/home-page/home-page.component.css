@@ -1,1 +1,10 @@
+.instructor-photo {
+  background: url(/assets/images/02.jpg) center top no-repeat;
+  height: 232px;
+  background-size: cover;
+}
 
+.main-col {
+  height: 232px;
+  padding: 40px !important;
+}

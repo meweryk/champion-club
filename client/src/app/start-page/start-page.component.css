@@ -16,7 +16,7 @@
  }
 
  @keyframes loading {
-  to {text-shadow: 30px 0 100px #ff0000;}
+  to {text-shadow: 60px 0 100px hsl(199, 32%, 75%);}
  }
  .loader span:nth-child(2){
   animation-delay:0.15s;
