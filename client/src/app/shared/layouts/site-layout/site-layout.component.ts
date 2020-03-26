@@ -14,7 +14,7 @@ export class SiteLayoutComponent implements OnInit, AfterViewInit, OnDestroy {
   sidenav: MaterialInstance
 
   links = [
-    { url: '/login', name: 'Вход' },
+    { url: '/home', name: 'Главная' },
     { url: '/', name: 'Новости' },
     { url: '/', name: 'Галерея' },
     { url: '/', name: 'Контакты' },
