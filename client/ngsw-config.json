@@ -23,6 +23,10 @@
         "files": [
           "/assets/**",
           "/*.(eot|svg|cur|jpg|png|webp|gif|otf|ttf|woff|woff2|ani)"
+        ],
+        "urls": [
+          "https://fonts.googleapis.com/**",
+          "https://fonts.gstatic.com/**"
         ]
       }
     },
@@ -33,6 +37,21 @@
           "https://fonts.googleapis.com/**",
           "https://fonts.gstatic.com/**"
         ]
+      }
+    }
+  ],
+  "dataGroups": [
+    {
+      "name": "api-freshness",
+      "urls": [
+        "https://champion-zp.herokuapp.com//login",
+        "https://champion-zp.herokuapp.com//category"
+      ],
+      "cacheConfig": {
+        "strategy": "freshness",
+        "maxSize": 5,
+        "maxAge": "1h",
+        "timeout": "3s"
       }
     }
   ]

@@ -4,8 +4,7 @@ import { NgModule } from '@angular/core';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 
-import { SiteLayoutComponent } from './shared/layouts/site-layout/site-layout.component';
-import { LoginPageComponent } from './login-page/login-page.component';
+import { SiteLayoutComponent } from './shared/layouts/site-layout/site-layout.component'
 import { RegisterPageComponent } from './register-page/register-page.component';
 import { LoaderComponent } from './shared/components/loader/loader.component';
 import { ServiceWorkerModule } from '@angular/service-worker';
@@ -15,7 +14,6 @@ import { environment } from '../environments/environment';
   declarations: [
     AppComponent,
     SiteLayoutComponent,
-    LoginPageComponent,
     RegisterPageComponent,
     LoaderComponent
   ],
