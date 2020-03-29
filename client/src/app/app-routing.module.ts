@@ -1,7 +1,7 @@
-import { NgModule } from '@angular/core';
+import { NgModule } from '@angular/core'
 import { Routes, RouterModule, PreloadAllModules } from '@angular/router';
+
 import { SiteLayoutComponent } from './shared/layouts/site-layout/site-layout.component'
-import { RegisterPageComponent } from './register-page/register-page.component';
 
 const routes: Routes = [
   {
@@ -10,8 +10,7 @@ const routes: Routes = [
       { path: 'start', loadChildren: () => import('./start-page/start.module').then(m => m.StartModule) },
       { path: 'home', loadChildren: () => import('./home-page/home.module').then(m => m.HomeModule) },
       { path: 'login', loadChildren: () => import('./login-page/login.module').then(m => m.LoginModule) },
-
-      { path: 'register', component: RegisterPageComponent }
+      { path: 'register', loadChildren: () => import('./register-page/register.module').then(m => m.RegisterModule) }
     ]
   }
 ];
