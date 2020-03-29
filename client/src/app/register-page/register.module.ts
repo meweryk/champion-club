@@ -3,6 +3,8 @@ import { CommonModule } from '@angular/common'
 
 import { RegisterRoutingModule } from './register-routing.module'
 import { RegisterPageComponent } from './register-page.component'
+import { ComponentsModule } from '../shared/components/components.module'
+import { SharedModule } from '../shared/shared.module'
 
 @NgModule({
   declarations: [
@@ -10,7 +12,9 @@ import { RegisterPageComponent } from './register-page.component'
   ],
   imports: [
     CommonModule,
-    RegisterRoutingModule
+    RegisterRoutingModule,
+    ComponentsModule,
+    SharedModule
   ],
   providers: []
 })

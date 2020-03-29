@@ -5,6 +5,7 @@
  *
  * Made By MaterializeCSS.com
  */
+
  @font-face {
   font-family: 'Pacifico';
   font-style: normal;
@@ -13,8 +14,32 @@
   font-display: swap;
 }
 
+/*spinner for submit button*/
+.load-center {
+  margin-top: -66px;
+  justify-content: center;
+}
+
+/*for form registration and login*/
+.auth-block {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding-top: 40px
+}
+
+.card-login {
+  width: 350px;
+  background-color: #fff4e6cc;
+}
+
+.card .card-action.card-act-op {
+  background-color: #fff4e638;
+}
+/*--------------------------------*/
+
 .transcol {
-  background-color: rgba(31, 43, 49, 0.702);
+  background-color: #1f2b31b3;
 }
 nav ul a,
 nav .brand-logo {

@@ -3,6 +3,8 @@ import { CommonModule } from '@angular/common'
 
 import { LoginPageComponent } from './login-page.component'
 import { LoginRoutingModule } from './login-routing.module'
+import { ComponentsModule } from '../shared/components/components.module'
+import { SharedModule } from '../shared/shared.module'
 
 @NgModule({
   declarations: [
@@ -10,7 +12,9 @@ import { LoginRoutingModule } from './login-routing.module'
   ],
   imports: [
     CommonModule,
-    LoginRoutingModule
+    LoginRoutingModule,
+    ComponentsModule,
+    SharedModule
   ],
   providers: []
 })

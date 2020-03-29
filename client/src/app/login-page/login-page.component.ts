@@ -1,5 +1,6 @@
 import { Component, OnInit, ViewChild, ElementRef, AfterViewInit, OnDestroy } from '@angular/core';
 import { MaterialInstance, MaterialService } from '../shared/classes/material.service';
+import { FormGroup, FormControl, Validators } from '@angular/forms';
 
 @Component({
   selector: 'app-login-page',
@@ -8,21 +9,27 @@ import { MaterialInstance, MaterialService } from '../shared/classes/material.se
 })
 export class LoginPageComponent implements OnInit, AfterViewInit, OnDestroy {
 
-  @ViewChild('modal') modalRef: ElementRef
-  modal: MaterialInstance
+  form: FormGroup
+  loader = false
 
   constructor() { }
 
   ngOnInit(): void {
+    this.loader = false
+    this.form = new FormGroup({
+      email: new FormControl(null, [Validators.required, Validators.email]),
+      password: new FormControl(null, [Validators.required, Validators.minLength(6)])
+    })
   }
 
   ngAfterViewInit() {
-    this.modal = MaterialService.initModal(this.modalRef)
-    this.modal.open()
+
   }
 
   ngOnDestroy() {
-    this.modal.destroy()
+
   }
+
+  onSubmit() { }
 
 }
