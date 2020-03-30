@@ -1,5 +1,6 @@
 import { BrowserModule } from '@angular/platform-browser'
 import { NgModule } from '@angular/core'
+
 import { ServiceWorkerModule } from '@angular/service-worker'
 import { environment } from '../environments/environment'
 
@@ -9,6 +10,7 @@ import { AppComponent } from './app.component'
 import { SiteLayoutComponent } from './shared/layouts/site-layout/site-layout.component'
 import { ComponentsModule } from './shared/components/components.module'
 import { SharedModule } from './shared/shared.module'
+import { HttpClientModule } from '@angular/common/http'
 
 @NgModule({
   declarations: [
@@ -17,6 +19,7 @@ import { SharedModule } from './shared/shared.module'
   ],
   imports: [
     BrowserModule,
+    HttpClientModule,
     AppRoutingModule,
     SharedModule,
     ComponentsModule,

@@ -27,8 +27,9 @@
       </div>
     </div>
     <div class="card-action card-act-op">
-      <button type="submit" class="modal-action btn waves-effect grey darken-1 orange-text"
-        [disabled]="form.invalid || form.disabled">Войти</button>
+      <a routerLink="/register" class="modal-action btn-flat waves-effect orange-text text-darken-4">Регистрация</a>
+      <button type="submit" class="modal-action btn waves-effect grey darken-1 orange-text right"
+        [disabled]="form.invalid || form.disabled">Вход</button>
     </div>
   </form>
 </div>

@@ -14,9 +14,11 @@ module.exports.login = async function (req, res) {
                 email: candidate.email,
                 userId: candidate._id
             }, keys.jwt, { expiresIn: 60 * 60 * 24 })
+            const nicname = candidate.nicname
 
             res.status(200).json({
-                token: `Bearer ${token}`
+                token: `Bearer ${token}`,
+                nicname: nicname
             })
         } else {
             res.status(401).json({
@@ -28,12 +30,7 @@ module.exports.login = async function (req, res) {
             message: 'Пользователь с таким email не найден.'
         })
     )
-    res.status(200).json({
-        login: {
-            email: req.body.email,
-            password: req.body.password
-        }
-    })
+
 }
 
 module.exports.register = async function (req, res) {
@@ -48,7 +45,8 @@ module.exports.register = async function (req, res) {
         const password = req.body.password
         const user = new User({
             email: req.body.email,
-            password: bcrypt.hashSync(password, salt)
+            password: bcrypt.hashSync(password, salt),
+            name: req.body.nicname
         })
 
         try {
