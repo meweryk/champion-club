@@ -1,4 +1,4 @@
-import { Component, OnInit, ViewChild, ElementRef, AfterViewInit, OnDestroy } from '@angular/core';
+import { Component, OnInit, OnDestroy } from '@angular/core';
 import { MaterialService } from '../shared/classes/material.service';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
 import { AuthService } from '../shared/services/auth.service';
@@ -10,8 +10,7 @@ import { Subscription } from 'rxjs';
   templateUrl: './login-page.component.html',
   styleUrls: ['./login-page.component.css']
 })
-export class LoginPageComponent implements OnInit, AfterViewInit, OnDestroy {
-
+export class LoginPageComponent implements OnInit, OnDestroy {
   form: FormGroup
   aSub: Subscription
   loader = false
@@ -36,10 +35,6 @@ export class LoginPageComponent implements OnInit, AfterViewInit, OnDestroy {
         MaterialService.toast('Пожалуйста войдите в систему заново')
       }
     })
-  }
-
-  ngAfterViewInit() {
-
   }
 
   ngOnDestroy() {

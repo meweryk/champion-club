@@ -1,0 +1,29 @@
+<div class="page-content">
+
+  <div class="page-title">
+    <h5 class="brown-text text-lighten-5">Категории</h5>
+    <button class="waves-effect waves-light btn-small" routerLink="/categories/new"><i
+        class="material-icons left">add</i>категория</button>
+  </div>
+
+  <div class="row" *ngIf="categories$ | async as categories; else loader">
+    <div class="col s12">
+      <div class="collection" *ngIf="categories.length !== 0; else empty">
+        <a *ngFor="let category of categories" [routerLink]="['/categories', category._id]" class="collection-item">
+          {{category.name}}
+        </a>
+      </div>
+      <ng-template #empty>
+        <div class="center white-text">
+          У вас нет ни одной категории
+        </div>
+      </ng-template>
+    </div>
+  </div>
+
+  <ng-template #loader>
+    <app-loader></app-loader>
+  </ng-template>
+
+
+</div>

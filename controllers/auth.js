@@ -14,11 +14,13 @@ module.exports.login = async function (req, res) {
                 email: candidate.email,
                 userId: candidate._id
             }, keys.jwt, { expiresIn: 60 * 60 * 24 })
-            const nicname = candidate.nicname
+            const nicname = candidate.name
+            const shop = candidate.shop
 
             res.status(200).json({
                 token: `Bearer ${token}`,
-                nicname: nicname
+                nicname: nicname,
+                shop: shop
             })
         } else {
             res.status(401).json({
@@ -46,7 +48,8 @@ module.exports.register = async function (req, res) {
         const user = new User({
             email: req.body.email,
             password: bcrypt.hashSync(password, salt),
-            name: req.body.nicname
+            name: req.body.nicname,
+            shop: req.body.shop
         })
 
         try {

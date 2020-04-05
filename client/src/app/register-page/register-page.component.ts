@@ -24,7 +24,8 @@ export class RegisterPageComponent implements OnInit, OnDestroy {
     this.form = new FormGroup({
       email: new FormControl(null, [Validators.required, Validators.email]),
       password: new FormControl(null, [Validators.required, Validators.minLength(6)]),
-      nicname: new FormControl(null, [Validators.required])
+      nicname: new FormControl(null, [Validators.required]),
+      shop: new FormControl(null, [Validators.required])
     })
 
     this.loader = false

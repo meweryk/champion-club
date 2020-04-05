@@ -1,14 +1,25 @@
 <div class="navbar-fixed">
   <nav class="z-depth-2 transcol" role="navigation">
-    <div class="nav-wrapper container">
-      <a id="logo-container" routerLink="/start" class="brand-logo">Champion</a>
+    <div class="nav-wrapper pl2">
+      <a id="logo-container" routerLink="/start" class="brand-logo hide-on-med-and-down">Champion</a>
       <ul class="right">
-        <li routerLinkActive="active"><a routerLink="/login"><i class="large material-icons">input</i></a></li>
-        <!--<li routerLinkActive="active"><a routerLink="/register">Регистрация</a></li>-->
+        <li routerLinkActive="active" *ngIf="!changeAuth">
+          <a routerLink="/login" class="waves-effect waves-orange">Вход</a>
+        </li>
+        <li routerLinkActive="active" *ngIf="changeAuth">
+          <a class="waves-effect waves-orange"><i class="material-icons left">account_box</i>{{nicname}}</a>
+        </li>
+        <li routerLinkActive="active" *ngIf="changeAuth">
+          <a href="#" class="waves-effect waves-orange" (click)="logout($event)"><i
+              class="material-icons left">exit_to_app</i></a>
+        </li>
       </ul>
-      <ul class="right hide-on-med-and-down">
+      <ul class="margin-large-left hide-on-med-and-down ">
         <li routerLinkActive="active" *ngFor="let link of links">
-          <a [routerLink]="[link.url]">{{link.name}}</a>
+          <div
+            [ngStyle]="{display: (link.url === '/categories' || link.url === '/history') && nicname != 'test' ? 'none ' : 'block'}">
+            <a [routerLink]="[link.url]" class="waves-effect waves-orange">{{link.name}}</a>
+          </div>
         </li>
       </ul>
 
@@ -17,19 +28,20 @@
   </nav>
 </div>
 
-<ul id="nav-mobile" class="sidenav" #sidenav>
+<ul id="nav-mobile" class="sidenav z-depth-3 grey lighten-2" edge="right" #sidenav>
   <li>
     <div class="card">
       <div class="card-image">
-        <img src="/assets/images/bun09-640x615.webp" alt="bunner">
+        <img src="/assets/images/bun09-640x615.jpg" alt="bunner">
       </div>
     </div>
   </li>
   <li routerLinkActive="active" *ngFor="let link of links">
-    <a [routerLink]="[link.url]">{{link.name}}</a>
+    <a [ngStyle]="{display: (link.url === '/categories' || link.url === '/history') && nicname != 'test' ? 'none ' : 'block'}"
+      [routerLink]="[link.url]" class="waves-effect waves-orange" (click)="closeSidenav()">{{link.name}}</a>
   </li>
 </ul>
 
-<div>
+<main class="content">
   <router-outlet></router-outlet>
-</div>
+</main>

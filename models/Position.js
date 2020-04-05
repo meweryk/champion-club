@@ -6,6 +6,15 @@ const positionSchema = new Schema({
         type: String,
         required: true
     },
+    stock: {
+        type: Number
+    },
+    rank: {
+        type: String
+    },
+    exposition: {
+        type: String
+    },
     cost: {
         type: Number,
         required: true
@@ -17,6 +26,12 @@ const positionSchema = new Schema({
     user: {
         ref: 'users',
         type: Schema.Types.ObjectId
+    },
+    shop: {
+        type: String
+    },
+    nicname: {
+        type: String
     }
 })
 

@@ -18,6 +18,9 @@ const userSchema = new Schema({
     postname: {
         type: String,
         default: ''
+    },
+    shop: {
+        type: String
     }
 })
 

@@ -1,8 +1,8 @@
 {
   "name": "Cempion-club",
   "short_name": "Champion",
-  "theme_color": "#1f2b31b3",
-  "background_color": "#252525",
+  "theme_color": "#ffab91",
+  "background_color": "#1f2b31b3",
   "display": "standalone",
   "scope": "/",
   "start_url": "/",
