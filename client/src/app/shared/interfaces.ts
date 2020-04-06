@@ -3,6 +3,7 @@ export interface User {
   password: string
   nicname: string
   shop?: string
+  phone?: string
 }
 
 export interface Message {
@@ -27,4 +28,5 @@ export interface Position {
   rank?: string
   shop?: string
   exposition?: string
+  imageSrc?: string
 }

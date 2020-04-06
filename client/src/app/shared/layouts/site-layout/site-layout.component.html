@@ -17,7 +17,7 @@
       <ul class="margin-large-left hide-on-med-and-down ">
         <li routerLinkActive="active" *ngFor="let link of links">
           <div
-            [ngStyle]="{display: (link.url === '/categories' || link.url === '/history') && nicname != 'test' ? 'none ' : 'block'}">
+            [ngStyle]="{display: (link.url === '/categories' || link.url === '/history') && (email != e1 && email != e2) ? 'none ' : 'block'}">
             <a [routerLink]="[link.url]" class="waves-effect waves-orange">{{link.name}}</a>
           </div>
         </li>
@@ -37,7 +37,7 @@
     </div>
   </li>
   <li routerLinkActive="active" *ngFor="let link of links">
-    <a [ngStyle]="{display: (link.url === '/categories' || link.url === '/history') && nicname != 'test' ? 'none ' : 'block'}"
+    <a [ngStyle]="{display: (link.url === '/categories' || link.url === '/history') && (email != e1 && email != e2) ? 'none ' : 'block'}"
       [routerLink]="[link.url]" class="waves-effect waves-orange" (click)="closeSidenav()">{{link.name}}</a>
   </li>
 </ul>

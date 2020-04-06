@@ -91,7 +91,6 @@ export class CategoriesFormComponent implements OnInit {
     }
 
     reader.readAsDataURL(file)
-
   }
 
   onSubmit() {

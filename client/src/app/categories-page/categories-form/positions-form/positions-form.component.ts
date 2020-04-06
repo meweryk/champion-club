@@ -11,6 +11,7 @@ import { AuthService } from 'src/app/shared/services/auth.service'
   styleUrls: ['./positions-form.component.css']
 })
 export class PositionsFormComponent implements OnInit, AfterViewInit, OnDestroy {
+  @ViewChild('input') innputRef: ElementRef
   @Input('categoryId') categoryId: string
   shop: string
 
@@ -25,6 +26,8 @@ export class PositionsFormComponent implements OnInit, AfterViewInit, OnDestroy 
   modal: MaterialInstance
 
   data = {}
+  image: File
+  imagePreview = ''
 
   form: FormGroup
   height: number
@@ -41,7 +44,8 @@ export class PositionsFormComponent implements OnInit, AfterViewInit, OnDestroy 
       cost: new FormControl(null, [Validators.required, Validators.min(1)]),
       stock: new FormControl(null, [Validators.required, Validators.min(0)]),
       rank: new FormControl(null, Validators.required),
-      exposition: new FormControl(null, Validators.maxLength(400))
+      exposition: new FormControl(null, Validators.maxLength(400)),
+      imageSrc: new FormControl(null)
     })
     this.loading = true
     this.positionsService.fetch(this.categoryId).subscribe(positions => {
@@ -74,6 +78,7 @@ export class PositionsFormComponent implements OnInit, AfterViewInit, OnDestroy 
       rank: position.rank,
       exposition: position.exposition
     })
+    this.imagePreview = position.imageSrc
     this.modal.open()
     MaterialService.updateTextInputs()
   }
@@ -85,7 +90,8 @@ export class PositionsFormComponent implements OnInit, AfterViewInit, OnDestroy 
       cost: +1,
       stock: +0,
       rank: 'шт',
-      exposition: null
+      exposition: null,
+      imageSrc: null
     })
     this.modal.open()
     MaterialService.updateTextInputs()
@@ -121,6 +127,7 @@ export class PositionsFormComponent implements OnInit, AfterViewInit, OnDestroy 
       stock: (this.form.value.stock).toFixed(3),
       rank: this.form.value.rank,
       exposition: this.form.value.exposition,
+      imageSrc: this.form.value.imageSrc,
       category: this.categoryId
     }
 
@@ -131,7 +138,7 @@ export class PositionsFormComponent implements OnInit, AfterViewInit, OnDestroy 
 
     if (this.positionId) {
       newPosition._id = this.positionId
-      this.positionsService.update(newPosition).subscribe(
+      this.positionsService.update(newPosition, this.image).subscribe(
         position => {
           const idx = this.positions.findIndex(p => p._id === position._id)
           this.positions[idx] = position
@@ -143,7 +150,7 @@ export class PositionsFormComponent implements OnInit, AfterViewInit, OnDestroy 
     } else {
       let mdx = this.positions.findIndex(p => p.name === newPosition.name)
       if (mdx < 0) {
-        this.positionsService.create(newPosition).subscribe(
+        this.positionsService.create(newPosition, this.image).subscribe(
           position => {
             MaterialService.toast('Позиция создана')
             this.positions.push(position)
@@ -158,6 +165,23 @@ export class PositionsFormComponent implements OnInit, AfterViewInit, OnDestroy 
         this.form.enable()
       }
     }
+  }
+
+  onFileUpload(event: any) {
+    const file = event.target.files[0]
+    this.image = file
+
+    const reader = new FileReader()
+
+    reader.onload = () => {
+      this.imagePreview = reader.result as string
+    }
+
+    reader.readAsDataURL(file)
+  }
+
+  triggerClick() {
+    this.innputRef.nativeElement.click()
   }
 
 }

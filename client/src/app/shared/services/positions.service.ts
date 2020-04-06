@@ -13,12 +13,32 @@ export class PositionsService {
     return this.http.get<Position[]>(`/api/position/${categoryId}`)
   }
 
-  create(position: Position): Observable<Position> {
-    return this.http.post<Position>('/api/position', position)
+  create(position: Position, image?: File): Observable<Position> {
+    const fd = new FormData()
+    if (image) {
+      fd.append('image', image, image.name)
+    }
+    fd.append('name', position.name)
+    fd.append('cost', (position.cost).toString())
+    fd.append('stock', (position.stock).toString())
+    fd.append('rank', position.rank)
+    fd.append('exposition', position.exposition)
+    fd.append('category', position.category)
+    return this.http.post<Position>('/api/position', fd)
   }
 
-  update(position: Position): Observable<Position> {
-    return this.http.patch<Position>(`/api/position/${position._id}`, position)
+  update(position: Position, image?: File): Observable<Position> {
+    const fd = new FormData()
+    if (image) {
+      fd.append('image', image, image.name)
+    }
+    fd.append('name', position.name)
+    fd.append('cost', (position.cost).toString())
+    fd.append('stock', (position.stock).toString())
+    fd.append('rank', position.rank)
+    fd.append('exposition', position.exposition)
+    fd.append('category', position.category)
+    return this.http.patch<Position>(`/api/position/${position._id}`, fd)
   }
 
   delete(position: Position): Observable<Message> {

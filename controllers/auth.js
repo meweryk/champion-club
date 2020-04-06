@@ -16,11 +16,15 @@ module.exports.login = async function (req, res) {
             }, keys.jwt, { expiresIn: 60 * 60 * 24 })
             const nicname = candidate.name
             const shop = candidate.shop
+            const email = candidate.email
+            const phone = candidate.phone
 
             res.status(200).json({
                 token: `Bearer ${token}`,
                 nicname: nicname,
-                shop: shop
+                shop: shop,
+                email: email,
+                phone: phone
             })
         } else {
             res.status(401).json({
@@ -49,7 +53,8 @@ module.exports.register = async function (req, res) {
             email: req.body.email,
             password: bcrypt.hashSync(password, salt),
             name: req.body.nicname,
-            shop: req.body.shop
+            shop: req.body.shop,
+            phone: req.body.phone
         })
 
         try {

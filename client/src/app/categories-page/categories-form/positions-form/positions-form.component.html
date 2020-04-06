@@ -13,16 +13,21 @@
               <thead>
                 <tr>
                   <th>Материал</th>
-                  <th>Запас</th>
-                  <th></th>
+                  <th>Фото</th>
+                  <th colspan="2">Запас</th>
                   <th>Цена</th>
                   <th>Действие</th>
                 </tr>
               </thead>
               <tbody>
                 <tr *ngFor="let position of positions">
-                  <th><a class="collection-item collection-item-icon"
-                      (click)="onSelectPosition(position)">{{position.name}}</a></th>
+                  <th>
+                    <a class="collection-item collection-item-icon"
+                      (click)="onSelectPosition(position)">{{position.name}}</a>
+                  </th>
+                  <td class="center">
+                    <img [src]="position.imageSrc" class="responsive-img h30">
+                  </td>
                   <td>{{position.stock}}</td>
                   <td>{{position.rank}}</td>
                   <td>{{position.cost}}грн.</td>
@@ -91,6 +96,21 @@
             Введите корректную цену (min = 1).
           </span>
         </div>
+      </div>
+
+      <div class="col s12 center">
+        <img class="responsive-img h120" [src]="imagePreview" *ngIf="imagePreview">
+      </div>
+
+      <div class="input-field col s12">
+        <input formControlName="imageSrc" id="imageSrc" name="imageSrc" class="dn" type="file" #input
+          (change)="onFileUpload($event)">
+
+        <button (click)="triggerClick()" [disabled]="form.disabled" type="button"
+          class="waves-effect waves-light btn-small orange lighten-2 brown-text text-lighten-1">
+          <i class="material-icons left">backup</i>
+          Загрузить изображение
+        </button>
       </div>
 
       <div class="row">

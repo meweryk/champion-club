@@ -36,7 +36,8 @@ module.exports.create = async function (req, res) {
             user: req.user.id,
             shop: req.user.shop,
             nicname: req.user.name,
-            exposition: req.body.exposition
+            exposition: req.body.exposition,
+            imageSrc: req.file ? req.file.path : ''
         }).save()
         res.status(201).json(position)
     } catch (e) {
@@ -56,18 +57,36 @@ module.exports.remove = async function (req, res) {
 }
 
 module.exports.update = async function (req, res) {
-    try {
-        const position = await Position.findOneAndUpdate(
-            { _id: req.params.id },
-            {
-                $set: req.body,
-                user: req.user.id,
-                nicname: req.user.name
-            },
-            { new: true }
-        )
-        res.status(200).json(position)
-    } catch (e) {
-        errorHandler(res, e)
+    const upposition = await Position.findOne({ _id: req.params.id })
+    if (upposition.user == req.user.id) {
+        const updated = {
+            name: req.body.name,
+            stock: req.body.stock,
+            rank: req.body.rank,
+            cost: req.body.cost,
+            category: req.body.category,
+            user: req.user.id,
+            shop: req.user.shop,
+            nicname: req.user.name,
+            exposition: req.body.exposition
+        }
+        if (req.file) {
+            updated.imageSrc = req.file.path
+        }
+        try {
+            const position = await Position.findOneAndUpdate(
+                { _id: req.params.id },
+                { $set: updated },
+                { new: true }
+            )
+            res.status(200).json(position)
+        } catch (e) {
+            errorHandler(res, e)
+        }
+    } else {
+        res.status(409).json({
+            message: 'У Вас нет прав на редактирование этой позиции.'
+        })
     }
+
 }

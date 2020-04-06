@@ -3,6 +3,7 @@
     <div class="card-content">
       <span class="card-title">Войти в систему</span>
       <div class="input-field">
+        <i class="material-icons prefix">markunread</i>
         <input formControlName="email" id="email" type="email"
           [ngClass]="{invalid: form.get('email').invalid && form.get('email').touched}">
         <label for="email">Email:</label>
@@ -12,6 +13,7 @@
         </span>
       </div>
       <div class="input-field">
+        <i class="material-icons prefix">vpn_key</i>
         <input formControlName="password" id="password" type="password"
           [ngClass]="{invalid: form.get('password').invalid && (form.get('password').touched || form.get('password').dirty)}">
         <label for="password">Пароль:</label>

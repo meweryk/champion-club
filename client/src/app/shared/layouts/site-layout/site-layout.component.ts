@@ -18,14 +18,17 @@ export class SiteLayoutComponent implements OnInit, AfterViewInit, OnDestroy {
   width: any
   nicname: string
   shop: string
+  email: string
   changeAuth: boolean
+  e1: string = 'test@ukr.net'
+  e2: string = 'pr.zp26@gmail.com'
 
   links = [
     { url: '/home', name: 'Главная' },
     { url: '/gallery', name: 'Галерея' },
     { url: '/order', name: 'Спортивное питание' },
-    { url: '/categories', name: 'Ассортимент' },
-    { url: '/history', name: 'История' }
+    { url: '/history', name: 'История' },
+    { url: '/categories', name: 'Ассортимент' }    
   ]
 
   constructor(private router: Router,
@@ -35,15 +38,14 @@ export class SiteLayoutComponent implements OnInit, AfterViewInit, OnDestroy {
     this.width = window.innerWidth
     this.aSub = this.auth.$chT.subscribe((changeAuth: boolean) => {
       this.changeAuth = changeAuth
-
       this.thisAuthenticated()
-
     })
   }
 
   private thisAuthenticated() {
     this.nicname = this.auth.getNicname()
     this.shop = this.auth.getShop()
+    this.email = this.auth.getEmail()
   }
 
   @HostListener('window:resize', ['$event'])

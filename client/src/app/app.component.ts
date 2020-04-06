@@ -25,6 +25,16 @@ export class AppComponent implements OnInit {
       this.auth.setShop(thisShop)
     }
 
+    const thisEmail = localStorage.getItem('my-email')
+    if (thisEmail !== null) {
+      this.auth.setEmail(thisEmail)
+    }
+
+    const thisPhone = localStorage.getItem('my-phone')
+    if (thisPhone !== null) {
+      this.auth.setPhone(thisPhone)
+    }
+
     if (this.swUpdate.isEnabled) {
       this.swUpdate.available.subscribe(() => {
         if (confirm("Доступна новая версия. Загрузить новую версию?")) {
