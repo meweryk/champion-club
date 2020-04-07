@@ -37,7 +37,6 @@ export class PositionsFormComponent implements OnInit, AfterViewInit, OnDestroy 
   ngOnInit(): void {
     this.height = 0.5 * window.innerHeight
     this.shop = this.auth.getShop()
-    console.log(this.shop)
 
     this.form = new FormGroup({
       name: new FormControl(null, [Validators.required, Validators.maxLength(20)]),
@@ -51,7 +50,6 @@ export class PositionsFormComponent implements OnInit, AfterViewInit, OnDestroy 
     this.positionsService.fetch(this.categoryId).subscribe(positions => {
       this.positions = positions.filter(position => position.shop === this.shop).sort((a, b) => Intl.Collator().compare(a.name, b.name))
       this.loading = false
-      console.log(this.positions)
     })
 
   }
@@ -90,9 +88,9 @@ export class PositionsFormComponent implements OnInit, AfterViewInit, OnDestroy 
       cost: +1,
       stock: +0,
       rank: 'шт',
-      exposition: null,
-      imageSrc: null
+      exposition: null
     })
+    this.imagePreview = null
     this.modal.open()
     MaterialService.updateTextInputs()
   }

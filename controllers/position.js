@@ -1,5 +1,9 @@
 const Position = require('../models/Position')
+const User = require('../models/User')
 const errorHandler = require('../utils/errorHandler')
+const fs = require('fs')
+const { promisify } = require('util')
+const unlinkAsync = promisify(fs.unlink)
 
 module.exports.getByCategoryIdAllShop = async function (req, res) {
     try {
@@ -16,7 +20,7 @@ module.exports.getByCategoryId = async function (req, res) {
     try {
         const positions = await Position.find({
             category: req.params.categoryId,
-            shop: req.user.shop
+            //shop: req.user.shop
         })
         res.status(200).json(positions)
     } catch (e) {
@@ -46,7 +50,12 @@ module.exports.create = async function (req, res) {
 }
 
 module.exports.remove = async function (req, res) {
+    const position = await Position.findById(req.params.id)
+    const filepathCat = position.imageSrc
     try {
+        if (filepathCat) {
+            await unlinkAsync(filepathCat) //удаление фото
+        }
         await Position.remove({ _id: req.params.id })
         res.status(200).json({
             message: 'Позиция была удалена.'
@@ -71,7 +80,11 @@ module.exports.update = async function (req, res) {
             exposition: req.body.exposition
         }
         if (req.file) {
+            const filepathCat = upposition.imageSrc
             updated.imageSrc = req.file.path
+            if (filepathCat) {
+                await unlinkAsync(filepathCat) //удаление старого фото
+            }
         }
         try {
             const position = await Position.findOneAndUpdate(
