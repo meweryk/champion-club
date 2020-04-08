@@ -51,10 +51,9 @@ module.exports.create = async function (req, res) {
 
 module.exports.remove = async function (req, res) {
     const position = await Position.findById(req.params.id)
-    const filepathCat = position.imageSrc
     try {
-        if (filepathCat) {
-            await unlinkAsync(filepathCat) //удаление фото
+        if (position.imageSrc) {
+            await unlinkAsync(position.imageSrc) //удаление фото            
         }
         await Position.remove({ _id: req.params.id })
         res.status(200).json({
@@ -80,10 +79,9 @@ module.exports.update = async function (req, res) {
             exposition: req.body.exposition
         }
         if (req.file) {
-            const filepathCat = upposition.imageSrc
             updated.imageSrc = req.file.path
-            if (filepathCat) {
-                await unlinkAsync(filepathCat) //удаление старого фото
+            if (upposition.imageSrc) {
+                await unlinkAsync(upposition.imageSrc) //удаление старого фото
             }
         }
         try {

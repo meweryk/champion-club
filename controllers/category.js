@@ -107,10 +107,9 @@ module.exports.update = async function (req, res) {
             name: req.body.name
         }
         if (req.file) {
-            const filepathCat = upcategory.imageSrc
             updated.imageSrc = req.file.path
-            if (filepathCat) {
-                await unlinkAsync(filepathCat) //удаление старого фото
+            if (upcategory.imageSrc) {
+                await unlinkAsync(upcategory.imageSrc) //удаление старого фото
             }
         }
         try {

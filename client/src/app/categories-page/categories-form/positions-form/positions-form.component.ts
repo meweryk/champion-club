@@ -132,6 +132,7 @@ export class PositionsFormComponent implements OnInit, AfterViewInit, OnDestroy 
     const completed = () => {
       this.modal.close()
       this.form.enable()
+      this.image = null
     }
 
     if (this.positionId) {
@@ -161,6 +162,7 @@ export class PositionsFormComponent implements OnInit, AfterViewInit, OnDestroy 
         MaterialService.toast(`Позиция "${newPosition.name}" уже существует`)
         this.modal.close()
         this.form.enable()
+        this.image = null
       }
     }
   }
