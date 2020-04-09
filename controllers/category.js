@@ -31,16 +31,18 @@ module.exports.remove = async function (req, res) {
     if (thisShop) {
         for (let position of thisShop) {
             if (position.imageSrc) {
-                await unlinkAsync(position.imageSrc) //удаление фото зщзиций
+                await unlinkAsync(position.imageSrc)//удаление фото//удаление фото позиций
             }
         }
     }
-
     const category = await Category.findOne({ _id: req.params.id })
     const elseShop = await Position.findOne({ category: req.params.id, shop: { $ne: req.user.shop } }, { shop: 1 })
     //проверяем права пользователя на категорию и присутствие других магазинов
     if ((category.user == req.user.id) && !elseShop) {
         //если категория создана пльзователем и её не используют позиций с других складов-магазинов
+        if (category.imageSrc) {
+            await unlinkAsync(category.imageSrc)//удаление фото
+        }
         try {
             await Category.remove({
                 _id: req.params.id
@@ -49,9 +51,6 @@ module.exports.remove = async function (req, res) {
                 category: req.params.id,
                 shop: req.user.shop
             })
-            if (category.imageSrc) {
-                await unlinkAsync(category.imageSrc) //удаление фото
-            }
             res.status(200).json({
                 message: 'Категория удалена'
             })
@@ -60,7 +59,6 @@ module.exports.remove = async function (req, res) {
         }
 
     } else {
-
         try {
             await Position.remove({
                 category: req.params.id,
@@ -72,13 +70,11 @@ module.exports.remove = async function (req, res) {
         } catch (e) {
             errorHandler(res, e)
         }
-
     }
 }
 
 module.exports.create = async function (req, res) {
     const newcategory = await Category.findOne({ name: req.body.name })
-
     if (newcategory) {
         // Категория существует, нужно отправить ошибку
         res.status(409).json({
@@ -103,9 +99,7 @@ module.exports.create = async function (req, res) {
 module.exports.update = async function (req, res) {
     const upcategory = await Category.findOne({ _id: req.params.id })
     if (upcategory.user == req.user.id) {
-        const updated = {
-            name: req.body.name
-        }
+        const updated = { name: req.body.name }
         if (req.file) {
             updated.imageSrc = req.file.path
             if (upcategory.imageSrc) {

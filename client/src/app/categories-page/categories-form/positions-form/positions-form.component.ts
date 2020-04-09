@@ -88,7 +88,7 @@ export class PositionsFormComponent implements OnInit, AfterViewInit, OnDestroy 
       cost: +1,
       stock: +0,
       rank: 'шт',
-      exposition: null
+      exposition: ''
     })
     this.imagePreview = null
     this.modal.open()

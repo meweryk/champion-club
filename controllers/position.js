@@ -29,7 +29,6 @@ module.exports.getByCategoryId = async function (req, res) {
 }
 
 module.exports.create = async function (req, res) {
-    console.log(req.user.shop)
     try {
         const position = await new Position({
             name: req.body.name,
@@ -51,10 +50,10 @@ module.exports.create = async function (req, res) {
 
 module.exports.remove = async function (req, res) {
     const position = await Position.findById(req.params.id)
+    if (position.imageSrc) {
+        await unlinkAsync(position.imageSrc) //удаление фото            
+    }
     try {
-        if (position.imageSrc) {
-            await unlinkAsync(position.imageSrc) //удаление фото            
-        }
         await Position.remove({ _id: req.params.id })
         res.status(200).json({
             message: 'Позиция была удалена.'
@@ -78,12 +77,14 @@ module.exports.update = async function (req, res) {
             nicname: req.user.name,
             exposition: req.body.exposition
         }
+
         if (req.file) {
             updated.imageSrc = req.file.path
             if (upposition.imageSrc) {
-                await unlinkAsync(upposition.imageSrc) //удаление старого фото
+                await unlinkAsync(upposition.imageSrc)//удаление старого фото
             }
         }
+
         try {
             const position = await Position.findOneAndUpdate(
                 { _id: req.params.id },
