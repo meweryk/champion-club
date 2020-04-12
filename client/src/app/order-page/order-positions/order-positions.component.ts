@@ -5,7 +5,7 @@ import { OrderService } from '../order.service';
 import { PositionsService } from 'src/app/shared/services/positions.service';
 import { ActivatedRoute, Params } from '@angular/router';
 import { switchMap, map } from 'rxjs/operators';
-import { MaterialService } from 'src/app/shared/classes/material.service';
+import { MaterialService, MaterialInstance } from 'src/app/shared/classes/material.service';
 
 @Component({
   selector: 'app-order-positions',
@@ -13,7 +13,6 @@ import { MaterialService } from 'src/app/shared/classes/material.service';
   styleUrls: ['./order-positions.component.css']
 })
 export class OrderPositionsComponent implements OnInit {
-
   positions$: Observable<Position[]>
 
   height: number

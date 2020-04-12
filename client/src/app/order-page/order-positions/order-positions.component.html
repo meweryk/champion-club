@@ -2,20 +2,17 @@
   <div class="col s12">
 
     <div class="row" *ngIf="positions.length !== 0; else empty">
-
-      <div class="col s5 m4 l3">
+      <div class="col s12">
         <div class="input-field" [style.margin.px]="0">
-          <input type="text" style="cursor: pointer; width: 5rem; color: #669;" [(ngModel)]="searchVid"
-            placeholder="Название">
+          <i class="material-icons prefix">search</i>
+          <input id="search1" type="text" style="cursor: pointer; width: 15rem; color: #e0f2f1;" [(ngModel)]="searchVid"
+            placeholder="Поиск по названию...">
         </div>
       </div>
-
-      <div class="col s2 m4 l6"></div>
-
-      <div class="col s5 m4 l3">
-        <div class="input-field" [style.margin.px]="0">
-          <input type="text" style="cursor: pointer; width: 6rem; color: #669;" [(ngModel)]="searchShop"
-            placeholder="Поставщик">
+      <div class="col s12">
+        <div class="input-field" style="display: none;">
+          <i class="material-icons prefix">search</i>
+          <input id="search2" type="text" style="cursor: pointer; color: #e0f2f1;" [(ngModel)]="searchShop">
         </div>
       </div>
 
@@ -34,20 +31,20 @@
             <div class="m0">
               <table>
                 <tr>
-                  <th class="p0">{{position.cost}}грн.</th>
-                  <td>Заказать</td>
+                  <th class="p0">{{position.cost}}грн.&nbsp;&nbsp;</th>
+                  <td class="p0">Заказать</td>
                   <td class="p0">
                     <div class="input-field inline order-position-input right">
                       <input type="number" min="1" max="999" [(ngModel)]="position.quantity">
                     </div>
                   </td>
-                  <td>шт.</td>
+                  <td class="p0">шт.</td>
                 </tr>
               </table>
             </div>
           </div>
 
-          <div class="card-reveal indigo lighten-5 m0">
+          <div class="card-reveal indigo lighten-5 p10">
             <span class="card-title brown-text text-darken-4">{{position.name}}<i
                 class="material-icons right">close</i></span>
             <p>{{position.exposition}}</p>
