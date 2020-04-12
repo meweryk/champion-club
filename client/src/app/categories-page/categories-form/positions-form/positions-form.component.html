@@ -48,7 +48,7 @@
         </div>
       </div>
       <ng-template #empty>
-        <div class="center white-text">В категории позиций нет</div>
+        <div class="center brown-text text-lighten-5">В категории позиций нет</div>
       </ng-template>
     </div>
     <ng-template #loader>
@@ -74,7 +74,7 @@
         <div class="input-field col s9 m3">
           <input formControlName="stock" id="pos-stock" type="number" maxlength="8"
             [ngClass]="{'invalid': form.get('stock').invalid && form.get('stock').touched}">
-          <label for="pos-stock">количество в наличии</label>
+          <label for="pos-stock">Запас</label>
           <span *ngIf="form.get('stock').invalid && (form.get('stock').touched || form.get('stock').dirty)"
             class="helper-text red-text">
             Введите корректный запас (min = 0).

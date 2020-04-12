@@ -285,12 +285,12 @@ html {
   justify-content: space-between;
   align-items: center;
   cursor: pointer;
-  z-index: 10
+  z-index: 10;
 }
 
 .collection-item-icon i.material-icons:hover {
   color: #f44336 !important;
-  transition: .3s color
+  transition: .3s color;
 }
 
 /*Отступы*/
@@ -298,6 +298,49 @@ html {
   padding-left: 20px !important
 }
 
+.p10 {
+  padding: 10px !important
+}
+
+.pb5 {
+  padding-bottom: 5px !important
+}
+
+.m0 {
+  margin: 0
+}
+
+.p0 {
+  padding: 0;
+}
+
+.mb1 {
+  margin-bottom: 10px
+}
+
 .margin-large-left {
   margin-left: 20%;
+}
+
+.center {
+  margin: auto;
+}
+
+.pointer {
+  cursor: pointer
+}
+
+.order-img {
+  height: 100px !important;
+  background-size: contain;
+}
+
+/*Form*/
+.order-position-input {
+  margin-top: 0;
+  margin-bottom: 0;
+}
+
+.order-position-input input {
+  margin-bottom: 0 !important;
 }

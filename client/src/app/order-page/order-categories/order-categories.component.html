@@ -1,0 +1,23 @@
+<div *ngIf="categories$ | async as categories; else loader">
+  <div class="row" *ngIf="categories.length !== 0; else empty">
+    <div class="col s12 m3 l4" *ngFor="let category of categories">
+      <div class="card pointer card-panel card-color hoverable pb5" [routerLink]="[ '/order', category._id ]">
+        <div class="center">
+          <img [src]="category.imageSrc" class="responsive-img order-img">
+        </div>
+        <div class="card-content blue-grey-text text-darken-4 center p10">
+          <h6 class="truncate m0">{{category.name}}</h6>
+        </div>
+      </div>
+    </div>
+
+  </div>
+  <ng-template #empty>
+    <div class="center brown-text text-lighten-5">Категорий пока нет.</div>
+  </ng-template>
+</div>
+
+
+<ng-template #loader>
+  <app-loader></app-loader>
+</ng-template>

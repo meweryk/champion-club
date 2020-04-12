@@ -1,0 +1,18 @@
+.card .card-image img {
+  width: auto;
+  height: 180px !important;
+}
+
+.card-title {
+  font-size: 16px;
+}
+
+.waves-effect {
+  overflow: visible;
+}
+
+tr {
+  border-bottom: 0px solid rgba(0,0,0,0.12);
+}
+
+

@@ -1,0 +1,112 @@
+<div *ngIf="positions$ | async as positions; else loader">
+  <div class="col s12">
+
+    <div class="row" *ngIf="positions.length !== 0; else empty">
+
+      <div class="col s5 m4 l3">
+        <div class="input-field" [style.margin.px]="0">
+          <input type="text" style="cursor: pointer; width: 5rem; color: #669;" [(ngModel)]="searchVid"
+            placeholder="Название">
+        </div>
+      </div>
+
+      <div class="col s2 m4 l6"></div>
+
+      <div class="col s5 m4 l3">
+        <div class="input-field" [style.margin.px]="0">
+          <input type="text" style="cursor: pointer; width: 6rem; color: #669;" [(ngModel)]="searchShop"
+            placeholder="Поставщик">
+        </div>
+      </div>
+
+      <div class="col s12 m4 l3" *ngFor="let position of positions | searchV: [searchVid, searchShop]">
+        <div class="card sticky-action">
+          <div class="card-image waves-effect waves-block waves-light">
+            <img class="activator center" [src]="position.imageSrc">
+            <button class="btn-floating halfway-fab waves-effect waves-light btn-small pulse"
+              (click)="addToOrder(position)" [disabled]="!position.quantity || position.quantity < 0">
+              <i class="material-icons">add</i>
+            </button>
+          </div>
+          <div class="card-content indigo lighten-4">
+            <span class="card-title activator brown-text text-darken-4">{{position.name}}<i
+                class="material-icons right">more_vert</i></span>
+            <div class="m0">
+              <table>
+                <tr>
+                  <th class="p0">{{position.cost}}грн.</th>
+                  <td>Заказать</td>
+                  <td class="p0">
+                    <div class="input-field inline order-position-input right">
+                      <input type="number" min="1" max="999" [(ngModel)]="position.quantity">
+                    </div>
+                  </td>
+                  <td>шт.</td>
+                </tr>
+              </table>
+            </div>
+          </div>
+
+          <div class="card-reveal indigo lighten-5 m0">
+            <span class="card-title brown-text text-darken-4">{{position.name}}<i
+                class="material-icons right">close</i></span>
+            <p>{{position.exposition}}</p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+  <ng-template #empty>
+    <div class="center brown-text text-lighten-4">В данной категории пока нет позиций</div>
+  </ng-template>
+</div>
+
+<ng-template #loader>
+  <app-loader></app-loader>
+</ng-template>
+
+
+
+
+
+<!--<div class="table-container" [style.maxHeight.px]="height">
+  <table class="highlight" *ngIf="positions.length !== 0; else empty">
+    <thead>
+      <tr>
+        <th>
+          <div class="input-field" [style.margin.px]="0">
+            <input type="text" style="cursor: pointer; width: 5rem; color: #669;" [(ngModel)]="searchVid"
+              placeholder="Название">
+          </div>
+        </th>
+        <th>Цена<br>грн</th>
+        <th>Количество</th>
+        <th>
+          <div class="input-field" [style.margin.px]="0">
+            <input type="text" style="cursor: pointer; width: 6rem; color: #669;" [(ngModel)]="searchShop"
+              placeholder="Поставщик">
+          </div>
+        </th>
+        <th></th>
+      </tr>
+    </thead>
+
+    <tbody>
+      <tr *ngFor="let position of positions | searchV: [searchVid, searchShop]">
+        <th>{{position.name}}</th>
+        <td>{{position.cost}}</td>
+        <td>
+          <div class="input-field inline order-position-input">
+            <input type="number" min="1" [(ngModel)]="position.quantity">
+          </div>
+        </td>
+        <td>{{position.shop}}</td>
+        <td>
+          <button class="waves-effect wavers-light btn-small" (click)="addToOrder(position)"
+            [disabled]="!position.quantity || position.quantity < 0"><i class="material-icons">add</i></button>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+</div>-->
