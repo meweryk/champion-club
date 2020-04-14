@@ -345,3 +345,14 @@ html {
   margin-bottom: 0 !important;
   height: 1.5rem;
 }
+
+.order-summary {
+  display: flex;
+  justify-content: flex-end;
+  font-size: 16px;
+  padding-right: 30px
+}
+
+.order-summary p {
+  margin-bottom: 0 !important
+}

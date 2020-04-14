@@ -42,6 +42,9 @@ export interface Order {
   view?: Date
   send?: Date
   got?: Date
+  comment?: string
+  phone?: string
+  nameBuyer?: string
 }
 
 export interface OrderPosition {

@@ -15,35 +15,59 @@
   <router-outlet></router-outlet>
 
   <div #modal class="modal modal-fixed-footer">
-    <div class="modal-content">
-      <h5 class="mb1">Ваш заказ</h5>
-      <table class="highlight">
-        <thead>
-          <tr>
-            <th>Название</th>
-            <th>Количество</th>
-            <th>Цена</th>
-            <th>Поставщик</th>
-            <th></th>
-          </tr>
-        </thead>
+    <div class="modal-content indigo lighten-4">
+      <h5 class="mb1 p10">Ваш заказ</h5>
+      <div class="table-container">
+        <table class="highlight">
+          <thead>
+            <tr>
+              <th>Название</th>
+              <th>Количество</th>
+              <th>Цена</th>
+              <th>Поставщик</th>
+              <th></th>
+            </tr>
+          </thead>
 
-        <tbody>
-          <tr *ngFor="let item of allPosition.list">
-            <td>{{item.name}}</td>
-            <td>{{item.quantity}}</td>
-            <td>{{item.cost}}грн</td>
-            <td>{{item.shopSeller}}</td>
-            <td><i class="material-icons pointer" (click)="removePosition(item)">delete</i></td>
-          </tr>
-        </tbody>
-      </table>
+          <tbody>
+            <tr *ngFor="let item of allPosition.list">
+              <th>{{item.name}}</th>
+              <td>{{item.quantity}}</td>
+              <td>{{item.cost}}грн</td>
+              <td>{{item.shopSeller}}</td>
+              <td>
+                <a class="collection-item collection-item-icon">
+                  <span>
+                    <i class="material-icons pointer" (click)="removePosition(item)">delete</i>
+                  </span>
+                </a>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
       <div class="order-summary">
         <p>Общий вес <strong>{{allPosition.weight}} т.</strong><br>Общая стоимость <strong>{{allPosition.price}}
             грн.</strong></p>
       </div>
+      <div class="input-field col s12">
+        <i class="material-icons prefix">mode_edit</i>
+        <textarea [(ngModel)]="comment" id="comment" name="comment" type="text" #name='ngModel'
+          class="form-control materialize-textarea" maxlength="400"></textarea>
+        <label for="comment">Коментарий</label>
+        <span class="helper-text" *ngIf="name.dirty">
+          <span [ngStyle]="{color: name.invalid ? '#f44336 ' : '#4db6ac'}">400 символов.</span>
+        </span>
+      </div>
+      <ul class="row grey-text text-darken-1" *ngIf="changeAuth">
+        <h6 class="mb1">Ваши данные: </h6>
+        <li class="col s12 m4 valign-wrapper pb5"><i class="material-icons">account_circle</i> {{nameBuyer}}</li>
+        <li class="col s12 m4 valign-wrapper pb5"><i class="material-icons prefix">markunread</i> {{email}}</li>
+        <li *ngIf="phone != 'undefined'" class="col s12 m4 valign-wrapper pb5"><i
+            class="material-icons">local_phone</i>{{phone}}</li>
+      </ul>
     </div>
-    <div class="modal-footer">
+    <div class="modal-footer indigo lighten-4">
       <button (click)="cencel()" class="modal-action waves-effect waves-black btn-flat"
         [disabled]="pending">Отмена</button>
       <button (click)="submit()" class="modal-action btn waves-effect"

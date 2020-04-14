@@ -5,6 +5,7 @@ import { OrdersServise } from '../shared/services/order.service';
 import { MaterialInstance, MaterialService } from '../shared/classes/material.service';
 import { Subscription } from 'rxjs';
 import { OrderPosition, Order } from '../shared/interfaces';
+import { AuthService } from '../shared/services/auth.service';
 
 @Component({
   selector: 'app-order-page',
@@ -15,17 +16,28 @@ import { OrderPosition, Order } from '../shared/interfaces';
 export class OrderPageComponent implements OnInit {
 
   @ViewChild('modal') modalRef: ElementRef
+  aSub: Subscription
+  changeAuth: boolean
+
   isRoot: boolean
   modal: MaterialInstance
   oSub: Subscription
   pending = false
   allPosition: any
+  comment: string = ''
+  phone: string = ''
+  nameBuyer: string = ''
+  email: string = ''
 
   constructor(private router: Router,
     private order: OrderService,
-    private ordersService: OrdersServise) { }
+    private ordersService: OrdersServise,
+    private auth: AuthService) { }
 
   ngOnInit(): void {
+    this.aSub = this.auth.$chT.subscribe((changeAuth: boolean) => {
+      this.changeAuth = changeAuth
+    })
     this.isRoot = this.router.url === '/order'
     this.router.events.subscribe(event => {
       if (event instanceof NavigationEnd) {
@@ -35,10 +47,19 @@ export class OrderPageComponent implements OnInit {
     this.allPosition = this.order
   }
 
+  private thisAuthenticated() {
+    this.nameBuyer = this.auth.getNicname()
+    this.phone = this.auth.getPhone()
+    this.email = this.auth.getEmail()
+  }
+
   ngOnDestroy() {
     this.modal.destroy()
     if (this.oSub) {
       this.oSub.unsubscribe()
+    }
+    if (this.aSub) {
+      this.aSub.unsubscribe()
     }
   }
 
@@ -51,6 +72,11 @@ export class OrderPageComponent implements OnInit {
   }
 
   open() {
+    if (this.changeAuth) {
+      this.thisAuthenticated()
+    } else {
+      MaterialService.toast('Укажите способ связи в коментариях или авторизуйтесь.')
+    }
     this.modal.open()
   }
 
@@ -65,13 +91,20 @@ export class OrderPageComponent implements OnInit {
       list: this.order.list.map(item => {
         delete item._id
         return item
-      })
+      }),
+      comment: this.comment,
+      phone: this.phone,
+      nameBuyer: this.nameBuyer
     }
+
 
     this.oSub = this.ordersService.create(order).subscribe(
       newOrder => {
         MaterialService.toast(`Заказ №${newOrder.order} был добавлен.`)
         this.order.clear()
+        this.comment = ''
+        this.phone = null
+        this.nameBuyer = ''
       },
       error => MaterialService.toast(error.error.message),
       () => {
