@@ -7,14 +7,19 @@ export class OrderService {
   public list: OrderPosition[] = []
   public price = 0
   public weight = 0
+  public allRank = ''
 
   add(position: Position) {
     const orderPosition: OrderPosition = Object.assign({}, {
       name: position.name,
       cost: +(position.cost).toFixed(2),
       quantity: +(position.quantity).toFixed(3),
+      rank: position.rank,
+      exposition: position.exposition,
+      imageSrc: position.imageSrc,
       _id: position._id,
-      shopSeller: position.shop
+      shopSeller: position.shop,
+      userSeller: position.user
     })
 
     const candidate = this.list.find(p => p._id === orderPosition._id)
@@ -28,6 +33,7 @@ export class OrderService {
 
     this.computePrice()
     this.computeWeight()
+    this.allRank = position.rank
 
   }
 

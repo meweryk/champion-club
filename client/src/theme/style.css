@@ -346,6 +346,18 @@ html {
   height: 1.5rem;
 }
 
+.select-wrapper input.select-dropdown {
+  color: #ffffff;
+  font-weight: bold;
+  font-size: 14px;
+  margin: 0;
+}
+
+.bold {
+  font-weight: bold;
+  color: #6e4a4a
+}
+
 .order-summary {
   display: flex;
   justify-content: flex-end;
@@ -355,4 +367,37 @@ html {
 
 .order-summary p {
   margin-bottom: 0 !important
+}
+
+/*Filter*/
+.fr {
+  display: flex;
+  margin-bottom: 15px
+}
+
+.fr .col.order {
+  width: 75px
+}
+
+.fr .col.filter-pickers {
+  padding: 0 20px;
+  width: 40%;
+  display: flex
+}
+
+.fr .col.filter-pickers .input-field {
+  width: 45% !important;
+  min-width: 110px;
+  margin-right: 20px !important;
+  margin-top: 0 !important;
+  margin-bottom: 0 !important;
+}
+
+.fr .col.range {
+  width: 40%;
+  padding-top: 44px
+}
+
+.filter {
+  margin-bottom: 15px
 }

@@ -1,5 +1,39 @@
 <div class="page-content">
   <div class="page-title">
-    <p class="white-text">Страница "История" в разработке</p>
+    <h5 class="brown-text text-lighten-5">История заказов</h5>
+    <div col s6>
+      <button (click)="updateHistoryList()" class="btn btn-small waves-effect waves-light"
+        data-tooltip="Обновить историю заказов" data-position="left" #tooltip>
+        <i class="material-icons">update</i>
+      </button>
+      <span>&#160;</span>
+      <button (click)="isFilterVisible = !isFilterVisible" class="btn btn-small waves-effect waves-light"
+        [ngClass]="{'active': isFilterVisible, 'red': isFiltered()}">
+        <i class="material-icons">filter_list</i>
+      </button>
+    </div>
   </div>
+
+  <app-history-filter *ngIf="isFilterVisible" (onFilter)="applyFilter($event)"></app-history-filter>
+
+  <div *ngIf="!reloading; else reloadingBlock">
+    <div *ngIf="orders.length > 0; else empty">
+      <app-history-list [(gsorders)]="orders" (onAddDelivery)="updateDeliveryForm($event)"></app-history-list>
+      <div class="center mb2" *ngIf="!noMoreOrders">
+        <button class="btn waves-effect grey darken-1 btn-small" (click)="loadMore()" *ngIf="!loading; else loader">
+          Загрузить еще
+        </button>
+        <ng-template #loader>
+          <app-loader></app-loader>
+        </ng-template>
+      </div>
+    </div>
+    <ng-template #empty>
+      <div class="center brown-text text-lighten-5">Заказов пока нет.</div>
+    </ng-template>
+  </div>
+
+  <ng-template #reloadingBlock>
+    <app-loader></app-loader>
+  </ng-template>
 </div>

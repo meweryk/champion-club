@@ -4,12 +4,16 @@ import { SharedModule } from '../shared/shared.module'
 
 import { ComponentsModule } from '../shared/components/components.module'
 import { HistoryPageComponent } from './history-page.component'
-import { HistoryRoutingModule } from './history-routing.module'
+import { HistoryRoutingModule } from './history-routing.module';
+import { HistoryListComponent } from './history-list/history-list.component';
+import { HistoryFilterComponent } from './history-filter/history-filter.component'
 
 
 @NgModule({
   declarations: [
-    HistoryPageComponent
+    HistoryPageComponent,
+    HistoryListComponent,
+    HistoryFilterComponent
   ],
   providers: [],
   imports: [

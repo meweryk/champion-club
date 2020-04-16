@@ -32,7 +32,7 @@
           <tbody>
             <tr *ngFor="let item of allPosition.list">
               <th>{{item.name}}</th>
-              <td>{{item.quantity}}</td>
+              <td>{{item.quantity}}{{item.rank}}</td>
               <td>{{item.cost}}грн</td>
               <td>{{item.shopSeller}}</td>
               <td>
@@ -47,7 +47,8 @@
         </table>
       </div>
       <div class="order-summary">
-        <p>Общий вес <strong>{{allPosition.weight}} т.</strong><br>Общая стоимость <strong>{{allPosition.price}}
+        <p>Общее количество <strong>{{allPosition.weight}} {{allPosition.allRank}}.</strong><br>Общая стоимость
+          <strong>{{allPosition.price}}
             грн.</strong></p>
       </div>
       <div class="input-field col s12">
@@ -62,9 +63,9 @@
       <ul class="row grey-text text-darken-1" *ngIf="changeAuth">
         <h6 class="mb1">Ваши данные: </h6>
         <li class="col s12 m4 valign-wrapper pb5"><i class="material-icons">account_circle</i> {{nameBuyer}}</li>
-        <li class="col s12 m4 valign-wrapper pb5"><i class="material-icons prefix">markunread</i> {{email}}</li>
-        <li *ngIf="phone != 'undefined'" class="col s12 m4 valign-wrapper pb5"><i
-            class="material-icons">local_phone</i>{{phone}}</li>
+        <li class="col s12 m4 valign-wrapper pb5"><i class="material-icons prefix">markunread</i> {{emailBuyer}}</li>
+        <li *ngIf="phoneBuyer != 'undefined'" class="col s12 m4 valign-wrapper pb5"><i
+            class="material-icons">local_phone</i>{{phoneBuyer}}</li>
       </ul>
     </div>
     <div class="modal-footer indigo lighten-4">

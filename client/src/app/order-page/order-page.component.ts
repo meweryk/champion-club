@@ -1,7 +1,7 @@
 import { Component, OnInit, ElementRef, ViewChild } from '@angular/core';
 import { OrderService } from './order.service';
 import { Router, NavigationEnd } from '@angular/router';
-import { OrdersServise } from '../shared/services/order.service';
+import { OrdersServise } from '../shared/services/orders.service';
 import { MaterialInstance, MaterialService } from '../shared/classes/material.service';
 import { Subscription } from 'rxjs';
 import { OrderPosition, Order } from '../shared/interfaces';
@@ -25,9 +25,11 @@ export class OrderPageComponent implements OnInit {
   pending = false
   allPosition: any
   comment: string = ''
-  phone: string = ''
+  phoneBuyer: string = ''
   nameBuyer: string = ''
-  email: string = ''
+  emailBuyer: string = ''
+  shopBuyer: string = ''
+  idBuyer: string = ''
 
   constructor(private router: Router,
     private order: OrderService,
@@ -37,6 +39,7 @@ export class OrderPageComponent implements OnInit {
   ngOnInit(): void {
     this.aSub = this.auth.$chT.subscribe((changeAuth: boolean) => {
       this.changeAuth = changeAuth
+      this.thisAuthenticated()
     })
     this.isRoot = this.router.url === '/order'
     this.router.events.subscribe(event => {
@@ -49,8 +52,10 @@ export class OrderPageComponent implements OnInit {
 
   private thisAuthenticated() {
     this.nameBuyer = this.auth.getNicname()
-    this.phone = this.auth.getPhone()
-    this.email = this.auth.getEmail()
+    this.phoneBuyer = this.auth.getPhone()
+    this.emailBuyer = this.auth.getEmail()
+    this.shopBuyer = this.auth.getShop()
+    this.idBuyer = this.auth.getId()
   }
 
   ngOnDestroy() {
@@ -73,7 +78,9 @@ export class OrderPageComponent implements OnInit {
 
   open() {
     if (this.changeAuth) {
-      this.thisAuthenticated()
+      if (!this.phoneBuyer || !this.emailBuyer) {
+        MaterialService.toast('Укажите способ связи в коментариях.')
+      }
     } else {
       MaterialService.toast('Укажите способ связи в коментариях или авторизуйтесь.')
     }
@@ -93,8 +100,9 @@ export class OrderPageComponent implements OnInit {
         return item
       }),
       comment: this.comment,
-      phone: this.phone,
-      nameBuyer: this.nameBuyer
+      nicname: this.nameBuyer,
+      shopBuyer: this.shopBuyer,
+      idBuyer: this.idBuyer
     }
 
 
@@ -103,8 +111,9 @@ export class OrderPageComponent implements OnInit {
         MaterialService.toast(`Заказ №${newOrder.order} был добавлен.`)
         this.order.clear()
         this.comment = ''
-        this.phone = null
+        this.phoneBuyer = null
         this.nameBuyer = ''
+        this.emailBuyer = ''
       },
       error => MaterialService.toast(error.error.message),
       () => {

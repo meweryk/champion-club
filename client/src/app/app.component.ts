@@ -35,6 +35,11 @@ export class AppComponent implements OnInit {
       this.auth.setPhone(thisPhone)
     }
 
+    const thisId = localStorage.getItem('my-id')
+    if (thisId !== null) {
+      this.auth.setId(thisId)
+    }
+
     if (this.swUpdate.isEnabled) {
       this.swUpdate.available.subscribe(() => {
         if (confirm("Доступна новая версия. Загрузить новую версию?")) {

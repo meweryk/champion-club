@@ -53,7 +53,7 @@ module.exports.register = async function (req, res) {
             email: req.body.email,
             password: bcrypt.hashSync(password, salt),
             name: req.body.nicname,
-            shop: req.body.shop,
+            shop: req.body.shop ? req.body.shop : req.body.nicname,
             phone: req.body.phone
         })
 

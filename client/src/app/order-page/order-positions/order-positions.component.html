@@ -18,7 +18,9 @@
 
       <div class="col s12 m4 l3" *ngFor="let position of positions | searchV: [searchVid, searchShop]">
         <div class="card sticky-action">
-          <div class="card-image waves-effect waves-block waves-light">
+          <div class="card-image waves-effect waves-block waves-light"><span
+              style="position: absolute; right: 0; border: 1px solid #9fa8da; border-radius: 2px;"
+              class="badge indigo lighten-5">{{position.shop}}</span>
             <img class="activator center" [src]="position.imageSrc">
             <button class="btn-floating halfway-fab waves-effect waves-light btn-small pulse"
               (click)="addToOrder(position)" [disabled]="!position.quantity || position.quantity < 0">
@@ -38,7 +40,7 @@
                       <input type="number" min="1" max="999" [(ngModel)]="position.quantity">
                     </div>
                   </td>
-                  <td class="p0">шт.</td>
+                  <td class="p0">{{position.rank}}.</td>
                 </tr>
               </table>
             </div>

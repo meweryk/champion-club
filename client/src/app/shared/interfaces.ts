@@ -37,26 +37,33 @@ export interface Order {
   user?: string
   list: OrderPosition[]
   _id?: string
+
+  comment?: string
+
+  idBuyer?: string
   shopBuyer?: string
   nicname?: string
+
   view?: Date
   send?: Date
   got?: Date
-  comment?: string
-  phone?: string
-  nameBuyer?: string
 }
 
 export interface OrderPosition {
   name: string
-  fraction?: string
-  rank?: string
-  trash?: number
-  trashStap?: string
-  quantityNoTrash?: number
   cost: number
   quantity: number
+  rank?: string
+  exposition?: string
+  imageSrc?: string
   _id?: string
   shopSeller?: string
+  userSeller?: string
   flag?: boolean
+}
+
+export interface Filter {
+  start?: Date
+  end?: Date
+  order?: number
 }
