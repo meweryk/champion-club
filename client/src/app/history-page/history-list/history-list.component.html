@@ -44,7 +44,7 @@
       <thead>
         <tr>
           <th>Вид</th>
-          <th>Объём</th>
+          <th>Количество</th>
           <th>Цена<br>грн.</th>
           <th>Поставщик</th>
         </tr>
@@ -53,7 +53,7 @@
       <tbody>
         <tr *ngFor="let item of selectedOrder.list">
           <td>{{item.name}}</td>
-          <td>{{item.quantity}}</td>
+          <td>{{item.quantity}}{{item.rank}}</td>
           <td>{{item.cost}}</td>
           <td>{{item.shopSeller}}</td>
         </tr>

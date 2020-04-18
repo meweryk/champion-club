@@ -31,7 +31,11 @@ module.exports.remove = async function (req, res) {
     if (thisShop) {
         for (let position of thisShop) {
             if (position.imageSrc) {
-                await unlinkAsync(position.imageSrc)//удаление фото//удаление фото позиций
+                try {
+                    await unlinkAsync(position.imageSrc)//удаление фото//удаление фото позиций
+                } catch (e) {
+                    console.log(res, e)
+                }
             }
         }
     }
@@ -41,7 +45,11 @@ module.exports.remove = async function (req, res) {
     if ((category.user == req.user.id) && !elseShop) {
         //если категория создана пльзователем и её не используют позиций с других складов-магазинов
         if (category.imageSrc) {
-            await unlinkAsync(category.imageSrc)//удаление фото
+            try {
+                await unlinkAsync(category.imageSrc)//удаление фото
+            } catch (e) {
+                console.log(res, e)
+            }
         }
         try {
             await Category.remove({
@@ -103,7 +111,11 @@ module.exports.update = async function (req, res) {
         if (req.file) {
             updated.imageSrc = req.file.path
             if (upcategory.imageSrc) {
-                await unlinkAsync(upcategory.imageSrc) //удаление старого фото
+                try {
+                    await unlinkAsync(upcategory.imageSrc)//удаление фото
+                } catch (e) {
+                    console.log(res, e)
+                }
             }
         }
         try {

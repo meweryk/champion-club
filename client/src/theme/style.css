@@ -80,7 +80,7 @@ nav ul li.active {
 }
 
 p {
-  line-height: 2rem;
+  line-height: 1.5rem;
 }
 
 .sidenav-trigger {
@@ -336,15 +336,21 @@ html {
 }
 
 /*Form*/
+.filter-input,
 .order-position-input {
   margin-top: 0;
   margin-bottom: 0;
 }
 
+.filter input {
+  color: #fdf5e6;
+ }
+
 .order-position-input input[type=number]:not(.browser-default) {
   margin-bottom: 0 !important;
   height: 1.5rem;
 }
+
 
 .select-wrapper input.select-dropdown {
   color: #ffffff;
@@ -401,3 +407,4 @@ html {
 .filter {
   margin-bottom: 15px
 }
+

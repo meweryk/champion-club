@@ -51,7 +51,11 @@ module.exports.create = async function (req, res) {
 module.exports.remove = async function (req, res) {
     const position = await Position.findById(req.params.id)
     if (position.imageSrc) {
-        await unlinkAsync(position.imageSrc) //удаление фото            
+        try {
+            await unlinkAsync(position.imageSrc) //удаление фото            
+        } catch (e) {
+            console.log(res, e)
+        }
     }
     try {
         await Position.remove({ _id: req.params.id })
@@ -81,7 +85,11 @@ module.exports.update = async function (req, res) {
         if (req.file) {
             updated.imageSrc = req.file.path
             if (upposition.imageSrc) {
-                await unlinkAsync(upposition.imageSrc)//удаление старого фото
+                try {
+                    await unlinkAsync(upposition.imageSrc)//удаление старого фото
+                } catch (e) {
+                    console.log(res, e)
+                }
             }
         }
 
