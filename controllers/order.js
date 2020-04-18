@@ -57,11 +57,12 @@ module.exports.getAll = async function (req, res) {
 
 module.exports.create = async function (req, res) {
   const userfirstSeller = req.body.list[0]['userSeller']
-
+  console.log(userfirstSeller)
   try {
     const lastOrder = await Order
-      .findOne({ user: userfirstSeller })
+      .findOne({ userfirstSeller: userfirstSeller })
       .sort({ date: -1 })
+    console.log(lastOrder)
     const maxOrder = lastOrder ? lastOrder.order : 0
     const order = await new Order({
       list: req.body.list,
@@ -77,4 +78,32 @@ module.exports.create = async function (req, res) {
     errorHandler(res, e)
   }
 
+}
+
+module.exports.update = async function (req, res) {
+  const updated = {}
+  if (req.body.view) {
+    updated.view = moment().tz(zone)
+  }
+
+  if (req.body.send) {
+    updated.send = moment().tz(zone)
+  }
+
+  if (req.body.got) {
+    updated.got = moment().tz(zone)
+  }
+
+  try {
+    const order = await Order.findOneAndUpdate({
+      _id: req.params.id
+    }, {
+      $set: updated
+    }, {
+      new: true
+    })
+    res.status(200).json(order)
+  } catch (e) {
+    errorHandler(res, e)
+  }
 }

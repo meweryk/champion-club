@@ -1,64 +1,76 @@
-<table class="highlight mb2">
-  <thead>
-    <tr [ngStyle]="{backgroundColor: '#ffeccd'}">
-      <th>№</th>
-      <th>Дата</th>
-      <th>Время</th>
-      <th>Сумма<br>грн.</th>
-      <th>
-        <div class="input-field order-position-input" style="cursor: pointer; width: 7rem;">
-          <select #select [(ngModel)]="searchOrd">
-            <option value="" selected><span style="font-size: 14px;">Все</span>
-            </option>
-            <option [value]="shop"><span style="font-size: 14px">Закупки</span></option>
-            <option value="exportOrd"><span style="font-size: 14px">Продажи</span></option>
-          </select>
-        </div>
-      </th>
-    </tr>
-  </thead>
+<div class="row">
+  <div class="col s12">
+    <div class="table-container">
+      <table class="highlight">
+        <thead>
+          <tr>
+            <th>№</th>
+            <th>Дата</th>
+            <th>Время</th>
+            <th>Сумма<br>грн.</th>
+            <th>
+              <div class="input-field order-position-input" style="cursor: pointer; width: 7rem;">
+                <select #select [(ngModel)]="searchOrd">
+                  <option value="" selected><span style="font-size: 14px;">Все</span>
+                  </option>
+                  <option [value]="shop"><span style="font-size: 14px">Закупки</span></option>
+                  <option value="exportOrd"><span style="font-size: 14px">Продажи</span></option>
+                </select>
+              </div>
+            </th>
+          </tr>
+        </thead>
 
-  <tbody>
-    <tr *ngFor="let order of gsorders | searchO: [searchOrd, shop]"
-      [ngStyle]="{backgroundColor: shop === order.shopBuyer ? '#eaffd5b0' : 'none'}" [class.bold]="!order.view">
-      <td>{{order.order}}</td>
-      <td>{{order.date | date:'dd.MM.yyyy'}}</td>
-      <td>{{order.date | date:'HH:mm:ss'}}</td>
-      <td>{{computePrice(order)}}</td>
-      <td>
-        <button [style.color]="shop === order.shopBuyer ? 'lawngreen' : 'none'" class="btn btn-small grey darken-1"
-          (click)="selectOrder(order)">
-          <i class="material-icons">open_in_new</i>
-        </button>
-      </td>
-    </tr>
-  </tbody>
-</table>
+        <tbody>
+          <tr *ngFor="let order of gsorders | searchO: [searchOrd, shop]"
+            [ngStyle]="{backgroundColor: shop === order.shopBuyer ? '#eaffd5b0' : 'none'}" [class.bold]="!order.view">
+            <th>{{order.order}}</th>
+            <td>{{order.date | date:'dd.MM.yyyy'}}</td>
+            <td>{{order.date | date:'HH:mm:ss'}}</td>
+            <td>{{computePrice(order)}}</td>
+            <td>
+              <button [style.color]="shop === order.shopBuyer ? 'lawngreen' : 'none'"
+                class="btn btn-small grey darken-1" (click)="selectOrder(order)">
+                <i class="material-icons">open_in_new</i>
+              </button>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</div>
 
 <div class="modal modal-fixed-footer" #modal>
   <div class="modal-content" *ngIf="selectedOrder">
     <h5 class="mb1 blue-grey-text text-darken-3">Заказ №{{selectedOrder.order}}</h5>
     <p>Заказчик: {{selectedOrder.nicname}}<br>
       {{selectedOrder.date | date:'Дата dd.MM.yyyy, время HH:mm'}}</p>
-    <table class="highlight">
-      <thead>
-        <tr>
-          <th>Вид</th>
-          <th>Количество</th>
-          <th>Цена<br>грн.</th>
-          <th>Поставщик</th>
-        </tr>
-      </thead>
+    <div class="row">
+      <div class="col s12">
+        <div class="table-container">
+          <table class="highlight">
+            <thead>
+              <tr>
+                <th>Вид</th>
+                <th>Кол-тво</th>
+                <th>Цена<br>грн.</th>
+                <th>Поставщик</th>
+              </tr>
+            </thead>
 
-      <tbody>
-        <tr *ngFor="let item of selectedOrder.list">
-          <td>{{item.name}}</td>
-          <td>{{item.quantity}}{{item.rank}}</td>
-          <td>{{item.cost}}</td>
-          <td>{{item.shopSeller}}</td>
-        </tr>
-      </tbody>
-    </table>
+            <tbody>
+              <tr *ngFor="let item of selectedOrder.list">
+                <td>{{item.name}}</td>
+                <td>{{item.quantity}}{{item.rank}}</td>
+                <td>{{item.cost}}</td>
+                <td>{{item.shopSeller}}</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
 
     <div class="order-summary">
       <p>Общее количество <strong>{{computeWeight(selectedOrder)}} т.</strong><br>Общая стоимость

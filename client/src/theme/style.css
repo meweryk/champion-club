@@ -215,37 +215,51 @@ table {
   border-collapse: collapse;
 }
 
-tbody th,
-tbody td {
-  position: -webkit-sticky; /* for Safari */
-  position: sticky;
-  padding: 0.4em;
-  border-bottom: 1px solid rgb(168, 168, 168);
-  color: rgb(65, 65, 95);
-  transition: .3s linear;
-}
-
 thead th {
   position: -webkit-sticky;
   /* for Safari */
   position: sticky;
   top: 0;
-  padding: 0.7em;
+  padding: 0.4em;
   z-index: 200;
-  background: rgba(161, 136, 127, 0.95);
-  color: #FFF;
+  border: 1px solid transparent;
+  background: #a1887f;
+  color: #3e2723;
 }
-tbody th {
-  background: rgba(255, 224, 178, 0.85);
-  border-right: 0px solid #CCC;
+
+thead th:first-child {
   left: 0;
+  z-index: 201;
 }
 
+tbody th,
 tbody td {
-  background: rgba(255, 224, 178, 0.9);
-  border: 1px solid rgb(168, 168, 168);
+  position: -webkit-sticky; /* for Safari */
+  position: sticky;
+  padding: 0.4em;
+  background: rgba(255, 224, 178, 0.90);
+  border: 1px solid transparent;
+  color: rgb(65, 65, 95);
+  transition: .3s linear;
 }
 
+tbody th,
+tbody td:first-child {
+  left: 0;
+  z-index: 199;
+}
+
+.datepicker-table abbr {
+  text-decoration: none;
+  color: #efebe9;
+}
+
+.datepicker-table {
+  width: 280px;
+  font-size: 1rem;
+  margin: 0 auto;
+  background: rgba(255, 224, 178, 0.9);
+}
 
 /*ScrollBar*/
 ::-webkit-scrollbar:horizontal,
@@ -318,6 +332,10 @@ html {
   margin-bottom: 10px
 }
 
+.mb2 {
+  margin-bottom: 20px
+}
+
 .margin-large-left {
   margin-left: 20%;
 }
@@ -342,10 +360,6 @@ html {
   margin-bottom: 0;
 }
 
-.filter input {
-  color: #fdf5e6;
- }
-
 .order-position-input input[type=number]:not(.browser-default) {
   margin-bottom: 0 !important;
   height: 1.5rem;
@@ -353,7 +367,7 @@ html {
 
 
 .select-wrapper input.select-dropdown {
-  color: #ffffff;
+  color: #3e2723;
   font-weight: bold;
   font-size: 14px;
   margin: 0;
@@ -361,7 +375,7 @@ html {
 
 .bold {
   font-weight: bold;
-  color: #6e4a4a
+  color: #3e2723
 }
 
 .order-summary {
@@ -376,6 +390,14 @@ html {
 }
 
 /*Filter*/
+.filter {
+  margin-bottom: 15px
+}
+
+.filter input {
+  color: #fdf5e6;
+ }
+
 .fr {
   display: flex;
   margin-bottom: 15px
@@ -404,7 +426,4 @@ html {
   padding-top: 44px
 }
 
-.filter {
-  margin-bottom: 15px
-}
 
