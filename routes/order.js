@@ -5,5 +5,6 @@ const router = express.Router()
 
 router.get('/', passport.authenticate('jwt', { session: false }), controller.getAll)
 router.post('/', controller.create)
+router.patch('/:id', passport.authenticate('jwt', { session: false }), controller.update)
 
 module.exports = router

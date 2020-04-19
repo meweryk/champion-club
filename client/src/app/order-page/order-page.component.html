@@ -62,10 +62,10 @@
       </div>
       <ul class="row grey-text text-darken-1" *ngIf="changeAuth">
         <h6 class="mb1">Ваши данные: </h6>
-        <li class="col s12 m4 valign-wrapper pb5"><i class="material-icons">account_circle</i> {{nameBuyer}}</li>
-        <li class="col s12 m4 valign-wrapper pb5"><i class="material-icons prefix">markunread</i> {{emailBuyer}}</li>
-        <li *ngIf="phoneBuyer != 'undefined'" class="col s12 m4 valign-wrapper pb5"><i
-            class="material-icons">local_phone</i>{{phoneBuyer}}</li>
+        <li class="col s12 m4 valign-wrapper pb5"><i class="material-icons">account_circle</i> {{nicname}}</li>
+        <li class="col s12 m4 valign-wrapper pb5"><i class="material-icons">markunread</i> {{email}}</li>
+        <li *ngIf="phone != 'undefined'" class="col s12 m4 valign-wrapper pb5"><i
+            class="material-icons">local_phone</i>{{phone}}</li>
       </ul>
     </div>
     <div class="modal-footer indigo lighten-4">

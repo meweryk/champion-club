@@ -15,7 +15,8 @@ const routes: Routes = [
       { path: 'login', loadChildren: () => import('./login-page/login.module').then(m => m.LoginModule) },
       { path: 'register', loadChildren: () => import('./register-page/register.module').then(m => m.RegisterModule) },
       { path: 'categories', canActivate: [AuthGuard], loadChildren: () => import('./categories-page/categories.module').then(m => m.CategoriesModule) },
-      { path: 'history', canActivate: [AuthGuard], loadChildren: () => import('./history-page/history.module').then(m => m.HistoryModule) }
+      { path: 'history', canActivate: [AuthGuard], loadChildren: () => import('./history-page/history.module').then(m => m.HistoryModule) },
+      { path: 'invoice', canActivate: [AuthGuard], loadChildren: () => import('./invoice-page/invoice.module').then(m => m.InvoiceModule) }
     ]
   }
 ];

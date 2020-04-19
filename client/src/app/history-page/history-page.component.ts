@@ -12,6 +12,7 @@ const STEP = 6
   styleUrls: ['./history-page.component.css']
 })
 export class HistoryPageComponent implements OnInit, OnDestroy, AfterViewInit {
+
   @ViewChild('tooltip') tooltipRef: ElementRef
   tooltip: MaterialInstance
   oSub: Subscription
@@ -44,7 +45,6 @@ export class HistoryPageComponent implements OnInit, OnDestroy, AfterViewInit {
     })
     this.oSub = this.ordersService.fetch(params).subscribe(orders => {
       this.orders = this.orders.concat(orders)
-      console.log(orders)
       this.noMoreOrders = orders.length < STEP
       this.loading = false
       this.reloading = false

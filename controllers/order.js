@@ -58,18 +58,21 @@ module.exports.getAll = async function (req, res) {
 module.exports.create = async function (req, res) {
   const userfirstSeller = req.body.list[0]['userSeller']
   console.log(userfirstSeller)
+  console.log(req.body.userBuyer)
+  console.log(req.body.nicname)
+  console.log(req.body.shopBuyer)
   try {
     const lastOrder = await Order
       .findOne({ userfirstSeller: userfirstSeller })
       .sort({ date: -1 })
-    console.log(lastOrder)
     const maxOrder = lastOrder ? lastOrder.order : 0
     const order = await new Order({
       list: req.body.list,
+      comment: req.body.comment,
       userfirstSeller: userfirstSeller,
       shopBuyer: req.body.shopBuyer ? req.body.shopBuyer : 'Гость',
       nicname: req.body.nicname ? req.body.nicname : 'Гость',
-      user: req.body.idBuyer ? req.body.idBuyer : '5e985d2c86190a217425cda7',
+      user: req.body.userBuyer ? req.body.userBuyer : '5e985d2c86190a217425cda7',
       order: maxOrder + 1
     }).save()
 

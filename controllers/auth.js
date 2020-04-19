@@ -18,13 +18,15 @@ module.exports.login = async function (req, res) {
             const shop = candidate.shop
             const email = candidate.email
             const phone = candidate.phone
+            const id = candidate._id
 
             res.status(200).json({
                 token: `Bearer ${token}`,
                 nicname: nicname,
                 shop: shop,
                 email: email,
-                phone: phone
+                phone: phone,
+                id: id
             })
         } else {
             res.status(401).json({

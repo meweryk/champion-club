@@ -46,36 +46,40 @@
     <h5 class="mb1 blue-grey-text text-darken-3">Заказ №{{selectedOrder.order}}</h5>
     <p>Заказчик: {{selectedOrder.nicname}}<br>
       {{selectedOrder.date | date:'Дата dd.MM.yyyy, время HH:mm'}}</p>
-    <div class="row">
-      <div class="col s12">
-        <div class="table-container">
-          <table class="highlight">
-            <thead>
-              <tr>
-                <th>Вид</th>
-                <th>Кол-тво</th>
-                <th>Цена<br>грн.</th>
-                <th>Поставщик</th>
-              </tr>
-            </thead>
 
-            <tbody>
-              <tr *ngFor="let item of selectedOrder.list">
-                <td>{{item.name}}</td>
-                <td>{{item.quantity}}{{item.rank}}</td>
-                <td>{{item.cost}}</td>
-                <td>{{item.shopSeller}}</td>
-              </tr>
-            </tbody>
-          </table>
-        </div>
-      </div>
+    <div class="table-container">
+      <table class="highlight">
+        <thead>
+          <tr>
+            <th>Вид</th>
+            <th>Кол-тво</th>
+            <th>Цена<br>грн.</th>
+            <th>Поставщик</th>
+          </tr>
+        </thead>
+
+        <tbody>
+          <tr *ngFor="let item of selectedOrder.list">
+            <td>{{item.name}}</td>
+            <td>{{item.quantity}}{{item.rank}}</td>
+            <td>{{item.cost}}</td>
+            <td>{{item.shopSeller}}</td>
+          </tr>
+        </tbody>
+      </table>
     </div>
 
-    <div class="order-summary">
-      <p>Общее количество <strong>{{computeWeight(selectedOrder)}} т.</strong><br>Общая стоимость
-        <strong>{{computePrice(selectedOrder)}} грн.</strong></p>
-    </div>
+    <ul class="row grey-text text-darken-1">
+      <li class="valign-wrapper pb5"><i class="material-icons">score</i>&nbsp;Общее
+        количество&nbsp;<strong>{{computeWeight(selectedOrder)}}</strong>
+      </li>
+      <li class="valign-wrapper pb5"><i class="material-icons">monetization_on</i>&nbsp;Общая
+        стоимость&nbsp;<strong>{{computePrice(selectedOrder)}}&nbsp;</strong>грн.
+      </li>
+      <li *ngIf="selectedOrder.comment" class="valign-wrapper pb5"><i
+          class="material-icons">mode_edit</i>&nbsp;Комментарий:&nbsp;{{selectedOrder.comment}}
+      </li>
+    </ul>
   </div>
   <div class="modal-footer" *ngIf="selectedOrder">
     <button class="modal-action waves-effect waves-black btn-flat" [disabled]="!workOrder">Просмотр</button>

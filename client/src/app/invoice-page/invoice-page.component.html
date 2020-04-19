@@ -1,0 +1,63 @@
+<form [formGroup]="form">
+  <div class="modal" #modal [style.width.px]="width">
+    <div class="modal-content">
+      <h5 class="mb1">Добавить поставку</h5>
+      <div class="row">
+        <div class="input-field col s5 m2">
+          <input formControlName="order" id="order" type="number" maxlength="9">
+          <label for="order">Заказ №</label>
+        </div>
+        <div class="input-field col s7 m4 offset-m6">
+          <input formControlName="waybill" id="waybill" type="text" maxlength="15"
+            [ngClass]="{'invalid': form.get('waybill').invalid && form.get('waybill').touched}">
+          <label for="waybill">Накладная №</label>
+          <span *ngIf="form.controls.waybill.invalid && (form.controls.waybill.touched || form.controls.waybill.dirty)"
+            class="helper-text red-text">Заполните позицию.
+          </span>
+        </div>
+      </div>
+      <div class="row">
+        <div class="input-field col s12 m6 l4">
+          <input formControlName="shopSend" id="shopSend" type="text" maxlength="15"
+            [ngClass]="{'invalid': form.get('shopSend').invalid && form.get('shopSend').touched}">
+          <label for="shopSend">Отправитель</label>
+          <span *ngIf="form.controls.shopSend.invalid && form.controls.shopSend.touched"
+            class="helper-text red-text">Заполните позицию.
+          </span>
+        </div>
+        <div class="input-field col s12 m6 l4">
+          <input formControlName="shopHost" id="shopHost" type="text" maxlength="15"
+            [ngClass]="{'invalid': form.get('shopHost').invalid && form.get('shopHost').touched}">
+          <label for="shopHost">Получатель</label>
+          <span *ngIf="form.controls.shopHost.invalid && form.controls.shopHost.touched"
+            class="helper-text red-text">Заполните позицию.
+          </span>
+        </div>
+        <div class="input-field col s6 m6 l2">
+          <input formControlName="train" id="train" type="text" maxlength="15"
+            [ngClass]="{'invalid': form.get('train').invalid && form.get('train').touched}">
+          <label for="train">Транспорт</label>
+          <span *ngIf="form.controls.train.invalid && form.controls.train.touched"
+            class="helper-text red-text">Заполните позицию.
+          </span>
+        </div>
+        <div class="input-field col s6 m6 l2">
+          <input formControlName="imageSrc" id="imageSrc" type="text">
+          <label for="imageSrc">Фото</label>
+        </div>
+      </div>
+
+      <app-invoice-positions *ngIf="deliveryOrder?._id" [(list)]="list" [allInvoice]="allInvoice"
+        (updateSave)="updateButton($event)">
+      </app-invoice-positions>
+
+    </div>
+    <div></div>
+    <div class="modal-footer">
+      <button type="button" (click)="onCancel()" class="modal-action waves-effect waves-black btn-flat"
+        [disabled]="form.disabled">Отмена</button>
+      <button (click)="submit()" class="modal-action btn waves-effect" type="submit"
+        [disabled]="form.invalid || form.disabled || formSave">Сохранить</button>
+    </div>
+  </div>
+</form>

@@ -40,7 +40,7 @@ export interface Order {
 
   comment?: string
 
-  idBuyer?: string
+  userBuyer?: string
   shopBuyer?: string
   nicname?: string
 
@@ -66,4 +66,25 @@ export interface Filter {
   start?: Date
   end?: Date
   order?: number
+}
+
+export interface Delivery {
+  date?: Date
+  shopHost: string
+  shopSend: string
+  train: string
+  waybill: string
+  order?: number
+  user?: string
+  list: DeliveryPosition[]
+  imageSrc?: string
+  _id?: string
+}
+
+export interface DeliveryPosition {
+  name: string
+  quantity: number
+  rank?: string
+  cost?: number
+  _id?: string
 }

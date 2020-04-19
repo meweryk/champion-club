@@ -25,11 +25,11 @@ export class OrderPageComponent implements OnInit {
   pending = false
   allPosition: any
   comment: string = ''
-  phoneBuyer: string = ''
-  nameBuyer: string = ''
-  emailBuyer: string = ''
-  shopBuyer: string = ''
-  idBuyer: string = ''
+  phone: string = ''
+  nicname: string = ''
+  email: string = ''
+  shop: string = ''
+  id: string = ''
 
   constructor(private router: Router,
     private order: OrderService,
@@ -51,11 +51,11 @@ export class OrderPageComponent implements OnInit {
   }
 
   private thisAuthenticated() {
-    this.nameBuyer = this.auth.getNicname()
-    this.phoneBuyer = this.auth.getPhone()
-    this.emailBuyer = this.auth.getEmail()
-    this.shopBuyer = this.auth.getShop()
-    this.idBuyer = this.auth.getId()
+    this.nicname = this.auth.getNicname()
+    this.phone = this.auth.getPhone() ? this.auth.getPhone() : ''
+    this.email = this.auth.getEmail()
+    this.shop = this.auth.getShop() ? this.auth.getShop() : ''
+    this.id = this.auth.getId()
   }
 
   ngOnDestroy() {
@@ -78,8 +78,8 @@ export class OrderPageComponent implements OnInit {
 
   open() {
     if (this.changeAuth) {
-      if (!this.phoneBuyer || !this.emailBuyer) {
-        MaterialService.toast('Укажите способ связи в коментариях.')
+      if (!this.phone) {
+        MaterialService.toast('Укажите телефон в коментариях.')
       }
     } else {
       MaterialService.toast('Укажите способ связи в коментариях или авторизуйтесь.')
@@ -100,9 +100,9 @@ export class OrderPageComponent implements OnInit {
         return item
       }),
       comment: this.comment,
-      nicname: this.nameBuyer,
-      shopBuyer: this.shopBuyer,
-      idBuyer: this.idBuyer
+      nicname: this.nicname, //имя покупателя
+      shopBuyer: this.shop, //магазин покупателя
+      userBuyer: this.id //id покупателя
     }
 
 
@@ -111,9 +111,6 @@ export class OrderPageComponent implements OnInit {
         MaterialService.toast(`Заказ №${newOrder.order} был добавлен.`)
         this.order.clear()
         this.comment = ''
-        this.phoneBuyer = null
-        this.nameBuyer = ''
-        this.emailBuyer = ''
       },
       error => MaterialService.toast(error.error.message),
       () => {

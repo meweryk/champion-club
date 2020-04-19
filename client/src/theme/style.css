@@ -233,7 +233,8 @@ thead th:first-child {
 }
 
 tbody th,
-tbody td {
+tbody td,
+tfoot th {
   position: -webkit-sticky; /* for Safari */
   position: sticky;
   padding: 0.4em;
@@ -243,7 +244,12 @@ tbody td {
   transition: .3s linear;
 }
 
+tfoot th {
+  background: #bcaaa4;
+}
+
 tbody th,
+tfoot th:first-child,
 tbody td:first-child {
   left: 0;
   z-index: 199;
@@ -364,7 +370,6 @@ html {
   margin-bottom: 0 !important;
   height: 1.5rem;
 }
-
 
 .select-wrapper input.select-dropdown {
   color: #3e2723;
