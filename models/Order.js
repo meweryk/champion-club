@@ -25,6 +25,9 @@ const orderSchema = new Schema({
             quantity: {
                 type: Number
             },
+            rank: {
+                type: String
+            },
             cost: {
                 type: Number
             },

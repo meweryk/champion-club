@@ -1,10 +1,11 @@
-import { Component, OnInit, Input, ViewChild, ElementRef, HostListener } from '@angular/core';
-import { InvoiceServise } from './invoice.service';
+import { Component, OnInit, Input, ViewChild, ElementRef, HostListener, OnChanges, OnDestroy } from '@angular/core';
 import { Order, OrderPosition, Delivery } from '../shared/interfaces';
 import { MaterialInstance, MaterialService } from '../shared/classes/material.service';
 import { FormGroup, Validators, FormBuilder } from '@angular/forms';
 import { AuthService } from '../shared/services/auth.service';
+
 import { DeliveriesServise } from '../shared/services/deliveries.service';
+import { InvoiceServise } from './invoice.service';
 
 @Component({
   selector: 'app-invoice-page',
@@ -12,7 +13,7 @@ import { DeliveriesServise } from '../shared/services/deliveries.service';
   styleUrls: ['./invoice-page.component.css'],
   providers: [InvoiceServise]
 })
-export class InvoicePageComponent implements OnInit {
+export class InvoicePageComponent implements OnInit, OnChanges, OnDestroy {
   @Input() deliveryOrder: Order
   @ViewChild('modal') modalRef: ElementRef
   modal: MaterialInstance
@@ -61,6 +62,14 @@ export class InvoicePageComponent implements OnInit {
     }
   }
 
+  onCancel() {
+    this.modal.close()
+  }
+
+  ngOnDestroy() {
+    this.modal.destroy()
+  }
+
   private onAddDelivery() {
     this.deliveryId = null
     this.list = this.deliveryOrder.list.filter(order => order.shopSeller === this.shop)
@@ -74,15 +83,6 @@ export class InvoicePageComponent implements OnInit {
     })
     this.modal.open()
     MaterialService.updateTextInputs()
-  }
-
-
-  onCancel() {
-    this.modal.close()
-  }
-
-  ngOnDestroy() {
-    this.modal.destroy()
   }
 
   updateButton(formSave: boolean) {

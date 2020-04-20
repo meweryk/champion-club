@@ -18,8 +18,8 @@
 
       <div class="col s12 m4 l3" *ngFor="let position of positions | searchV: [searchVid, searchShop]">
         <div class="card sticky-action hoverable">
-          <div class="card-image waves-effect waves-block waves-light"><span
-              style="position: absolute; right: 0; border: 1px solid #9fa8da; border-radius: 2px;"
+          <div class="card-image waves-block pointer"><span
+              style="position: absolute; z-index: 1; right: 0; border: 1px solid #9fa8da; border-radius: 2px;"
               class="badge indigo lighten-5">{{position.shop}}</span>
             <img class="activator center" [src]="position.imageSrc">
             <button class="btn-floating halfway-fab waves-effect waves-light btn-small pulse"

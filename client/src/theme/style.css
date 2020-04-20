@@ -366,10 +366,10 @@ html {
   margin-bottom: 0;
 }
 
-.order-position-input input[type=number]:not(.browser-default) {
+/*.order-position-input input[type=number]:not(.browser-default) {
   margin-bottom: 0 !important;
   height: 1.5rem;
-}
+}*/
 
 .select-wrapper input.select-dropdown {
   color: #3e2723;
