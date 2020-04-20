@@ -21,8 +21,9 @@
               <a class="collection-item collection-item-icon" (click)="changeInvoice(position)">{{position.name}}</a>
             </div>
             <div *ngIf="!position.flag" class="input-fild inline order-position-input">
-              <input type="text" #name="ngModel" [(ngModel)]="position.name" maxlength="30" required
-                style="width: auto;" [ngClass]="{'invalid': name.invalid && (name.dirty || name.touched)}">
+              <textarea type="text" class="materialize-textarea" #name="ngModel" [(ngModel)]="position.name"
+                maxlength="30" required
+                [ngClass]="{'invalid': name.invalid && (name.dirty || name.touched)}"></textarea>
             </div>
           </th>
 

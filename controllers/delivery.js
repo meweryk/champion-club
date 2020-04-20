@@ -52,9 +52,11 @@ module.exports.create = async function (req, res) {
     } else {
         try {
             const delivery = await new Delivery({
-                shopHost: req.body.shopHost,
-                shopSend: req.body.shopSend,
+                shopBuyer: req.body.shopBuyer,
+                shop: req.body.shop,
                 train: req.body.train,
+                order: req.body.order,
+                orderId: req.body.orderId,
                 waybill: req.body.waybill,
                 list: req.body.list,
                 imageSrc: req.file ? req.file.path : '',

@@ -6,8 +6,8 @@ import { OrderPosition, DeliveryPosition } from '../shared/interfaces';
 export class InvoiceServise {
 
   public list: DeliveryPosition[] = []
-  public price = 0
-  public weight = 0
+  public price: number = 0
+  public weight: number = 0
   public deliveryPosList: number = 0
 
   add(position: OrderPosition) {
@@ -38,6 +38,7 @@ export class InvoiceServise {
     this.list = []
     this.price = 0
     this.weight = 0
+    this.deliveryPosList = 0
   }
 
   private computerPrice() {

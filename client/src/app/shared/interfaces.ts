@@ -47,6 +47,7 @@ export interface Order {
   view?: Date
   send?: Date
   got?: Date
+  deliveryId?: string
 }
 
 export interface OrderPosition {
@@ -70,10 +71,11 @@ export interface Filter {
 
 export interface Delivery {
   date?: Date
-  shopHost: string
-  shopSend: string
+  shopBuyer: string
+  shop: string
   train: string
   waybill: string
+  orderId?: string
   order?: number
   user?: string
   list: DeliveryPosition[]

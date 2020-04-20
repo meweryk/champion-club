@@ -6,13 +6,20 @@ const deliverySchema = new Schema({
         type: Date,
         default: Date.now
     },
-    shopHost: {
+    shopBuyer: {
         type: String,
         required: true
     },
-    shopSend: {
+    shop: {
         type: String,
         required: true
+    },
+    orderId: {
+        ref: 'orders',
+        type: Schema.Types.ObjectId
+    },
+    order: {
+        type: Number
     },
     train: {
         type: String,

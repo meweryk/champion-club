@@ -6,6 +6,7 @@ import { AuthService } from '../shared/services/auth.service';
 
 import { DeliveriesServise } from '../shared/services/deliveries.service';
 import { InvoiceServise } from './invoice.service';
+import { OrdersServise } from '../shared/services/orders.service';
 
 @Component({
   selector: 'app-invoice-page',
@@ -19,6 +20,7 @@ export class InvoicePageComponent implements OnInit, OnChanges, OnDestroy {
   modal: MaterialInstance
   width: number
   deliveryId = null
+  orderId = null
   shop: string
   nicname: string
   list: OrderPosition[] = []
@@ -27,8 +29,8 @@ export class InvoicePageComponent implements OnInit, OnChanges, OnDestroy {
 
   form: FormGroup = this._formBuilder.group({
     order: '',
-    shopSend: ['', Validators.required],
-    shopHost: ['', Validators.required],
+    shop: ['', Validators.required],
+    shopBuyer: ['', Validators.required],
     train: [null, Validators.required],
     waybill: [null, Validators.required],
     imageSrc: null
@@ -37,7 +39,8 @@ export class InvoicePageComponent implements OnInit, OnChanges, OnDestroy {
   constructor(private _formBuilder: FormBuilder,
     private auth: AuthService,
     private invoice: InvoiceServise,
-    private deliveriesService: DeliveriesServise) { }
+    private deliveriesService: DeliveriesServise,
+    private ordersService: OrdersServise) { }
 
   ngOnInit(): void {
     this.width = window.innerWidth * 0.9
@@ -64,6 +67,7 @@ export class InvoicePageComponent implements OnInit, OnChanges, OnDestroy {
 
   onCancel() {
     this.modal.close()
+    this.allInvoice.clear()
   }
 
   ngOnDestroy() {
@@ -72,11 +76,12 @@ export class InvoicePageComponent implements OnInit, OnChanges, OnDestroy {
 
   private onAddDelivery() {
     this.deliveryId = null
+    this.orderId = this.deliveryOrder._id
     this.list = this.deliveryOrder.list.filter(order => order.shopSeller === this.shop)
     this.form.reset({
       order: this.deliveryOrder.order,
-      shopSend: this.shop,
-      shopHost: this.deliveryOrder.shopBuyer,
+      shop: this.shop,
+      shopBuyer: this.deliveryOrder.shopBuyer,
       train: null,
       waybill: null,
       imageSrc: null
@@ -89,16 +94,15 @@ export class InvoicePageComponent implements OnInit, OnChanges, OnDestroy {
     this.formSave = formSave //активация сохранения всей формы при валидности позиций
   }
 
-  onSubmit() {
-    //this.form.setValue
-    //this.form.disable()
-    this.modal.close()
-  }
-
   submit() {
+    this.form.setValue
+    this.form.disable()
+
     const delivery: Delivery = {
-      shopHost: this.form.value.shopHost,
-      shopSend: this.form.value.shopSend,
+      orderId: this.orderId,
+      order: this.form.value.order,
+      shopBuyer: this.form.value.shopBuyer,
+      shop: this.form.value.shop,
       train: this.form.value.train,
       waybill: this.form.value.waybill,
       list: this.invoice.list.map(pos => {
@@ -109,13 +113,37 @@ export class InvoicePageComponent implements OnInit, OnChanges, OnDestroy {
 
     this.deliveriesService.create(delivery).subscribe(
       newDelivery => {
-        MaterialService.toast(`Поставка по накладной №${newDelivery.waybill} была добавлена`)
-        this.invoice.clear()
+        MaterialService.toast(`Поставка по накладной №${newDelivery.waybill} создана`)
+        this.allInvoice.clear()
+        if (this.orderId) {
+          this.update(newDelivery._id)
+        }
       },
-      error => MaterialService.toast(error.error.message),
+      error => {
+        MaterialService.toast(error.error.message)
+        this.form.enable()
+      },
       () => {
         this.modal.close()
+        this.form.enable()
       }
+    )
+  }
+
+  private update(deliveryId: string) {
+    const objectFlag = Object.assign({}, {
+      _id: this.orderId,
+      deliveryId: deliveryId,
+      view: this.deliveryOrder.view,
+      send: 'f',
+      got: this.deliveryOrder.got
+    })
+    this.ordersService.update(objectFlag).subscribe((order: Order) => {
+      //const idx = this.gsorders.findIndex(p => p._id === objectFlag._id)
+      //this.gsorders[idx].view = order.send
+      MaterialService.toast(`Заказ ${this.deliveryOrder.order} отправлен поставщиком ${this.shop}`)
+    },
+      error => MaterialService.toast(error.error.message),
     )
   }
 

@@ -82,15 +82,18 @@ module.exports.create = async function (req, res) {
 
 module.exports.update = async function (req, res) {
   const updated = {}
-  if (req.body.view) {
+  if (req.body.deliveryId) {
+    updated.deliveryId = req.body.deliveryId
+  }
+  if (req.body.view === 'f') {
     updated.view = moment().tz(zone)
   }
 
-  if (req.body.send) {
+  if (req.body.send === 'f') {
     updated.send = moment().tz(zone)
   }
 
-  if (req.body.got) {
+  if (req.body.got === 'f') {
     updated.got = moment().tz(zone)
   }
 

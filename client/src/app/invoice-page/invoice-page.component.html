@@ -18,18 +18,18 @@
       </div>
       <div class="row">
         <div class="input-field col s12 m6 l4">
-          <input formControlName="shopSend" id="shopSend" type="text" maxlength="15"
-            [ngClass]="{'invalid': form.get('shopSend').invalid && form.get('shopSend').touched}">
-          <label for="shopSend">Отправитель</label>
-          <span *ngIf="form.controls.shopSend.invalid && form.controls.shopSend.touched"
-            class="helper-text red-text">Заполните позицию.
+          <input formControlName="shop" id="shop" type="text" maxlength="15"
+            [ngClass]="{'invalid': form.get('shop').invalid && form.get('shop').touched}">
+          <label for="shop">Отправитель</label>
+          <span *ngIf="form.controls.shop.invalid && form.controls.shop.touched" class="helper-text red-text">Заполните
+            позицию.
           </span>
         </div>
         <div class="input-field col s12 m6 l4">
-          <input formControlName="shopHost" id="shopHost" type="text" maxlength="15"
-            [ngClass]="{'invalid': form.get('shopHost').invalid && form.get('shopHost').touched}">
-          <label for="shopHost">Получатель</label>
-          <span *ngIf="form.controls.shopHost.invalid && form.controls.shopHost.touched"
+          <input formControlName="shopBuyer" id="shopBuyer" type="text" maxlength="15"
+            [ngClass]="{'invalid': form.get('shopBuyer').invalid && form.get('shopBuyer').touched}">
+          <label for="shopBuyer">Получатель</label>
+          <span *ngIf="form.controls.shopBuyer.invalid && form.controls.shopBuyer.touched"
             class="helper-text red-text">Заполните позицию.
           </span>
         </div>

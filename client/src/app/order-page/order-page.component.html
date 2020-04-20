@@ -32,7 +32,7 @@
           <tbody>
             <tr *ngFor="let item of allPosition.list">
               <th>{{item.name}}</th>
-              <td>{{item.quantity}}{{item.rank}}</td>
+              <td>{{item.quantity}}&nbsp;{{item.rank}}</td>
               <td>{{item.cost}}грн</td>
               <td>{{item.shopSeller}}</td>
               <td>
@@ -47,7 +47,8 @@
         </table>
       </div>
       <div class="order-summary">
-        <p>Общее количество <strong>{{allPosition.weight}} {{allPosition.allRank}}.</strong><br>Общая стоимость
+        <p>Общее количество&nbsp;<strong>{{allPosition.weight}}&nbsp;{{allPosition.allRank}}.</strong><br>Общая
+          стоимость
           <strong>{{allPosition.price}}
             грн.</strong></p>
       </div>

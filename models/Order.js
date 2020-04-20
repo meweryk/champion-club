@@ -65,6 +65,10 @@ const orderSchema = new Schema({
     },
     got: {
         type: Date
+    },
+    deliveryId: {
+        ref: 'deliveries',
+        type: Schema.Types.ObjectId
     }
 })
 
