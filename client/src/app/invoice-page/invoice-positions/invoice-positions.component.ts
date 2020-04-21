@@ -27,6 +27,7 @@ export class InvoicePositionsComponent implements OnInit {
     this.positions$ = of(this.list).pipe(
       map(pos => {
         return pos.map(p => {
+          p.flag = false
           return p
         })
       }))

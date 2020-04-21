@@ -48,6 +48,7 @@ export interface Order {
   send?: Date
   got?: Date
   deliveryId?: string
+  waybill?: string
 }
 
 export interface OrderPosition {

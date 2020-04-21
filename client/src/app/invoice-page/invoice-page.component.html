@@ -59,5 +59,8 @@
       <button (click)="submit()" class="modal-action btn waves-effect" type="submit"
         [disabled]="form.invalid || form.disabled || formSave">Сохранить</button>
     </div>
+    <div class="load-center" *ngIf="loader">
+      <app-loader></app-loader>
+    </div>
   </div>
 </form>

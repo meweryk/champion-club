@@ -20,12 +20,14 @@ export class InvoicePageComponent implements OnInit, OnChanges, OnDestroy {
   modal: MaterialInstance
   width: number
   deliveryId = null
-  orderId = null
+  newOrder = null
   shop: string
   nicname: string
   list: OrderPosition[] = []
   allInvoice: any
-  formSave: boolean = true
+  formSave: boolean = true //если не заполнены позиции
+
+  loader = false
 
   form: FormGroup = this._formBuilder.group({
     order: '',
@@ -43,6 +45,7 @@ export class InvoicePageComponent implements OnInit, OnChanges, OnDestroy {
     private ordersService: OrdersServise) { }
 
   ngOnInit(): void {
+    this.loader = false
     this.width = window.innerWidth * 0.9
     this.shop = this.auth.getShop()
     this.nicname = this.auth.getNicname()
@@ -75,8 +78,9 @@ export class InvoicePageComponent implements OnInit, OnChanges, OnDestroy {
   }
 
   private onAddDelivery() {
+    this.formSave = true
     this.deliveryId = null
-    this.orderId = this.deliveryOrder._id
+    this.newOrder = null
     this.list = this.deliveryOrder.list.filter(order => order.shopSeller === this.shop)
     this.form.reset({
       order: this.deliveryOrder.order,
@@ -91,15 +95,16 @@ export class InvoicePageComponent implements OnInit, OnChanges, OnDestroy {
   }
 
   updateButton(formSave: boolean) {
-    this.formSave = formSave //активация сохранения всей формы при валидности позиций
+    this.formSave = formSave //активация кнопки сохранения всей формы при валидности позиций
   }
 
   submit() {
     this.form.setValue
     this.form.disable()
+    this.loader = true
 
     const delivery: Delivery = {
-      orderId: this.orderId,
+      orderId: this.deliveryOrder._id,
       order: this.form.value.order,
       shopBuyer: this.form.value.shopBuyer,
       shop: this.form.value.shop,
@@ -115,25 +120,33 @@ export class InvoicePageComponent implements OnInit, OnChanges, OnDestroy {
       newDelivery => {
         MaterialService.toast(`Поставка по накладной №${newDelivery.waybill} создана`)
         this.allInvoice.clear()
-        if (this.orderId) {
-          this.update(newDelivery._id)
+        if (this.deliveryOrder._id) {
+          this.update(newDelivery._id, newDelivery.waybill, newDelivery.order)
         }
       },
       error => {
         MaterialService.toast(error.error.message)
         this.form.enable()
+        this.loader = false
       },
       () => {
         this.modal.close()
         this.form.enable()
+        this.loader = false
       }
     )
   }
 
-  private update(deliveryId: string) {
+  private update(deliveryId: string, waybill: string, order: number) {
+    if (this.deliveryOrder.order != order) {
+      this.deliveryOrder.order = order
+      this.newOrder = order
+    }
     const objectFlag = Object.assign({}, {
-      _id: this.orderId,
+      _id: this.deliveryOrder._id,
       deliveryId: deliveryId,
+      waybill: waybill,
+      order: this.newOrder,
       view: this.deliveryOrder.view,
       send: 'f',
       got: this.deliveryOrder.got
@@ -141,7 +154,7 @@ export class InvoicePageComponent implements OnInit, OnChanges, OnDestroy {
     this.ordersService.update(objectFlag).subscribe((order: Order) => {
       //const idx = this.gsorders.findIndex(p => p._id === objectFlag._id)
       //this.gsorders[idx].view = order.send
-      MaterialService.toast(`Заказ ${this.deliveryOrder.order} отправлен поставщиком ${this.shop}`)
+      MaterialService.toast(`Заказ ${order.order} отправлен поставщиком ${this.shop}`)
     },
       error => MaterialService.toast(error.error.message),
     )

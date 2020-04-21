@@ -97,6 +97,14 @@ module.exports.update = async function (req, res) {
     updated.got = moment().tz(zone)
   }
 
+  if (req.body.waybill) {
+    updated.waybill = req.body.waybill
+  }
+
+  if (req.body.order) {
+    updated.order = req.body.order
+  }
+
   try {
     const order = await Order.findOneAndUpdate({
       _id: req.params.id

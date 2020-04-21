@@ -69,6 +69,9 @@ const orderSchema = new Schema({
     deliveryId: {
         ref: 'deliveries',
         type: Schema.Types.ObjectId
+    },
+    waybill: {
+        type: String
     }
 })
 

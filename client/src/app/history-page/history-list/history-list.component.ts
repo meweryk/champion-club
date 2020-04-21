@@ -1,4 +1,4 @@
-import { Component, OnInit, Input, Output, ViewChild, EventEmitter, ElementRef, AfterViewInit, OnDestroy } from '@angular/core';
+import { Component, OnInit, Input, Output, ViewChild, EventEmitter, ElementRef, AfterViewInit, OnDestroy, OnChanges } from '@angular/core';
 import { Order } from 'src/app/shared/interfaces';
 import { MaterialInstance, MaterialService } from 'src/app/shared/classes/material.service';
 import { AuthService } from 'src/app/shared/services/auth.service';
@@ -63,6 +63,7 @@ export class HistoryListComponent implements OnInit, OnDestroy, AfterViewInit {
 
   selectOrder(order: Order) {
     this.selectedOrder = order
+    console.log(this.selectedOrder.send)
 
     this.workOrder = (this.selectedOrder.shopBuyer === this.shop) //true если магазин покупает: кнопка "обработать" отключена
     this.modal.open()
