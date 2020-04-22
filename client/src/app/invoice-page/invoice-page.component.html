@@ -47,8 +47,7 @@
         </div>
       </div>
 
-      <app-invoice-positions *ngIf="deliveryOrder?._id" [(list)]="list" [allInvoice]="allInvoice"
-        (updateSave)="updateButton($event)">
+      <app-invoice-positions *ngIf="deliveryOrder?._id" [(list)]="list" (updateSave)="updateButton($event)">
       </app-invoice-positions>
 
     </div>

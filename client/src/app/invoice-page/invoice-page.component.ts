@@ -24,7 +24,6 @@ export class InvoicePageComponent implements OnInit, OnChanges, OnDestroy {
   shop: string
   nicname: string
   list: OrderPosition[] = []
-  allInvoice: any
   formSave: boolean = true //если не заполнены позиции
 
   loader = false
@@ -49,7 +48,6 @@ export class InvoicePageComponent implements OnInit, OnChanges, OnDestroy {
     this.width = window.innerWidth * 0.9
     this.shop = this.auth.getShop()
     this.nicname = this.auth.getNicname()
-    this.allInvoice = this.invoice
   }
 
   @HostListener('window:resize', ['$event'])
@@ -70,10 +68,11 @@ export class InvoicePageComponent implements OnInit, OnChanges, OnDestroy {
 
   onCancel() {
     this.modal.close()
-    this.allInvoice.clear()
+    this.invoice.clear()
   }
 
   ngOnDestroy() {
+    this.invoice.clear()
     this.modal.destroy()
   }
 
@@ -119,10 +118,11 @@ export class InvoicePageComponent implements OnInit, OnChanges, OnDestroy {
     this.deliveriesService.create(delivery).subscribe(
       newDelivery => {
         MaterialService.toast(`Поставка по накладной №${newDelivery.waybill} создана`)
-        this.allInvoice.clear()
+
         if (this.deliveryOrder._id) {
           this.update(newDelivery._id, newDelivery.waybill, newDelivery.order)
         }
+        this.invoice.clear()
       },
       error => {
         MaterialService.toast(error.error.message)
@@ -152,8 +152,15 @@ export class InvoicePageComponent implements OnInit, OnChanges, OnDestroy {
       got: this.deliveryOrder.got
     })
     this.ordersService.update(objectFlag).subscribe((order: Order) => {
-      //const idx = this.gsorders.findIndex(p => p._id === objectFlag._id)
-      //this.gsorders[idx].view = order.send
+      this.deliveryOrder.deliveryId = order.deliveryId
+      this.deliveryOrder.waybill = order.waybill
+      this.deliveryOrder.order = order.order
+      this.deliveryOrder.send = order.send
+      /*this.deliveryOrder.list = order.list.map(p => {
+        return p
+      })
+      this.deliveryOrder.list = JSON.parse(JSON.stringify(order.list)) копирование массива обьектов*/
+
       MaterialService.toast(`Заказ ${order.order} отправлен поставщиком ${this.shop}`)
     },
       error => MaterialService.toast(error.error.message),

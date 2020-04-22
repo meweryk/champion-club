@@ -63,7 +63,6 @@ export class HistoryListComponent implements OnInit, OnDestroy, AfterViewInit {
 
   selectOrder(order: Order) {
     this.selectedOrder = order
-    console.log(this.selectedOrder.send)
 
     this.workOrder = (this.selectedOrder.shopBuyer === this.shop) //true если магазин покупает: кнопка "обработать" отключена
     this.modal.open()

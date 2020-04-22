@@ -14,12 +14,12 @@ export class InvoicePositionsComponent implements OnInit {
 
   @Output() updateSave = new EventEmitter<any>()
   @Input() list: OrderPosition[]
-  @Input() allInvoice: any
 
   positions$: Observable<OrderPosition[]>
   flag: boolean = false
   rankOpt = ['', 'тонн', 'штук']
   orderListLength: number //количество позиций в заказе
+  allInvoice: any
 
   constructor(private invoice: InvoiceServise) { }
 
@@ -32,6 +32,7 @@ export class InvoicePositionsComponent implements OnInit {
         })
       }))
     this.orderListLength = this.list.length
+    this.allInvoice = this.invoice
   }
 
   addToInvoice(position: OrderPosition) {
@@ -58,7 +59,7 @@ export class InvoicePositionsComponent implements OnInit {
 
     this.positions$ = of(this.list).pipe(
       map(pos => {
-        const idx = pos.findIndex(p => p._id === position._id)
+        const idx = pos.findIndex(p => p._id === position._id && p.name === position.name)
         pos.splice(idx, 1)
         return pos
       }))
