@@ -156,11 +156,6 @@ export class InvoicePageComponent implements OnInit, OnChanges, OnDestroy {
       this.deliveryOrder.waybill = order.waybill
       this.deliveryOrder.order = order.order
       this.deliveryOrder.send = order.send
-      /*this.deliveryOrder.list = order.list.map(p => {
-        return p
-      })
-      this.deliveryOrder.list = JSON.parse(JSON.stringify(order.list)) копирование массива обьектов*/
-
       MaterialService.toast(`Заказ ${order.order} отправлен поставщиком ${this.shop}`)
     },
       error => MaterialService.toast(error.error.message),

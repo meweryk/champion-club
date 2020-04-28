@@ -85,6 +85,7 @@ module.exports.update = async function (req, res) {
   if (req.body.deliveryId) {
     updated.deliveryId = req.body.deliveryId
   }
+
   if (req.body.view === 'f') {
     updated.view = moment().tz(zone)
   }

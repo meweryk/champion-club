@@ -26,7 +26,6 @@ export class InvoiceServise {
   }
 
   remove(position: OrderPosition) {
-    console.log(position.name, position._id)
     const idx = this.list.findIndex(p => (p._id === position._id && p.name === position.name))
     this.list.splice(idx, 1)
     this.deliveryPosList = this.list.length

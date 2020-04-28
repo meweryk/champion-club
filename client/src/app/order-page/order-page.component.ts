@@ -1,4 +1,4 @@
-import { Component, OnInit, ElementRef, ViewChild } from '@angular/core';
+import { Component, OnInit, ElementRef, ViewChild, OnDestroy, AfterViewInit } from '@angular/core';
 import { OrderService } from './order.service';
 import { Router, NavigationEnd } from '@angular/router';
 import { OrdersServise } from '../shared/services/orders.service';
@@ -13,7 +13,7 @@ import { AuthService } from '../shared/services/auth.service';
   styleUrls: ['./order-page.component.css'],
   providers: [OrderService]
 })
-export class OrderPageComponent implements OnInit {
+export class OrderPageComponent implements OnInit, OnDestroy, AfterViewInit {
 
   @ViewChild('modal') modalRef: ElementRef
   aSub: Subscription

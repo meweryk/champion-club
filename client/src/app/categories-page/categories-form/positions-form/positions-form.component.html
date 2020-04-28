@@ -122,7 +122,7 @@
           <label for="exposition">Описание</label>
           <span class="helper-text" *ngIf="form.get('exposition').dirty">
             <span [ngStyle]="{color: form.get('exposition').invalid ? '#f44336 ' : '#4db6ac'}">Не
-              больше 400 символов.</span>
+              больше 4000 символов.</span>
             <span class="red-text"
               *ngIf="form.get('exposition').invalid && (form.get('exposition').touched || form.get('exposition').dirty)">
               Сейчас {{form.get('exposition').errors['maxlength']['actualLength']}}
@@ -130,7 +130,6 @@
           </span>
         </div>
       </div>
-
     </div>
     <div class="modal-footer card-act-op">
       <button type="button" (click)="onCancel()" class="modal-action waves-effect waves-black btn-flat"

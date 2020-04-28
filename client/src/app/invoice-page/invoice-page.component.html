@@ -2,11 +2,13 @@
   <div class="modal" #modal [style.width.px]="width">
     <div class="modal-content">
       <h5 class="mb1">Добавить поставку</h5>
+
       <div class="row">
         <div class="input-field col s5 m2">
           <input formControlName="order" id="order" type="number" maxlength="9">
           <label for="order">Заказ №</label>
         </div>
+
         <div class="input-field col s7 m4 offset-m6">
           <input formControlName="waybill" id="waybill" type="text" maxlength="15"
             [ngClass]="{'invalid': form.get('waybill').invalid && form.get('waybill').touched}">
@@ -16,6 +18,7 @@
           </span>
         </div>
       </div>
+
       <div class="row">
         <div class="input-field col s12 m6 l4">
           <input formControlName="shop" id="shop" type="text" maxlength="15"
@@ -25,6 +28,7 @@
             позицию.
           </span>
         </div>
+
         <div class="input-field col s12 m6 l4">
           <input formControlName="shopBuyer" id="shopBuyer" type="text" maxlength="15"
             [ngClass]="{'invalid': form.get('shopBuyer').invalid && form.get('shopBuyer').touched}">
@@ -33,6 +37,7 @@
             class="helper-text red-text">Заполните позицию.
           </span>
         </div>
+
         <div class="input-field col s6 m6 l2">
           <input formControlName="train" id="train" type="text" maxlength="15"
             [ngClass]="{'invalid': form.get('train').invalid && form.get('train').touched}">
@@ -41,6 +46,7 @@
             class="helper-text red-text">Заполните позицию.
           </span>
         </div>
+
         <div class="input-field col s6 m6 l2">
           <input formControlName="imageSrc" id="imageSrc" type="text">
           <label for="imageSrc">Фото</label>
