@@ -47,7 +47,7 @@ const orderSchema = new Schema({
         ref: 'users',
         type: Schema.Types.ObjectId
     },
-    user: {
+    userBuyer: {
         ref: 'users',
         type: Schema.Types.ObjectId
     },

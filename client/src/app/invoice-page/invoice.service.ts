@@ -34,7 +34,7 @@ export class InvoiceServise {
   }
 
   clear() {
-    this.list = []
+    this.list.length = 0
     this.price = 0
     this.weight = 0
     this.deliveryPosList = 0

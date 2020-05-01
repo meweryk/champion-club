@@ -1,7 +1,7 @@
 <div class="navbar-fixed">
   <nav class="z-depth-2 transcol" role="navigation">
     <div class="nav-wrapper pl2">
-      <a id="logo-container" routerLink="/start" class="brand-logo hide-on-med-and-down">Champion</a>
+      <a id="logo-container" routerLink="/start" class="brand-logo">{{logo}}</a>
       <ul class="right">
         <li routerLinkActive="active" *ngIf="!changeAuth">
           <a routerLink="/login" class="waves-effect waves-orange">Вход</a>
@@ -9,12 +9,13 @@
         <li routerLinkActive="active" *ngIf="changeAuth">
           <a class="waves-effect waves-orange"><i class="material-icons left">account_box</i>{{nicname}}</a>
         </li>
-        <li routerLinkActive="active" *ngIf="changeAuth">
+        <li routerLinkActive="active" *ngIf="changeAuth" class="hide-on-med-and-down ">
           <a href="#" class="waves-effect waves-orange" (click)="logout($event)"><i
               class="material-icons left">exit_to_app</i></a>
         </li>
+
       </ul>
-      <ul class="margin-large-left hide-on-med-and-down ">
+      <ul class="margin-large-left hide-on-med-and-down">
         <li routerLinkActive="active" *ngFor="let link of links">
           <div
             [ngStyle]="{display: (link.url === '/categories' && (email != e1 && email != e2)) || (link.url === '/history' && !changeAuth) ? 'none ' : 'block'}">
@@ -23,7 +24,7 @@
         </li>
       </ul>
 
-      <a href="#" data-target="nav-mobile" class="sidenav-trigger"><i class="material-icons">menu</i></a>
+      <a href=" #" data-target="nav-mobile" class="sidenav-trigger"><i class="material-icons">menu</i></a>
     </div>
   </nav>
 </div>
@@ -39,6 +40,9 @@
   <li routerLinkActive="active" *ngFor="let link of links">
     <a [ngStyle]="{display: (link.url === '/categories' && (email != e1 && email != e2)) || (link.url === '/history' && !changeAuth) ? 'none ' : 'block'}"
       [routerLink]="[link.url]" class="waves-effect waves-orange" (click)="closeSidenav()">{{link.name}}</a>
+  </li>
+  <li routerLinkActive="active" *ngIf="changeAuth">
+    <a href="#" class="waves-effect waves-orange" (click)="logout($event)">Выход</a>
   </li>
 </ul>
 

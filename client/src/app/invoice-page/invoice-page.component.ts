@@ -23,7 +23,7 @@ export class InvoicePageComponent implements OnInit, OnChanges, OnDestroy {
   newOrder = null
   shop: string
   nicname: string
-  list: OrderPosition[] = []
+  list: any[] = []
   formSave: boolean = true //если не заполнены позиции
 
   loader = false
@@ -62,13 +62,13 @@ export class InvoicePageComponent implements OnInit, OnChanges, OnDestroy {
 
   ngOnChanges() {
     if (this.deliveryOrder) {
+      this.invoice.clear()
       this.onAddDelivery()
     }
   }
 
   onCancel() {
     this.modal.close()
-    this.invoice.clear()
   }
 
   ngOnDestroy() {
@@ -80,7 +80,14 @@ export class InvoicePageComponent implements OnInit, OnChanges, OnDestroy {
     this.formSave = true
     this.deliveryId = null
     this.newOrder = null
-    this.list = this.deliveryOrder.list.filter(order => order.shopSeller === this.shop)
+
+    //создание глубокой копии массива позиций для автономной работы
+    let newlist = this.deliveryOrder.list.filter(order => order.shopSeller === this.shop)
+    let key: string | number
+    for (key in newlist) {
+      this.list[key] = JSON.parse(JSON.stringify(newlist[key]))
+    }
+
     this.form.reset({
       order: this.deliveryOrder.order,
       shop: this.shop,

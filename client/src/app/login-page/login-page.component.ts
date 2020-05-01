@@ -4,6 +4,7 @@ import { FormGroup, FormControl, Validators } from '@angular/forms';
 import { AuthService } from '../shared/services/auth.service';
 import { Router, ActivatedRoute, Params } from '@angular/router';
 import { Subscription } from 'rxjs';
+import { Title, Meta } from '@angular/platform-browser';
 
 @Component({
   selector: 'app-login-page',
@@ -17,7 +18,15 @@ export class LoginPageComponent implements OnInit, OnDestroy {
 
   constructor(private auth: AuthService,
     private router: Router,
-    private route: ActivatedRoute) { }
+    private route: ActivatedRoute,
+    private title: Title,
+    private meta: Meta) {
+    title.setTitle('Вход в систему')
+    meta.addTags([
+      { name: 'keywords', content: 'логин,вход,система' },
+      { name: 'description', content: 'Страница для входа в систему' }
+    ])
+  }
 
   ngOnInit(): void {
     this.loader = false

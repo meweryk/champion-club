@@ -52,7 +52,8 @@ module.exports.remove = async function (req, res) {
     const position = await Position.findById(req.params.id)
     if (position.imageSrc) {
         try {
-            await unlinkAsync(position.imageSrc) //удаление фото            
+            await unlinkAsync(position.imageSrc) //удаление фото  
+            console.log('Old foto del.')
         } catch (e) {
             console.log(res, e)
         }
@@ -69,7 +70,10 @@ module.exports.remove = async function (req, res) {
 
 module.exports.update = async function (req, res) {
     const upposition = await Position.findOne({ _id: req.params.id })
+    console.log(upposition.user)
+    console.log(req.user.id)
     if (upposition.user == req.user.id) {
+        console.log(true)
         const updated = {
             name: req.body.name,
             stock: req.body.stock,
@@ -87,6 +91,7 @@ module.exports.update = async function (req, res) {
             if (upposition.imageSrc) {
                 try {
                     await unlinkAsync(upposition.imageSrc)//удаление старого фото
+                    console.log('Old foto del.')
                 } catch (e) {
                     console.log(res, e)
                 }

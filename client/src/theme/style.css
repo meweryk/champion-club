@@ -431,4 +431,9 @@ html {
   padding-top: 44px
 }
 
+.bold {
+  text-transform: uppercase;
+  font-weight: bold;
+  font-variant: small-caps;
+}
 

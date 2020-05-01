@@ -8,7 +8,7 @@ const orderRoutes: Routes = [
   {
     path: '', component: OrderPageComponent, children: [
       { path: '', component: OrderCategoriesComponent },
-      { path: ':id', component: OrderPositionsComponent }
+      { path: ':id/:nameCategory', component: OrderPositionsComponent }
     ]
   }
 ]

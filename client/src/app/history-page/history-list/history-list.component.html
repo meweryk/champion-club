@@ -49,17 +49,20 @@
 
     <ul class="row grey-text text-darken-1">
       <li class="valign-wrapper pb5">
-        <span><u>Заказчик:</u>&nbsp;{{selectedOrder.nicname}}</span>
+        <span class="bold">Заказчик:</span>&nbsp;<span>{{selectedOrder.shopBuyer}} -
+          {{selectedOrder.nicname}}</span>
       </li>
       <li class="valign-wrapper pb5" *ngIf="selectedOrder.view">
-        <span><u>Просмотрен:</u>{{selectedOrder.view | date:' dd.MM.yyyy - HH:mm'}}</span>
+        <span class="bold">Просмотрен:</span>&nbsp;{{selectedOrder.view | date:' dd.MM.yy - HH:mm'}}
       </li>
       <li class="valign-wrapper pb5" *ngIf="selectedOrder.waybill">
-        <span><u>Отправлен:</u>{{selectedOrder.send | date:' dd.MM.yyyy - HH:mm, '}}накладная
-          &#8470;{{selectedOrder.waybill}}</span>
+        <span class="bold">Отправлен:</span>&nbsp;{{selectedOrder.send | date:' dd.MM.yy - HH:mm, '}}
+      </li>
+      <li class="valign-wrapper pb5" *ngIf="selectedOrder.waybill">
+        <span class="bold">накладная:</span>&nbsp;&#8470;{{selectedOrder.waybill}}
       </li>
       <li class="valign-wrapper pb5" *ngIf="selectedOrder.got">
-        <span><u>Получен:</u>{{selectedOrder.got | date:' dd.MM.yyyy - HH:mm'}}</span>
+        <span class="bold">Получен:</span>&nbsp;{{selectedOrder.got | date:' dd.MM.yy - HH:mm'}}
       </li>
     </ul>
 
@@ -95,10 +98,22 @@
       <li *ngIf="selectedOrder.comment" class="valign-wrapper pb5"><i
           class="material-icons">mode_edit</i>&nbsp;<span>Комментарий: &nbsp;{{selectedOrder.comment}}.</span>
       </li>
+      <hr>
+      <li *ngIf="phone" class="valign-wrapper pb5"><i class="material-icons">phone</i>&nbsp;<span><a class="pulse"
+            href="tel: {{phone}}">
+            Позвонить
+          </a></span>
+      </li>
+      <li *ngIf="email" class="valign-wrapper pb5"><i class="material-icons">email</i>&nbsp;<span><a class="pulse"
+            href="mailto:{{email}}?subject=по заказу {{selectedOrder.order}} от {{selectedOrder.date | date:'dd.MM.yyyy'}}">
+            Отправить письмо
+          </a></span>
+      </li>
     </ul>
   </div>
+
   <div class="modal-footer" *ngIf="selectedOrder">
-    <button class="modal-action waves-effect waves-black btn-flat" [disabled]="!workOrder">Просмотр</button>
+    <button class="modal-action waves-effect waves-black btn-flat" [disabled]="!selectedOrder.send">Просмотр</button>
     <button class="modal-action waves-effect waves-black btn-flat" [disabled]="workOrder || selectedOrder.send"
       (click)="addDelivery()">Обработать</button>
     <button class="modal-action waves-effect waves-black btn-flat" (click)="closeModal()">

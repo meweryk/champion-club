@@ -1,5 +1,6 @@
 import { Component, OnInit, ElementRef, ViewChild, AfterViewInit, OnDestroy } from '@angular/core';
 import { MaterialInstance, MaterialService } from '../shared/classes/material.service';
+import { Meta, Title } from '@angular/platform-browser';
 
 @Component({
   selector: 'app-home-page',
@@ -17,7 +18,14 @@ export class HomePageComponent implements OnInit, AfterViewInit, OnDestroy {
   parallax3: MaterialInstance
   parallax4: MaterialInstance
 
-  constructor() { }
+  constructor(private title: Title,
+    private meta: Meta) {
+    title.setTitle('Тренажерный зал')
+    meta.addTags([
+      { name: 'keywords', content: 'Запорожье,Чемпион,услуги,контакты,адрес,часы работы,Чмарак,Сергей,пауэрлифтинг,кроссфит,фитнес,champion-clab,fitness,powerlifting,champion-zp,bodybuilding' },
+      { name: 'description', content: 'Главная страница спортклуба Чемпион, услуги, контакты, адрес, часы работы' }
+    ])
+  }
 
   ngOnInit(): void {
   }

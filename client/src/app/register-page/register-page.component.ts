@@ -2,8 +2,9 @@ import { Component, OnInit, OnDestroy } from '@angular/core';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
 import { Subscription } from 'rxjs';
 import { AuthService } from '../shared/services/auth.service';
-import { Router, ActivatedRoute } from '@angular/router';
+import { Router } from '@angular/router';
 import { MaterialService } from '../shared/classes/material.service';
+import { Meta, Title } from '@angular/platform-browser';
 
 @Component({
   selector: 'app-register-page',
@@ -18,7 +19,14 @@ export class RegisterPageComponent implements OnInit, OnDestroy {
 
   constructor(private auth: AuthService,
     private router: Router,
-    private route: ActivatedRoute) { }
+    private title: Title,
+    private meta: Meta) {
+    title.setTitle('Регистрация')
+    meta.addTags([
+      { name: 'keywords', content: 'регистрация' },
+      { name: 'description', content: 'Страница для регистрации в системе' }
+    ])
+  }
 
   ngOnInit(): void {
     this.form = new FormGroup({

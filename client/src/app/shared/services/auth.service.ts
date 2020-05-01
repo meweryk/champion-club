@@ -116,4 +116,8 @@ export class AuthService {
   setChange(chAuth: boolean) {
     this.changeAuth.next(chAuth);
   }
+
+  getById(id: string): Observable<User> {
+    return this.http.get<User>(`api/auth/${id}`)
+  }
 }

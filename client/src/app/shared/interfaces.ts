@@ -39,6 +39,7 @@ export interface Order {
   _id?: string
 
   comment?: string
+  userfirstSeller?: string
 
   userBuyer?: string
   shopBuyer?: string

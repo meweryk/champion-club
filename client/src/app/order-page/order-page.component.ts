@@ -6,6 +6,7 @@ import { MaterialInstance, MaterialService } from '../shared/classes/material.se
 import { Subscription } from 'rxjs';
 import { OrderPosition, Order } from '../shared/interfaces';
 import { AuthService } from '../shared/services/auth.service';
+import { Title, Meta } from '@angular/platform-browser';
 
 @Component({
   selector: 'app-order-page',
@@ -34,7 +35,15 @@ export class OrderPageComponent implements OnInit, OnDestroy, AfterViewInit {
   constructor(private router: Router,
     private order: OrderService,
     private ordersService: OrdersServise,
-    private auth: AuthService) { }
+    private auth: AuthService,
+    private title: Title,
+    private meta: Meta) {
+    title.setTitle('Спортпит.zp')
+    meta.addTags([
+      { name: 'keywords', content: 'Запорожье,спортпит,спортивное питание,гейнер,аминокислоты,антиоксиданты,протеин,витамины,для суставов,жирные кислоты,бустер,тестостерон,азот,жиросжигатели,креатин,батончики,аксессуары,для здоровья,предтренировочники,купить' },
+      { name: 'description', content: 'Страница категорий товаров магазина спортивного питания' }
+    ])
+  }
 
   ngOnInit(): void {
     this.aSub = this.auth.$chT.subscribe((changeAuth: boolean) => {

@@ -67,3 +67,12 @@ module.exports.register = async function (req, res) {
         }
     }
 }
+
+module.exports.getById = async function (req, res) {
+    try {
+        const user = await User.findById(req.params.id, { email: true, phone: true })
+        res.status(200).json(user)
+    } catch (e) {
+        errorHandler(res, e)
+    }
+}

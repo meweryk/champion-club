@@ -1,12 +1,13 @@
 <div *ngIf="categories$ | async as categories; else loader">
   <div class="row" *ngIf="categories.length !== 0; else empty">
     <div class="col s12 m4 l3" *ngFor="let category of categories">
-      <div class="card pointer card-panel card-color hoverable pb5" [routerLink]="[ '/order', category._id ]">
+      <div class="card pointer card-panel card-color hoverable pb5" [routerLink]="
+        [ '/order' , category._id, category.name ]">
         <div class="center">
           <img [src]="category.imageSrc" class="responsive-img order-img">
         </div>
-        <div class="card-content blue-grey-text text-darken-4 center p10">
-          <h6 class="truncate m0">{{category.name}}</h6>
+        <div class="card-content blue-grey-text text-darken-2 center p10">
+          <h6 class="truncate m0 bold">{{category.name}}</h6>
         </div>
       </div>
     </div>

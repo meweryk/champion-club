@@ -6,26 +6,36 @@ import { PositionsService } from 'src/app/shared/services/positions.service';
 import { ActivatedRoute, Params } from '@angular/router';
 import { switchMap, map } from 'rxjs/operators';
 import { MaterialService, MaterialInstance } from 'src/app/shared/classes/material.service';
+import { Meta, Title } from '@angular/platform-browser';
 
 @Component({
   selector: 'app-order-positions',
   templateUrl: './order-positions.component.html',
   styleUrls: ['./order-positions.component.css']
 })
+
 export class OrderPositionsComponent implements OnInit {
   positions$: Observable<Position[]>
 
   height: number
-
+  nameCategory: string
   allShops: string[]
   searchShop = ''
   searchVid = ''
 
   constructor(private route: ActivatedRoute,
     private positionsService: PositionsService,
-    private order: OrderService) { }
+    private order: OrderService,
+    private title: Title,
+    private meta: Meta) { }
 
   ngOnInit(): void {
+    this.nameCategory = this.route.snapshot.params['nameCategory']
+    this.title.setTitle(`${this.nameCategory}`)
+    this.meta.addTags([
+      { name: 'keywords', content: `Запорожье,спортпит,спортивное питание,${this.nameCategory},купить` },
+      { name: 'description', content: `Страница позиций товара из категории ${this.nameCategory}` }
+    ])
     this.height = 0.75 * window.innerHeight
     this.positions$ = this.route.params
       .pipe(

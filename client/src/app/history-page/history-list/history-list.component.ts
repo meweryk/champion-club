@@ -16,6 +16,9 @@ export class HistoryListComponent implements OnInit, OnDestroy, AfterViewInit {
   @ViewChild('select') selectRef: ElementRef
 
   shop: string
+  phone: string
+  email: string
+  id: string
 
   selectedOrder: Order
   modal: MaterialInstance
@@ -37,6 +40,7 @@ export class HistoryListComponent implements OnInit, OnDestroy, AfterViewInit {
 
   ngOnInit(): void {
     this.shop = this.auth.getShop()
+    this.id = this.auth.getId()
   }
 
   ngOnDestroy() {
@@ -63,6 +67,19 @@ export class HistoryListComponent implements OnInit, OnDestroy, AfterViewInit {
 
   selectOrder(order: Order) {
     this.selectedOrder = order
+    //если на странце покупателя берём номер поставщика
+    if (this.selectedOrder.userfirstSeller === this.id) {
+      this.auth.getById(this.selectedOrder.userfirstSeller).subscribe(user => {
+        this.phone = user.phone
+        this.email = user.email
+      })
+    } else {
+      //если на странице поставщика берём номер покупателя
+      this.auth.getById(this.selectedOrder.userBuyer).subscribe(user => {
+        this.phone = user.phone
+        this.email = user.email
+      })
+    }
 
     this.workOrder = (this.selectedOrder.shopBuyer === this.shop) //true если магазин покупает: кнопка "обработать" отключена
     this.modal.open()

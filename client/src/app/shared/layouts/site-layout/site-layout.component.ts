@@ -1,6 +1,6 @@
-import { Component, OnInit, ViewChild, ElementRef, AfterViewInit, OnDestroy, HostListener } from '@angular/core';
+import { Component, OnInit, ViewChild, ElementRef, AfterViewInit, OnDestroy, HostListener, OnChanges } from '@angular/core';
 import { MaterialInstance, MaterialService } from '../../classes/material.service'
-import { Router } from '@angular/router'
+import { Router, NavigationEnd } from '@angular/router'
 import { AuthService } from '../../services/auth.service'
 import { Subscription } from 'rxjs';
 
@@ -22,6 +22,7 @@ export class SiteLayoutComponent implements OnInit, AfterViewInit, OnDestroy {
   changeAuth: boolean
   e1: string = 'test@ukr.net'
   e2: string = 'pr.zp26@gmail.com'
+  logo: string
 
   links = [
     { url: '/home', name: 'Главная' },
@@ -35,10 +36,18 @@ export class SiteLayoutComponent implements OnInit, AfterViewInit, OnDestroy {
     private auth: AuthService) { }
 
   ngOnInit(): void {
+    this.logo = "Champion"
     this.width = window.innerWidth
     this.aSub = this.auth.$chT.subscribe((changeAuth: boolean) => {
       this.changeAuth = changeAuth
       this.thisAuthenticated()
+    })
+    this.router.events.subscribe((event) => {
+      if (event instanceof NavigationEnd && /\/order/.test(this.router.url)) {
+        this.logo = "Спортпит.zp"
+      } else {
+        this.logo = "Champion"
+      }
     })
   }
 
@@ -61,6 +70,7 @@ export class SiteLayoutComponent implements OnInit, AfterViewInit, OnDestroy {
     event.preventDefault() //убрали перезагрузку страницы
     this.auth.logout()
     this.router.navigate(['/home'])
+    this.sidenav.close()
   }
 
   closeSidenav() {

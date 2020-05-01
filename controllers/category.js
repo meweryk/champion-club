@@ -106,13 +106,17 @@ module.exports.create = async function (req, res) {
 
 module.exports.update = async function (req, res) {
     const upcategory = await Category.findOne({ _id: req.params.id })
+    console.log(upcategory.user)
+    console.log(req.user.id)
     if (upcategory.user == req.user.id) {
+        console.log(true)
         const updated = { name: req.body.name }
         if (req.file) {
             updated.imageSrc = req.file.path
             if (upcategory.imageSrc) {
                 try {
                     await unlinkAsync(upcategory.imageSrc)//удаление фото
+                    console.log('Old foto del.')
                 } catch (e) {
                     console.log(res, e)
                 }

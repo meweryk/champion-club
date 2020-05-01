@@ -20,7 +20,7 @@ module.exports.getAll = async function (req, res) {
       }
     ]
   } else {
-    query.user = req.user.id
+    query.userBuyer = req.user.id
   }
 
   //дата старта
@@ -69,7 +69,7 @@ module.exports.create = async function (req, res) {
       userfirstSeller: userfirstSeller,
       shopBuyer: req.body.shopBuyer ? req.body.shopBuyer : 'Гость',
       nicname: req.body.nicname ? req.body.nicname : 'Гость',
-      user: req.body.userBuyer ? req.body.userBuyer : '5e985d2c86190a217425cda7',
+      userBuyer: req.body.userBuyer ? req.body.userBuyer : '5e985d2c86190a217425cda7',
       order: maxOrder + 1
     }).save()
 
