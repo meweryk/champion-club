@@ -64,7 +64,7 @@
       <h4 class="mb1">Добавить позицию</h4>
       <div class="row">
         <div class="input-field col s12 m4">
-          <input name="name" formControlName="name" id="pos-name" type="text" maxlength="20"
+          <input name="name" formControlName="name" id="pos-name" type="text" maxlength="50"
             [ngClass]="{'invalid': form.get('name').invalid && form.get('name').touched}">
           <label for="pos-name">Название</label>
           <span *ngIf="form.get('name').invalid && form.get('name').touched" class="helper-text red-text">
@@ -103,8 +103,7 @@
       </div>
 
       <div class="input-field col s12 center">
-        <input formControlName="imageSrc" id="imageSrc" name="imageSrc" class="dn" type="file" #input
-          (change)="onFileUpload($event)">
+        <input class="dn" type="file" #input (change)="onFileUpload($event)">
 
         <button (click)="triggerClick()" [disabled]="form.disabled" type="button"
           class="waves-effect waves-light btn-small orange lighten-2 brown-text text-lighten-1">

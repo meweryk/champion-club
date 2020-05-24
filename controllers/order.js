@@ -70,6 +70,8 @@ module.exports.create = async function (req, res) {
       shopBuyer: req.body.shopBuyer ? req.body.shopBuyer : 'Гость',
       nicname: req.body.nicname ? req.body.nicname : 'Гость',
       userBuyer: req.body.userBuyer ? req.body.userBuyer : '5e985d2c86190a217425cda7',
+      phoneBuyer: req.user.phone ? req.user.phone : null,
+      emailBuyer: req.user.email ? req.user.email : null,
       order: maxOrder + 1
     }).save()
 

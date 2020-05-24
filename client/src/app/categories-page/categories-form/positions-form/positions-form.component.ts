@@ -39,12 +39,11 @@ export class PositionsFormComponent implements OnInit, AfterViewInit, OnDestroy 
     this.shop = this.auth.getShop()
 
     this.form = new FormGroup({
-      name: new FormControl(null, [Validators.required, Validators.maxLength(40)]),
+      name: new FormControl(null, [Validators.required, Validators.maxLength(50)]),
       cost: new FormControl(null, [Validators.required, Validators.min(1)]),
       stock: new FormControl(null, [Validators.required, Validators.min(0)]),
       rank: new FormControl(null, Validators.required),
       exposition: new FormControl(null, Validators.maxLength(4000)),
-      imageSrc: new FormControl(null)
     })
     this.loading = true
     this.positionsService.fetch(this.categoryId).subscribe(positions => {
@@ -74,7 +73,7 @@ export class PositionsFormComponent implements OnInit, AfterViewInit, OnDestroy 
       cost: position.cost,
       stock: position.stock,
       rank: position.rank,
-      exposition: position.exposition
+      exposition: position.exposition,
     })
     this.imagePreview = position.imageSrc
     this.modal.open()
@@ -125,7 +124,6 @@ export class PositionsFormComponent implements OnInit, AfterViewInit, OnDestroy 
       stock: (this.form.value.stock).toFixed(3),
       rank: this.form.value.rank,
       exposition: this.form.value.exposition,
-      imageSrc: this.form.value.imageSrc,
       category: this.categoryId
     }
 

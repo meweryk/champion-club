@@ -27,6 +27,9 @@ export class HistoryListComponent implements OnInit, OnDestroy, AfterViewInit {
   searchOrd = ''
   workOrder: boolean = false
 
+  castomer = ''
+  executor = ''
+
   today = new Date()
   isView: boolean
 

@@ -1,15 +1,112 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild, ElementRef, AfterViewInit, OnDestroy } from '@angular/core';
+import { MaterialInstance, MaterialService } from '../shared/classes/material.service';
+import { AlbumService } from '../shared/services/album.service';
+import { FormGroup, FormControl, Validators } from '@angular/forms';
+import { Album } from '../shared/interfaces';
+import { Observable } from 'rxjs';
+import { map } from 'rxjs/operators';
+import { Router, ActivatedRoute } from '@angular/router';
 
 @Component({
   selector: 'app-gallery-page',
   templateUrl: './gallery-page.component.html',
   styleUrls: ['./gallery-page.component.css']
 })
-export class GalleryPageComponent implements OnInit {
+export class GalleryPageComponent implements OnInit, AfterViewInit, OnDestroy {
+  @ViewChild('modal') modalRef: ElementRef
+  modal: MaterialInstance
+  loading = false
 
-  constructor() { }
+  albums$: Observable<Album[]>
+  albums: Album[];
+  height: any
+
+  form: FormGroup
+
+  constructor(private albumService: AlbumService,
+    private route: ActivatedRoute,
+    private router: Router) { }
 
   ngOnInit(): void {
+    this.form = new FormGroup({
+      albumName: new FormControl(null, [Validators.required, Validators.maxLength(20)]),
+      albumDescription: new FormControl(null, Validators.maxLength(4000))
+    })
+
+    this.albums$ = this.albumService.getAlbums()
+      .pipe(
+        map((albums: Album[]) => {
+          return albums.map(album => album)
+        })
+      )
   }
 
+  ngAfterViewInit() {
+    this.modal = MaterialService.initModal(this.modalRef)
+  }
+
+  onCancel() {
+    this.modal.close()
+  }
+
+  addAlbum() {
+    this.form.reset({
+      albumName: null,
+      albumDescription: '',
+    })
+    this.modal.open()
+    MaterialService.updateTextInputs()
+  }
+
+  onSubmit() {
+    this.form.setValue
+    this.form.disable()
+    let album$
+
+    const album: Album = {
+      name: this.form.value.albumName,
+      description: this.form.value.albumDescription
+    }
+
+    const completed = () => {
+      this.modal.close()
+      this.form.enable()
+    }
+
+    album$ = this.albumService.addAlbum(album)
+
+    album$.subscribe(
+      (album: Album) => {
+        this.albums$.pipe(
+          map((albums: Album[]) => {
+            return albums.push(album)
+          })
+        )
+        MaterialService.toast('Альбом создан')
+        this.modal.close()
+        this.form.enable()
+        this.router.navigate(
+          ['/gallery', album._id],
+          {
+            queryParams: {
+              name: album.name,
+              description: album.description
+            }
+          }
+        )
+      },
+      (error: {
+        error: {
+          message: string
+        }
+      }) => {
+        MaterialService.toast(error.error.message)
+        completed
+      }
+    )
+  }
+
+  ngOnDestroy() {
+    this.modal.destroy
+  }
 }

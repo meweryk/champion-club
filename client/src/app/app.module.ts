@@ -2,7 +2,6 @@ import { BrowserModule } from '@angular/platform-browser'
 import { NgModule } from '@angular/core'
 import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http'
 import { TokenInterceptor } from './shared/classes/token.interceptor'
-
 import { ServiceWorkerModule } from '@angular/service-worker'
 import { environment } from '../environments/environment'
 
@@ -11,7 +10,7 @@ import { AppComponent } from './app.component'
 
 import { SiteLayoutComponent } from './shared/layouts/site-layout/site-layout.component'
 import { ComponentsModule } from './shared/components/components.module'
-import { SharedModule } from './shared/shared.module';
+import { SharedModule } from './shared/shared.module'
 
 @NgModule({
   declarations: [

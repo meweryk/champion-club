@@ -40,7 +40,9 @@ module.exports.create = async function (req, res) {
             shop: req.user.shop,
             nicname: req.user.name,
             exposition: req.body.exposition,
-            imageSrc: req.file ? req.file.path : ''
+            imageSrc: req.file ? req.file.path : '',
+            phone: req.user.phone,
+            email: req.user.email
         }).save()
         res.status(201).json(position)
     } catch (e) {
@@ -70,10 +72,7 @@ module.exports.remove = async function (req, res) {
 
 module.exports.update = async function (req, res) {
     const upposition = await Position.findOne({ _id: req.params.id })
-    console.log(upposition.user)
-    console.log(req.user.id)
     if (upposition.user == req.user.id) {
-        console.log(true)
         const updated = {
             name: req.body.name,
             stock: req.body.stock,
@@ -83,7 +82,9 @@ module.exports.update = async function (req, res) {
             user: req.user.id,
             shop: req.user.shop,
             nicname: req.user.name,
-            exposition: req.body.exposition
+            exposition: req.body.exposition,
+            phone: req.user.phone,
+            email: req.user.email
         }
 
         if (req.file) {
@@ -91,7 +92,6 @@ module.exports.update = async function (req, res) {
             if (upposition.imageSrc) {
                 try {
                     await unlinkAsync(upposition.imageSrc)//удаление старого фото
-                    console.log('Old foto del.')
                 } catch (e) {
                     console.log(res, e)
                 }

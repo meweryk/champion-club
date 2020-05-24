@@ -36,6 +36,12 @@ const positionSchema = new Schema({
     },
     nicname: {
         type: String
+    },
+    phone: {
+        type: String
+    },
+    email: {
+        type: String
     }
 })
 

@@ -1,5 +1,69 @@
 <div class="page-content">
   <div class="page-title">
-    <p class="white-text">Страница "Галерея" в разработке</p>
+    <h5 class="brown-text text-lighten-4">Галерея</h5>
+
+    <button class="waves-effect waves-light btn-small grey darken-1" (click)="addAlbum()">
+      <i class="material-icons left">add</i>Альбом
+    </button>
   </div>
 </div>
+
+<div class="row" *ngIf="albums$ | async as albums; else loader">
+  <div class="col s12">
+    <div class="collection" *ngIf="albums.length !== 0; else empty">
+      <a *ngFor="let album of albums" [routerLink]="['/gallery', album._id]"
+      [queryParams]="{name: album.name, description: album.description}" class="collection-item">
+        {{album.name}}
+      </a>
+    </div>
+    <ng-template #empty>
+      <div class="center brown-text text-lighten-5">
+        У вас нет ни одной категории
+      </div>
+    </ng-template>
+  </div>
+</div>
+
+<ng-template #loader>
+  <app-loader></app-loader>
+</ng-template>
+
+<form [formGroup]="form" (ngSubmit)="onSubmit()">
+  <div class="modal card-position" #modal>
+    <div class="modal-content">
+      <h5 class="mb1">Добавить альбом</h5>
+      <div class="row">
+        <div class="input-field col s12 m4">
+          <input name="albumName" formControlName="albumName" id="pos-albumName" type="text" maxlength="20"
+            [ngClass]="{'invalid': form.get('albumName').invalid && form.get('albumName').touched}">
+          <label for="pos-albumName">Название альбома</label>
+          <span *ngIf="form.get('albumName').invalid && form.get('albumName').touched" class="helper-text red-text">
+            Позиция не должна быть пустой.
+          </span>
+        </div>
+
+        <div class="input-field col s12">
+          <i class="material-icons prefix">mode_edit</i>
+          <textarea formControlName="albumDescription" id="albumDescription" name="albumDescription" type="text"
+            class="materialize-textarea"
+            [ngClass]="{'invalid': form.get('albumDescription').invalid && (form.get('albumDescription').touched || form.get('albumDescription').dirty)}"></textarea>
+          <label for="albumDescription">Описание</label>
+          <span class="helper-text" *ngIf="form.get('albumDescription').dirty">
+            <span [ngStyle]="{color: form.get('albumDescription').invalid ? '#f44336 ' : '#4db6ac'}">Не
+              больше 4000 символов.</span>
+            <span class="red-text"
+              *ngIf="form.get('albumDescription').invalid && (form.get('albumDescription').touched || form.get('albumDescription').dirty)">
+              Сейчас {{form.get('albumDescription').errors['maxlength']['actualLength']}}
+            </span>
+          </span>
+        </div>
+      </div>
+    </div>
+    <div class="modal-footer card-act-op">
+      <button type="button" (click)="onCancel()" class="modal-action waves-effect waves-black btn-flat"
+        [disabled]="form.disabled">Отмена</button>
+      <button class="modal-action btn waves-effect" type="submit"
+        [disabled]="form.invalid || form.disabled">Добавить</button>
+    </div>
+  </div>
+</form>

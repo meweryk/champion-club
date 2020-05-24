@@ -37,6 +37,12 @@ const orderSchema = new Schema({
             userSeller: {
                 ref: 'users',
                 type: Schema.Types.ObjectId
+            },
+            phoneSeller: {
+                type: String
+            },
+            emailSeller: {
+                type: String
             }
         }
     ],
@@ -52,6 +58,12 @@ const orderSchema = new Schema({
         type: Schema.Types.ObjectId
     },
     shopBuyer: {
+        type: String
+    },
+    phoneBuyer: {
+        type: String
+    },
+    emailBuyer: {
         type: String
     },
     nicname: {

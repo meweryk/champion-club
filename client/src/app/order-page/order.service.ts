@@ -19,7 +19,9 @@ export class OrderService {
       imageSrc: position.imageSrc,
       _id: position._id,
       shopSeller: position.shop,
-      userSeller: position.user
+      userSeller: position.user,
+      emailSeller: position.email,
+      phoneSeller: position.phone
     })
 
     const candidate = this.list.find(p => p._id === orderPosition._id)

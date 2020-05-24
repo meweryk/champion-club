@@ -1,0 +1,68 @@
+<div class="page-content">
+  <div class="page-title">
+    <h5 class="brown-text text-lighten-5">
+      <a routerLink="/gallery">Галерея</a>
+      <i class="tiny material-icons">keyboard_arrow_right</i>
+      {{name}}<span style="font-size: 1.2rem;" *ngIf="description">: {{description}}</span>
+    </h5>
+
+    <span>
+      <button class="btn btn-small red" (click)="deleteAlbum()">
+        <i class="material-icons">delete</i>
+      </button>
+      <button class="waves-effect waves-light btn-small" (click)="onAddPhoto()"><i
+          class="material-icons">add</i></button>
+    </span>
+  </div>
+
+
+  <!-- Image Upload -->
+  <form (ngSubmit)="onSubmit()">
+    <div class="modal card-position" #modal>
+      <div class="modal-content">
+        <h4 class="mb1">Загрузка фото</h4>
+
+        <div class="col s12 center">
+          <img class="responsive-img h120" [src]="imagePreview" *ngIf="imagePreview">
+        </div>
+
+        <div class="input-field col s12 center">
+          <input id="imageSrc" name="imageSrc" class="dn" type="file" #input (change)="onFileUpload($event)">
+
+          <button (click)="triggerClick()" type="button"
+            class="waves-effect waves-light btn-small orange lighten-2 brown-text text-lighten-1">
+            <i class="material-icons left">backup</i>
+            Загрузить изображение
+          </button>
+        </div>
+
+        <!--<div class="input-field col s12 center">
+          <input type="file" class="form-control" name="multiple" multiple />
+        </div>-->
+
+
+
+        <div class="modal-footer card-act-op">
+          <button type="button" (click)="onCancel()"
+            class="modal-action waves-effect waves-black btn-flat">Отмена</button>
+          <button class="modal-action btn waves-effect" type="submit">Сохранить</button>
+        </div>
+
+      </div>
+
+    </div>
+  </form>
+
+
+  <!--<div class="content">
+    <div #carousel class="carousel" *ngFor="let picture of pictures">
+
+      <a class="carousel-item" [href]="picture.url" target="_blank">
+        <img class="card-img" [src]="picture.picture" alt="image">
+      </a>
+      <button mat-raised-button (click)="deletePicture(picture.id)" color="red">Remove</button>
+    </div>
+
+  </div>-->
+
+</div>

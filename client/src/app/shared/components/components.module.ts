@@ -3,18 +3,21 @@ import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { SearchPipe } from './pipes/search.pipe';
 import { HistoryListPipe } from './pipes/history-list.pipe';
+import { SearchShopPipe } from './pipes/searchshop.pipe';
 
 @NgModule({
   declarations: [
     LoaderComponent,
     SearchPipe,
-    HistoryListPipe
+    HistoryListPipe,
+    SearchShopPipe
   ],
   imports: [CommonModule],
   exports: [
     LoaderComponent,
     SearchPipe,
-    HistoryListPipe
+    HistoryListPipe,
+    SearchShopPipe
   ]
 })
 
