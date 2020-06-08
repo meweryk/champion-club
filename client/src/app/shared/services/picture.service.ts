@@ -1,20 +1,25 @@
 import { Injectable } from '@angular/core';
-import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { Message } from '../interfaces';
 
 @Injectable({
   providedIn: 'root'
 })
-export class PhotoService {
+export class PictureService {
 
   constructor(private http: HttpClient) { }
 
-  // GridFS Way
-  //Get photo from server
-  //@param photo_id ID of photo to retrieve
-  getPhoto(photo_id): Observable<Blob> {
-    return this.http.get(`/api/pictures/${photo_id}`, { responseType: 'blob' });
+  getPhotoId(albumId: string): Observable<any> {
+    let headers = new HttpHeaders();
+    headers = headers.set('Content-type', 'appliction/json')
+    return this.http.get<any>(`/api/pictures/album/${albumId}`)
+  }
+
+  getPhoto(filename: string, type): Observable<Blob> {
+    return this.http.get(`/api/pictures/${filename}`, {
+      responseType: 'blob'
+    })
   }
 
   //Uploads the photos to the backend server
@@ -31,9 +36,9 @@ export class PhotoService {
 
   //Delete photo
   //@param pictureId picture ID to delete
-  deletePhoto(pictureId) {
+  deletePhoto(pictureId: string): Observable<Message> {
     let headers = new HttpHeaders();
     headers = headers.set('Content-type', 'application/json');
-    return this.http.delete(`/api/pictures/${pictureId}`, { headers: headers });
+    return this.http.delete<Message>(`/api/pictures/${pictureId}`, { headers: headers });
   }
 }

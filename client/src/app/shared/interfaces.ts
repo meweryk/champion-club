@@ -103,11 +103,14 @@ export interface Album {
   _id?: string
   name?: string
   description?: string
-  pictures?: string
+  pictures?: Picture[]
 }
 
-/*export interface Picture {
+export interface Picture {
   _id?: string
-  data?: string
+  filename?: string
   contentType?: string
-}*/
+  uploadDate?: Date
+  aliases: string
+  metadata?: string
+}

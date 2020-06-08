@@ -82,7 +82,4 @@ export class MaterialService {
     return M.Parallax.init(ref.nativeElement)
   }
 
-  static initCarousel(ref: ElementRef): MaterialInstance {
-    return M.Carousel.init(ref.nativeElement)
-  }
 }

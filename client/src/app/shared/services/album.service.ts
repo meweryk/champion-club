@@ -13,12 +13,6 @@ export class AlbumService {
 
   constructor(private http: HttpClient) { }
 
-  getAlbum(id: string): Observable<any> {
-    let headers = new HttpHeaders()
-    headers = headers.set('Content-type', 'application/json')
-    return this.http.get(`/api/albums/${id}`, { headers: headers })
-  }
-
   getAlbums(): Observable<Album[]> {
     let headers = new HttpHeaders()
     headers = headers.set('Content-type', 'application/json')

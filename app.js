@@ -17,6 +17,7 @@ const picturesRoutes = require('./routes/pictures')
 const keys = require('./config/keys')
 const app = express()
 
+mongoose.Promise = global.Promise
 // connection
 mongoose.connect(keys.mongoURI, {
     useUnifiedTopology: true,
@@ -28,71 +29,6 @@ mongoose.connect(keys.mongoURI, {
         console.log('MongoDB connected.')
     })
     .catch(error => console.log(error))
-/*mongoose.Promise = global.Promise
-gridfs.mongo = mongoose.mongo;
-const connection = mongoose.connection
-connection.once('open', () => {
-    console.log('Connected to database ...');
-    const gfs = gridfs(connection.db)
-})
-// Writing a file from local to MongoDB
-app.use('/api/write', upload.single('image'), function (req, res) {
-    var writestream = gfs.createWriteStream({ filename: req.file.filename, contentType: req.file.mimetype, aliases: req.body.albumId });
-    fs.createReadStream(req.file.path).pipe(writestream);
-    writestream.on('close', function (file) {
-        res.status(200).json({ message: 'Файл создан : ' + file.filename });
-        try {
-            fs.unlink(req.file.path)
-            res.json({ message: 'Файл удалён.' })
-        } catch (e) {
-            errorHandler(res, e)
-
-        }
-    });
-
-});
-
-// Reading a file from MongoDB
-app.get('/read', function (req, res) {
-    // Check file exist on MongoDB
-    gfs.exist({ filename: db_filename }, function (err, file) {
-        if (err || !file) {
-            res.send('File Not Found');
-        } else {
-            var readstream = gfs.createReadStream({ filename: db_filename });
-            readstream.pipe(res);
-        }
-    });
-});
-
-// Delete a file from MongoDB
-app.get('/delete', function (req, res) {
-    gfs.exist({ filename: db_filename }, function (err, file) {
-        if (err || !file) {
-            res.send('File Not Found');
-        } else {
-            gfs.remove({ filename: db_filename }, function (err) {
-                if (err) res.send(err);
-                res.send('File Deleted');
-            });
-        }
-    });
-});
-
-// Get file information(File Meta Data) from MongoDB
-app.get('/meta', function (req, res) {
-    gfs.exist({ filename: db_filename }, function (err, file) {
-        if (err || !file) {
-            res.send('File Not Found');
-        } else {
-            gfs.files.find({ filename: db_filename }).toArray(function (err, files) {
-                if (err) res.send(err);
-                res.send(files);
-            });
-        }
-    });
-})*/
-
 
 app.use(compression())
 
@@ -126,7 +62,6 @@ app.use('/api/position', positionRoutes)
 app.use('/api/order', orderRoutes)
 app.use('/api/delivery', deliveryRoutes)
 app.use('/api/albums', albumsRoutes)
-app.use('/api/pictures', picturesRoutes)
 app.use('/api/pictures', picturesRoutes)
 
 

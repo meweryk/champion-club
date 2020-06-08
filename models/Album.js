@@ -13,6 +13,6 @@ const albumSchema = new Schema({
         ref: 'users',
         type: Schema.Types.ObjectId
     },
-})
+}, { usePushEach: true })
 
 module.exports = mongoose.model('album', albumSchema)

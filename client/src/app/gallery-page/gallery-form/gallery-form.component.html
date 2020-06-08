@@ -54,15 +54,21 @@
   </form>
 
 
-  <!--<div class="content">
-    <div #carousel class="carousel" *ngFor="let picture of pictures">
+  <div class="row">
 
-      <a class="carousel-item" [href]="picture.url" target="_blank">
-        <img class="card-img" [src]="picture.picture" alt="image">
-      </a>
-      <button mat-raised-button (click)="deletePicture(picture.id)" color="red">Remove</button>
+    <div class="col s12 m4 l3 center" *ngFor=" let picture of pictures">
+      <div class="card pointer h120">
+        <a class="card-image waves-effect waves-block waves-light" [href]="picture.url">
+          <img [src]="picture.picture" class="contain">
+
+        </a>
+        <a class="btn-floating halfway-fab waves-effect waves-light red btn-small"
+          (click)="deletePicture($event, picture.id)">
+          <i class="material-icons">delete_forever</i>
+        </a>
+      </div>
     </div>
 
-  </div>-->
+  </div>
 
 </div>

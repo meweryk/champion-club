@@ -5,7 +5,7 @@ import { ActivatedRoute, Router, Params } from '@angular/router'
 import { Album } from 'src/app/shared/interfaces'
 import { Title, Meta } from '@angular/platform-browser'
 import { AlbumService } from 'src/app/shared/services/album.service'
-import { PhotoService } from 'src/app/shared/services/picture.service'
+import { PictureService } from 'src/app/shared/services/picture.service'
 import { FormGroup } from '@angular/forms';
 import { AuthService } from 'src/app/shared/services/auth.service';
 
@@ -19,9 +19,7 @@ export class GalleryFormComponent implements OnInit, AfterViewInit, OnDestroy {
 
   @ViewChild('input') innputRef: ElementRef
   @ViewChild('modal') modalRef: ElementRef
-  //@ViewChild('carousel') carouselRef: ElementRef
   modal: MaterialInstance
-  carousel: MaterialInstance
 
   trainer: boolean
   name: string
@@ -36,14 +34,14 @@ export class GalleryFormComponent implements OnInit, AfterViewInit, OnDestroy {
   imagePreview = ''
 
   album: Album
-  pictures: any[]
+  pictures: Array<any> = []
   imageToShow: any;
 
   constructor(private route: ActivatedRoute,
     private router: Router,
     private auth: AuthService,
     private albumService: AlbumService,
-    private photoService: PhotoService,
+    private pictureService: PictureService,
     private title: Title,
     private meta: Meta) { }
 
@@ -63,63 +61,35 @@ export class GalleryFormComponent implements OnInit, AfterViewInit, OnDestroy {
       this.description = params['description']
     })
 
-    /*this.route.params.subscribe((params: Params) => {
-      this.albumService.getAlbum(params['id'])
-        .subscribe((res) => {
-          if (!res.error) {
-            this.album = res.album;
-            if (this.album.pictures) {
-              //Запросить каждую фотографию в альбоме
-              for (let i = 0; i < this.album.pictures.length; i++) {
-                this.photoService.getPhoto(this.album.pictures[i])
-                  .subscribe((picture) => {
-                    // Возьмите изображение base64 и прочитайте его как файл
-                    const reader = new FileReader();
-                    reader.addEventListener('load', () => {
-                      // Сохраните URL-адрес изображения и содержание изображения для нашего просмотра
-                      // Если пользователь нажимает на изображение, мы будем использовать URL, чтобы открыть изображение в полноэкранном режиме
-                      this.pictures.push({
-                        id: this.album.pictures[i],
-                        url: '/api/pictures/' + this.album.pictures[i],
-                        picture: reader.result
-                      })
-                    }, false)
+    this.fetch()
 
-                    if (picture) {
-                      reader.readAsDataURL(picture);
-                    }
-                  })
-              }
-            }
+  }
+
+  private fetch() {
+    this.pictureService.getPhotoId(this.albumId).subscribe(pictures => {
+      pictures.forEach((picture: { filename: string; contentType: any; _id: any; }) => {
+        this.pictureService.getPhoto(picture.filename, picture.contentType).subscribe(data => {
+          let reader = new FileReader();
+          reader.addEventListener('load', () => {
+            // Сохраните URL-адрес изображения и содержание изображения для нашего просмотра
+            // Если пользователь нажимает на изображение, мы будем использовать URL, чтобы открыть изображение в полноэкранном режиме
+            this.pictures.push({
+              id: picture._id,
+              url: `/api/pictures/${picture.filename}`,
+              picture: reader.result
+            })
+          }, false)
+          if (data) {
+            let blob = new Blob([data], { type: picture.contentType })
+            reader.readAsDataURL(blob);
           }
         })
+      });
     })
-
-    this.uploader.onAfterAddingFile = (file) => {
-      file.withCredentials = false
-    }
-
-    //Добавьте идентификатор альбома, чтобы опубликовать параметры запроса для каждой фотографииo
-    this.uploader.onBuildItemForm = (fileItem: any, form: any) => {
-      form.append('album', this.album._id);
-      return { fileItem, form }
-    }
-
-    this.uploader.onCompleteItem = (item: any, response: any, status: any, headers: any) => {
-      const res = JSON.parse(response)
-      if (res.success) {
-        this.uploader.removeFromQueue(item)
-        if (this.uploader.queue.length === 0) {
-          // Reload page when all images have been uploaded
-          location.reload()
-        }
-      }
-    }*/
   }
 
   ngAfterViewInit() {
     this.modal = MaterialService.initModal(this.modalRef)
-    //this.carousel = MaterialService.initCarousel(this.carouselRef)
   }
 
   onCancel() {
@@ -128,24 +98,22 @@ export class GalleryFormComponent implements OnInit, AfterViewInit, OnDestroy {
 
   ngOnDestroy() {
     this.modal.destroy()
-    //this.carousel.destroy()
   }
 
-  /*deletePicture(id) {
-    this.photoService.deletePhoto(id)
-      .subscribe((data) => {
-        this.pictures.splice(this.findPictureIndex(id), 1);
-      })
-  }
-
-  findPictureIndex(id): number {
-    for (let i = 0; i < this.pictures.length; i++) {
-      if (this.pictures[i].id === id) {
-        return i
-      }
+  deletePicture(event: Event, id: string) {
+    event.stopPropagation()
+    const decision = window.confirm("Удалить фото из базы?")
+    if (decision) {
+      this.pictureService.deletePhoto(id).subscribe(
+        response => {
+          const idx = this.pictures.findIndex(p => p.id === id)
+          this.pictures.splice(idx, 1)
+          MaterialService.toast(response.message)
+        },
+        error => MaterialService.toast(error.error.message)
+      )
     }
-    return -1
-  }*/
+  }
 
   deleteAlbum() {
     const desision = window.confirm(`Вы уверены, что хотите удалить альбом "${this.name}? Будут удалены все фото."`)
@@ -170,9 +138,11 @@ export class GalleryFormComponent implements OnInit, AfterViewInit, OnDestroy {
     const completed = () => {
       this.modal.close()
       this.image = null
+      this.pictures = []
+      this.fetch()
     }
 
-    this.photoService.uploadPhotos(this.albumId, this.image).subscribe(
+    this.pictureService.uploadPhotos(this.albumId, this.image).subscribe(
       response => MaterialService.toast(response.message),
       error => MaterialService.toast(error.error.message),
       completed,
