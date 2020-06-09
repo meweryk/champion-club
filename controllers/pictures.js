@@ -1,6 +1,5 @@
 const fs = require('fs')
 const errorHandler = require('../utils/errorHandler')
-const keys = require('../config/keys')
 const mongoose = require('mongoose')
 
 const conn = mongoose.connection
@@ -8,7 +7,7 @@ const conn = mongoose.connection
 let gridFSBucket
 conn.once('open', function () {
     gridFSBucket = new mongoose.mongo.GridFSBucket(conn.db)
-    console.log('all set');
+    console.log('photo set');
 })
 
 module.exports.addPicture = function (req, res, next) {

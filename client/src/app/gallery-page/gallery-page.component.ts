@@ -6,6 +6,8 @@ import { Album } from '../shared/interfaces';
 import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
 import { Router, ActivatedRoute } from '@angular/router';
+import { AuthService } from '../shared/services/auth.service';
+import { Title, Meta } from '@angular/platform-browser';
 
 @Component({
   selector: 'app-gallery-page',
@@ -21,13 +23,27 @@ export class GalleryPageComponent implements OnInit, AfterViewInit, OnDestroy {
   albums: Album[];
   height: any
 
+  trainer: boolean
+  myEmail: string
+
   form: FormGroup
 
   constructor(private albumService: AlbumService,
+    private auth: AuthService,
     private route: ActivatedRoute,
-    private router: Router) { }
+    private router: Router,
+    private title: Title,
+    private meta: Meta) { }
 
   ngOnInit(): void {
+    this.myEmail = this.auth.getEmail()
+    this.trainer = ((this.myEmail === "test@ukr.net") || (this.myEmail === "chmaraksergei@gmail.com")) ? true : false
+    this.title.setTitle('Фотогалерея')
+    this.meta.addTags([
+      { name: 'keywords', content: 'Запорожье,Чемпион,фотографии,спорт,зал,клуб' },
+      { name: 'description', content: 'Фотографии клуба Чемпион' }
+    ])
+
     this.form = new FormGroup({
       albumName: new FormControl(null, [Validators.required, Validators.maxLength(20)]),
       albumDescription: new FormControl(null, Validators.maxLength(4000))

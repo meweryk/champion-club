@@ -2,7 +2,7 @@
   <div class="page-title">
     <h5 class="brown-text text-lighten-4">Галерея</h5>
 
-    <button class="waves-effect waves-light btn-small grey darken-1" (click)="addAlbum()">
+    <button *ngIf="trainer" class="waves-effect waves-light btn-small grey darken-1" (click)="addAlbum()">
       <i class="material-icons left">add</i>Альбом
     </button>
   </div>
@@ -12,7 +12,7 @@
   <div class="col s12">
     <div class="collection" *ngIf="albums.length !== 0; else empty">
       <a *ngFor="let album of albums" [routerLink]="['/gallery', album._id]"
-      [queryParams]="{name: album.name, description: album.description}" class="collection-item">
+        [queryParams]="{name: album.name, description: album.description}" class="collection-item">
         {{album.name}}
       </a>
     </div>

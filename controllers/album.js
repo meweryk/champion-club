@@ -1,6 +1,16 @@
 const Album = require('../models/Album')
 const errorHandler = require('../utils/errorHandler')
 
+const mongoose = require('mongoose')
+
+const conn = mongoose.connection
+
+let gridFSBucket
+conn.once('open', function () {
+    gridFSBucket = new mongoose.mongo.GridFSBucket(conn.db)
+    console.log('album set');
+})
+
 module.exports.add = async function (req, res) {
     const newAlbum = await Album.findOne({ name: req.body.name })
     if (newAlbum) {
@@ -57,22 +67,21 @@ module.exports.edit = (req, res, next) => {
 module.exports.remove = async function (req, res) {
     const album = await Album.findOne({ _id: req.params.id })
     if (album.user == req.user.id) {
+        const pictures = await gridFSBucket.find({ aliases: req.params.id }).toArray()
         // Сначала удалите все фотографии в альбоме
-        /*Picture.getIds(albumId, (err, pictures) => {
-            if (err) {
-                return res.json({ success: false, error: err });
+        if (pictures) {
+            for (let picture of pictures) {
+                try {
+                    await gridFSBucket.delete(new mongoose.Types.ObjectId(picture._id))//удаление фото
+                } catch (e) {
+                    errorHandler(res, e)
+                }
             }
-            for (let i = 0; i < pictures.length; i++) {
-                Picture.deleteById(pictures[i]._id, (err) => {
-                    if (err) {
-                        return res.json({ success: false, error: err });
-                    }
-                });
-            }*/
+        }
 
         // Second, remove the album itself.
         try {
-            await Album.remove({
+            await Album.deleteOne({
                 _id: req.params.id
             })
             res.status(200).json({
@@ -87,29 +96,6 @@ module.exports.remove = async function (req, res) {
         })
     }
 }
-
-//получить альбом с фото из базы 
-/*module.exports.get = (req, res, next) => {
-    Album.get(req.params.id, (err, data) => {
-        if (err) {
-            return res.json({ success: false, error: err });
-        }
-        Picture.getIds(data._id, (err, pictures) => {
-            if (err) {
-                return res.json({ success: false, error: err });
-            }
-            // Добавить идентификаторы фотографий к возвращенным данным из Монго
-            // Вот почему мы используем Lean в нашем запросе
-            data.pictures = [];
-            if (pictures) {
-                for (let i = 0; i < pictures.length; i++) {
-                    data.pictures.push(pictures[i]._id);
-                }
-            }
-            return res.json({ success: true, album: data });
-        });
-    })
-}*/
 
 module.exports.getAll = async function (req, res) {
     try {

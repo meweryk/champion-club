@@ -31,13 +31,10 @@ export class PositionsFormComponent implements OnInit, AfterViewInit, OnDestroy 
 
   form: FormGroup
   height: number
-  constructor(private positionsService: PositionsService,
-    private auth: AuthService) { }
+  constructor(private positionsService: PositionsService) { }
 
   ngOnInit(): void {
     this.height = 0.5 * window.innerHeight
-    this.shop = this.auth.getShop()
-
     this.form = new FormGroup({
       name: new FormControl(null, [Validators.required, Validators.maxLength(50)]),
       cost: new FormControl(null, [Validators.required, Validators.min(1)]),

@@ -1,4 +1,4 @@
-import { Component, OnInit, ViewChild, ElementRef, Input, AfterViewInit, OnDestroy } from '@angular/core';
+import { Component, OnInit, ViewChild, ElementRef, Input, AfterViewInit, OnDestroy, HostListener } from '@angular/core';
 import { MaterialInstance, MaterialService } from 'src/app/shared/classes/material.service';
 import { ActivatedRoute, Router, Params } from '@angular/router'
 
@@ -22,6 +22,8 @@ export class GalleryFormComponent implements OnInit, AfterViewInit, OnDestroy {
   modal: MaterialInstance
 
   trainer: boolean
+  myEmail: string
+  height: number
   name: string
   description: string
 
@@ -46,7 +48,10 @@ export class GalleryFormComponent implements OnInit, AfterViewInit, OnDestroy {
     private meta: Meta) { }
 
   ngOnInit(): void {
-    this.trainer = ((this.auth.getEmail).toString() === "test@ukr.net") ? true : false
+    this.height = 0.5 * window.innerHeight
+    this.myEmail = this.auth.getEmail()
+    this.trainer = ((this.myEmail === "test@ukr.net") || (this.myEmail === "chmaraksergei@gmail.com")) ? true : false
+
     this.albumId = this.route.snapshot.params['id']
     this.name = this.route.snapshot.queryParams['name']
     this.description = this.route.snapshot.queryParams['description']
@@ -56,13 +61,19 @@ export class GalleryFormComponent implements OnInit, AfterViewInit, OnDestroy {
       { name: 'description', content: `${this.description} из альбома ${this.name}` }
     ])
 
+    this.loading = true
+
     this.route.queryParams.subscribe((params: Params) => {
       this.name = params['name']
       this.description = params['description']
     })
 
     this.fetch()
+  }
 
+  @HostListener('window:resize', ['$event'])
+  onResize(event: any) {
+    this.height = 0.7 * event.target.innerHeight
   }
 
   private fetch() {
@@ -84,7 +95,8 @@ export class GalleryFormComponent implements OnInit, AfterViewInit, OnDestroy {
             reader.readAsDataURL(blob);
           }
         })
-      });
+      })
+      this.loading = false
     })
   }
 
@@ -139,6 +151,7 @@ export class GalleryFormComponent implements OnInit, AfterViewInit, OnDestroy {
       this.modal.close()
       this.image = null
       this.pictures = []
+      this.loading = true
       this.fetch()
     }
 

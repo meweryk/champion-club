@@ -6,15 +6,15 @@
       {{name}}<span style="font-size: 1.2rem;" *ngIf="description">: {{description}}</span>
     </h5>
 
-    <span>
-      <button class="btn btn-small red" (click)="deleteAlbum()">
+    <span *ngIf="trainer">
+      <button class="btn btn-small red m03" (click)="deleteAlbum()">
         <i class="material-icons">delete</i>
       </button>
-      <button class="waves-effect waves-light btn-small" (click)="onAddPhoto()"><i
+
+      <button class="waves-effect waves-light btn-small m03" (click)="onAddPhoto()"><i
           class="material-icons">add</i></button>
     </span>
   </div>
-
 
   <!-- Image Upload -->
   <form (ngSubmit)="onSubmit()">
@@ -54,15 +54,15 @@
   </form>
 
 
-  <div class="row">
+  <div class="row" [style.maxHeight.px]="height" *ngIf="!loading; else loader">
 
-    <div class="col s12 m4 l3 center" *ngFor=" let picture of pictures">
-      <div class="card pointer h120">
-        <a class="card-image waves-effect waves-block waves-light" [href]="picture.url">
+    <div class="col s12 m4 l3 center " *ngFor=" let picture of pictures">
+      <div class="card pointer h150 hoverable">
+        <a class="hovergallery card-image waves-effect waves-block waves-light" [href]="picture.url">
           <img [src]="picture.picture" class="contain">
 
         </a>
-        <a class="btn-floating halfway-fab waves-effect waves-light red btn-small"
+        <a *ngIf="trainer" class="btn-floating halfway-fab waves-effect waves-light orange darken-3 btn-small"
           (click)="deletePicture($event, picture.id)">
           <i class="material-icons">delete_forever</i>
         </a>
@@ -70,5 +70,9 @@
     </div>
 
   </div>
+
+  <ng-template #loader>
+    <app-loader></app-loader>
+  </ng-template>
 
 </div>

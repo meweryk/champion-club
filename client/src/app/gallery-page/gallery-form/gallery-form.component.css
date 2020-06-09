@@ -10,12 +10,13 @@
   display: none;
 }
 
-.h120 {
-  height: 120px;
-  border: 1px solid #9e9e9e;
+.h150 {
+  height: 150px;
+  border: 2px solid #ef6c00 ;
   border-radius: 3px;
   margin: 0px;
-  background-color: rgba(0, 0, 0, 0.8); /* Black w/ opacity */
+  margin-bottom: 20px;
+  background-color: rgba(0, 0, 0, 0); /* Black w/ opacity */
 }
 
 .h30 {
@@ -25,6 +26,18 @@
 
 .contain {
   object-fit: contain;
-  height: 118px;
+  height: 146px;
   border-radius: 3px;
 }
+
+.hovergallery img {
+  transform:scale(1.0); /*масштабирование*/
+  transition-duration: 0.3s; /*длительность анимации*/
+  opacity: 0.9; /*Начальная прозрачность изображений*/
+  /*margin: 0 10px 5px 0; /*Интервалы между изображениями*/
+  }
+
+  .hovergallery img:hover{
+  transform:scale(1.1);
+  opacity: 1;
+  }
