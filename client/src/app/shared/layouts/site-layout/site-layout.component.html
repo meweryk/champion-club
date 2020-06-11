@@ -7,7 +7,8 @@
           <a routerLink="/login" class="waves-effect waves-orange">Вход</a>
         </li>
         <li routerLinkActive="active" *ngIf="changeAuth">
-          <a class="waves-effect waves-orange"><i class="material-icons left">account_box</i>{{nicname}}</a>
+          <a class="waves-effect waves-orange" (click)="nikcnameShow()"><i
+              class="material-icons left">account_box</i></a>
         </li>
         <li routerLinkActive="active" *ngIf="changeAuth" class="hide-on-med-and-down ">
           <a href="#" class="waves-effect waves-orange" (click)="logout($event)"><i

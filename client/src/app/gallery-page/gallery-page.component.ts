@@ -125,4 +125,5 @@ export class GalleryPageComponent implements OnInit, AfterViewInit, OnDestroy {
   ngOnDestroy() {
     this.modal.destroy
   }
+
 }

@@ -34,10 +34,32 @@
   transform:scale(1.0); /*масштабирование*/
   transition-duration: 0.3s; /*длительность анимации*/
   opacity: 0.9; /*Начальная прозрачность изображений*/
-  /*margin: 0 10px 5px 0; /*Интервалы между изображениями*/
   }
 
   .hovergallery img:hover{
   transform:scale(1.1);
   opacity: 1;
   }
+
+  .modal {
+    max-height: 90%;
+    background-color: transparent;
+  }
+
+  @media only screen and (max-width: 600px) {
+    .modal {
+      width: 95%;
+    }
+  }
+
+  @media all and (orientation: landscape), all and (min-width: 992px) {
+    .modal {
+      width: 60%;
+    }
+  }
+
+
+
+
+
+

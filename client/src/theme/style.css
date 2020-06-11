@@ -370,11 +370,6 @@ html {
   margin-bottom: 0;
 }
 
-/*.order-position-input input[type=number]:not(.browser-default) {
-  margin-bottom: 0 !important;
-  height: 1.5rem;
-}*/
-
 .select-wrapper input.select-dropdown {
   color: #3e2723;
   font-weight: bold;
@@ -439,5 +434,9 @@ html {
   text-transform: uppercase;
   font-weight: bold;
   font-variant: small-caps;
+}
+
+.modalPicture {
+  z-index: 2000;
 }
 

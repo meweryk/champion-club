@@ -19,11 +19,14 @@ export class GalleryFormComponent implements OnInit, AfterViewInit, OnDestroy {
 
   @ViewChild('input') innputRef: ElementRef
   @ViewChild('modal') modalRef: ElementRef
+  @ViewChild('show') showRef: ElementRef
   modal: MaterialInstance
+  show: MaterialInstance
 
   trainer: boolean
   myEmail: string
   height: number
+  width: number
   name: string
   description: string
 
@@ -37,7 +40,7 @@ export class GalleryFormComponent implements OnInit, AfterViewInit, OnDestroy {
 
   album: Album
   pictures: Array<any> = []
-  imageToShow: any;
+  imageToShow: any = null
 
   constructor(private route: ActivatedRoute,
     private router: Router,
@@ -48,7 +51,8 @@ export class GalleryFormComponent implements OnInit, AfterViewInit, OnDestroy {
     private meta: Meta) { }
 
   ngOnInit(): void {
-    this.height = 0.5 * window.innerHeight
+    this.height = window.innerHeight
+    this.width = window.innerWidth
     this.myEmail = this.auth.getEmail()
     this.trainer = ((this.myEmail === "test@ukr.net") || (this.myEmail === "chmaraksergei@gmail.com")) ? true : false
 
@@ -73,7 +77,8 @@ export class GalleryFormComponent implements OnInit, AfterViewInit, OnDestroy {
 
   @HostListener('window:resize', ['$event'])
   onResize(event: any) {
-    this.height = 0.7 * event.target.innerHeight
+    this.height = event.target.innerHeight
+    this.width = event.target.innerWidth
   }
 
   private fetch() {
@@ -102,14 +107,17 @@ export class GalleryFormComponent implements OnInit, AfterViewInit, OnDestroy {
 
   ngAfterViewInit() {
     this.modal = MaterialService.initModal(this.modalRef)
+    this.show = MaterialService.initModal(this.showRef)
   }
 
   onCancel() {
     this.modal.close()
+    this.show.close()
   }
 
   ngOnDestroy() {
     this.modal.destroy()
+    this.show.destroy()
   }
 
   deletePicture(event: Event, id: string) {
@@ -177,6 +185,12 @@ export class GalleryFormComponent implements OnInit, AfterViewInit, OnDestroy {
 
   triggerClick() {
     this.innputRef.nativeElement.click()
+  }
+
+
+  showPicture(picture) {
+    this.imageToShow = picture.picture
+    this.show.open()
   }
 
 }
