@@ -6,6 +6,7 @@ import { ComponentsModule } from '../shared/components/components.module';
 import { GalleryRoutingModule } from './gallery-routing.module';
 import { GalleryPageComponent } from './gallery-page.component';
 import { GalleryFormComponent } from './gallery-form/gallery-form.component';
+import { Title } from '@angular/platform-browser';
 
 
 @NgModule({
@@ -13,7 +14,7 @@ import { GalleryFormComponent } from './gallery-form/gallery-form.component';
     GalleryPageComponent,
     GalleryFormComponent
   ],
-  providers: [],
+  providers: [Title],
   imports: [
     CommonModule,
     SharedModule,

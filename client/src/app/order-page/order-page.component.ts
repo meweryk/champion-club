@@ -87,7 +87,7 @@ export class OrderPageComponent implements OnInit, OnDestroy, AfterViewInit {
 
   open() {
     if (this.changeAuth) {
-      if (!this.phone) {
+      if (this.phone === 'null' || this.phone === 'undefined') {
         MaterialService.toast('Укажите телефон в коментариях.')
       }
     } else {
@@ -102,7 +102,6 @@ export class OrderPageComponent implements OnInit, OnDestroy, AfterViewInit {
 
   submit() {
     this.pending = true
-
     const order: Order = {
       list: this.order.list.map(item => {
         delete item._id
@@ -111,7 +110,9 @@ export class OrderPageComponent implements OnInit, OnDestroy, AfterViewInit {
       comment: this.comment,
       nicname: this.nicname, //имя покупателя
       shopBuyer: this.shop, //магазин покупателя
-      userBuyer: this.id //id покупателя
+      userBuyer: this.id, //id покупателя
+      phoneBuyer: this.phone,
+      emailBuyer: this.email
     }
 
 

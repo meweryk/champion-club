@@ -66,8 +66,9 @@
         <h6 class="mb1">Ваши данные: </h6>
         <li class="col s12 m4 valign-wrapper pb5"><i class="material-icons">account_circle</i> {{nicname}}</li>
         <li class="col s12 m4 valign-wrapper pb5"><i class="material-icons">markunread</i> {{email}}</li>
-        <li *ngIf="phone != 'undefined'" class="col s12 m4 valign-wrapper pb5"><i
-            class="material-icons">local_phone</i>{{phone}}</li>
+        <li *ngIf="phone !== 'null' && phone !== 'undefined'" class="col s12 m4 valign-wrapper pb5"><i
+            class="material-icons">local_phone</i>{{phone}}
+        </li>
       </ul>
     </div>
     <div class="modal-footer indigo lighten-4">

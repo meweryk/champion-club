@@ -5,6 +5,7 @@ import { RegisterRoutingModule } from './register-routing.module'
 import { RegisterPageComponent } from './register-page.component'
 import { ComponentsModule } from '../shared/components/components.module'
 import { SharedModule } from '../shared/shared.module'
+import { Title } from '@angular/platform-browser'
 
 @NgModule({
   declarations: [
@@ -16,7 +17,7 @@ import { SharedModule } from '../shared/shared.module'
     ComponentsModule,
     SharedModule
   ],
-  providers: []
+  providers: [Title]
 })
 
 export class RegisterModule { }

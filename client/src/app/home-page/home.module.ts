@@ -3,10 +3,11 @@ import { CommonModule } from '@angular/common'
 
 import { HomePageComponent } from './home-page.component'
 import { HomeRoutingModule } from './home-routing.module'
+import { Title } from '@angular/platform-browser'
 
 @NgModule({
   declarations: [HomePageComponent],
-  providers: [],
+  providers: [Title],
   imports: [
     CommonModule,
     HomeRoutingModule

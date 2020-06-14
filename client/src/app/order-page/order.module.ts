@@ -7,6 +7,7 @@ import { OrderPageComponent } from './order-page.component';
 import { OrderRoutingModule } from './order-routing.module';
 import { OrderPositionsComponent } from './order-positions/order-positions.component';
 import { OrderCategoriesComponent } from './order-categories/order-categories.component';
+import { Title } from '@angular/platform-browser';
 
 
 @NgModule({
@@ -15,7 +16,7 @@ import { OrderCategoriesComponent } from './order-categories/order-categories.co
     OrderPositionsComponent,
     OrderCategoriesComponent,
   ],
-  providers: [],
+  providers: [Title],
   imports: [
     CommonModule,
     SharedModule,
