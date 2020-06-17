@@ -18,6 +18,8 @@ export class HomePageComponent implements OnInit, AfterViewInit, OnDestroy {
   parallax3: MaterialInstance
   parallax4: MaterialInstance
 
+  today = new Date()
+
   constructor(private title: Title,
     private meta: Meta) {
     title.setTitle('Тренажерный зал')
