@@ -73,6 +73,7 @@ export class GalleryFormComponent implements OnInit, AfterViewInit, OnDestroy {
     })
 
     this.fetch()
+
   }
 
   @HostListener('window:resize', ['$event'])

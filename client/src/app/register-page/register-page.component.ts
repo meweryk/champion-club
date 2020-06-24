@@ -23,7 +23,7 @@ export class RegisterPageComponent implements OnInit, OnDestroy {
     private meta: Meta) {
     title.setTitle('Регистрация')
     meta.addTags([
-      { name: 'keywords', content: 'регистрация' },
+      { name: 'keywords', content: 'Регистрация' },
       { name: 'description', content: 'Страница для регистрации в системе' }
     ])
   }

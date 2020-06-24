@@ -3,6 +3,7 @@ import { Order } from 'src/app/shared/interfaces';
 import { MaterialInstance, MaterialService } from 'src/app/shared/classes/material.service';
 import { AuthService } from 'src/app/shared/services/auth.service';
 import { OrdersServise } from 'src/app/shared/services/orders.service';
+import { Title, Meta } from '@angular/platform-browser';
 
 @Component({
   selector: 'app-history-list',
@@ -39,7 +40,15 @@ export class HistoryListComponent implements OnInit, OnDestroy, AfterViewInit {
   got = null
 
   constructor(private auth: AuthService,
-    private ordersService: OrdersServise) { }
+    private ordersService: OrdersServise,
+    private title: Title,
+    private meta: Meta) {
+    title.setTitle('История заказов')
+    meta.addTags([
+      { name: 'keywords', content: 'Запорожье,спортпит.zp,история,заказ,купить,спортивное,питание' },
+      { name: 'description', content: 'Просмотр заказа' }
+    ])
+  }
 
   ngOnInit(): void {
     this.shop = this.auth.getShop()
@@ -70,6 +79,7 @@ export class HistoryListComponent implements OnInit, OnDestroy, AfterViewInit {
 
   selectOrder(order: Order) {
     this.selectedOrder = order
+
     //если на странце покупателя берём номер поставщика
     if (this.selectedOrder.userfirstSeller === this.id) {
       this.auth.getById(this.selectedOrder.userfirstSeller).subscribe(user => {
@@ -120,6 +130,7 @@ export class HistoryListComponent implements OnInit, OnDestroy, AfterViewInit {
 
   closeModal() {
     this.modal.close()
+    this.title.setTitle('История заказов')
   }
 
 }

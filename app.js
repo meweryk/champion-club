@@ -13,6 +13,7 @@ const orderRoutes = require('./routes/order')
 const deliveryRoutes = require('./routes/delivery')
 const albumsRoutes = require('./routes/albums')
 const picturesRoutes = require('./routes/pictures')
+const sitemapRoutes = require('./routes/sitemap')
 
 const keys = require('./config/keys')
 const app = express()
@@ -63,6 +64,7 @@ app.use('/api/order', orderRoutes)
 app.use('/api/delivery', deliveryRoutes)
 app.use('/api/albums', albumsRoutes)
 app.use('/api/pictures', picturesRoutes)
+app.use('/api', sitemapRoutes)
 
 
 if (process.env.NODE_ENV === 'production') {

@@ -22,7 +22,7 @@ export class HomePageComponent implements OnInit, AfterViewInit, OnDestroy {
 
   constructor(private title: Title,
     private meta: Meta) {
-    title.setTitle('Тренажерный зал')
+    title.setTitle('СК Чемпион')
     meta.addTags([
       { name: 'keywords', content: 'Запорожье,Чемпион,услуги,контакты,адрес,часы работы,Чмарак,Сергей,пауэрлифтинг,кроссфит,фитнес,champion-clab,fitness,powerlifting,champion-zp,bodybuilding' },
       { name: 'description', content: 'Главная страница спортклуба Чемпион, услуги, контакты, адрес, часы работы' }

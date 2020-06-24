@@ -6,6 +6,8 @@ import { switchMap } from 'rxjs/operators';
 import { of } from 'rxjs';
 import { MaterialService } from 'src/app/shared/classes/material.service';
 import { Category } from 'src/app/shared/interfaces';
+import { Meta, Title } from '@angular/platform-browser';
+import { PictureService } from 'src/app/shared/services/picture.service';
 
 @Component({
   selector: 'app-categories-form',
@@ -23,7 +25,16 @@ export class CategoriesFormComponent implements OnInit {
 
   constructor(private route: ActivatedRoute,
     private categoriesService: CategoriesService,
-    private router: Router) { }
+    private pictureService: PictureService,
+    private router: Router,
+    private title: Title,
+    private meta: Meta) {
+    title.setTitle('Редактор категории')
+    meta.addTags([
+      { name: 'keywords', content: 'Запорожье,Спортпит,ассортимент,категории,товар,позиции,создоть' },
+      { name: 'description', content: 'Страница создания, изменения, удаления категорий и позиций товаров для интернет магазина' }
+    ])
+  }
 
   ngOnInit(): void {
     this.form = new FormGroup({
@@ -108,13 +119,19 @@ export class CategoriesFormComponent implements OnInit {
     obs$.subscribe(
       (category: Category) => {
         this.category = category
+        //add gridfs
+        this.pictureService.uploadPhotos(category._id, this.image).subscribe(
+          response => MaterialService.toast(response.message),
+          error => MaterialService.toast(error.error.message)
+        )
+        //end add gridfs
         MaterialService.toast('Изменения сохранены.')
         this.form.enable()
       },
       (error: {
         error: {
           message: string;
-        };
+        }
       }) => {
         MaterialService.toast(error.error.message)
         this.form.enable()

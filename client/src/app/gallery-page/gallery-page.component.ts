@@ -40,8 +40,8 @@ export class GalleryPageComponent implements OnInit, AfterViewInit, OnDestroy {
     this.trainer = ((this.myEmail === "test@ukr.net") || (this.myEmail === "chmaraksergei@gmail.com")) ? true : false
     this.title.setTitle('Фотогалерея')
     this.meta.addTags([
-      { name: 'keywords', content: 'Запорожье,Чемпион,фотографии,спорт,зал,клуб' },
-      { name: 'description', content: 'Фотографии клуба Чемпион' }
+      { name: 'keywords', content: 'Запорожье,Чемпион,фотографии,спорт,зал,клуб,' },
+      { name: 'description', content: 'Фотогалерея клуба Чемпион' }
     ])
 
     this.form = new FormGroup({

@@ -3,6 +3,7 @@ import { Subscription } from 'rxjs';
 import { Order, Filter } from '../shared/interfaces';
 import { OrdersServise } from '../shared/services/orders.service';
 import { MaterialService, MaterialInstance } from '../shared/classes/material.service';
+import { Title, Meta } from '@angular/platform-browser';
 
 const STEP = 6
 
@@ -31,7 +32,15 @@ export class HistoryPageComponent implements OnInit, OnDestroy, AfterViewInit {
   reloading = false
   noMoreOrders = false
 
-  constructor(private ordersService: OrdersServise) { }
+  constructor(private ordersService: OrdersServise,
+    private title: Title,
+    private meta: Meta) {
+    title.setTitle('История заказов')
+    meta.addTags([
+      { name: 'keywords', content: 'Запорожье,спортпит.zp,история,заказов,купить,спортивное,питание,заказ' },
+      { name: 'description', content: 'Страница просмотра истории заказов товаров товаров магазина спортивного питания' }
+    ])
+  }
 
   ngOnInit(): void {
     this.reloading = true
