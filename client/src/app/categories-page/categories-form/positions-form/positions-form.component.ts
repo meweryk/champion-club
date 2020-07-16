@@ -52,16 +52,17 @@ export class PositionsFormComponent implements OnInit, AfterViewInit, OnDestroy 
     this.loading = true
     this.positionsService.fetch(this.categoryId).subscribe(positions => {
       this.positions = positions.filter(position => position.shop === this.shop).sort((a, b) => Intl.Collator().compare(a.name, b.name))
-      this.positions.forEach((position: Position) => {
-        this.fetch(position._id)
+      this.positions.map((position: Position) => {
+        position = this.fetch(position)
+        return position
       })
       this.loading = false
     })
   }
 
-  private fetch(albumId: string) {
-    const idx = this.positions.findIndex(p => p._id === albumId)
-    this.pictureService.getPhotoId(albumId).subscribe(pictures => {
+  private fetch(position: Position) {
+    //const idx = this.positions.findIndex(p => p._id === albumId)
+    this.pictureService.getPhotoId(position._id).subscribe(pictures => {
       pictures.forEach((picture: { filename: string; contentType: any; _id: any; }) => {
         this.pictureService.getPhoto(picture.filename, picture.contentType).subscribe(data => {
           let reader = new FileReader();
@@ -74,9 +75,9 @@ export class PositionsFormComponent implements OnInit, AfterViewInit, OnDestroy 
               picture: reader.result
             }
             //в массиве всегда 1 фото
-            this.positions[idx].imageSrc = this.foto.picture
-            this.positions[idx].imageId = this.foto.id
-            this.positions[idx].url = this.foto.url
+            position.imageSrc = this.foto.picture
+            position.imageId = this.foto.id
+            position.url = this.foto.url
           }, false)
           if (data) {
             let blob = new Blob([data], { type: picture.contentType })
@@ -85,6 +86,7 @@ export class PositionsFormComponent implements OnInit, AfterViewInit, OnDestroy 
         })
       })
     })
+    return position
   }
 
   @HostListener('window:resize', ['$event'])
@@ -111,7 +113,6 @@ export class PositionsFormComponent implements OnInit, AfterViewInit, OnDestroy 
     })
     this.imagePreview = position.imageSrc
     this.imageId = position.imageId ? position.imageId : ''
-    console.log(this.imageId)
     this.modal.open()
     MaterialService.updateTextInputs()
   }
@@ -175,12 +176,22 @@ export class PositionsFormComponent implements OnInit, AfterViewInit, OnDestroy 
 
     if (this.positionId) {
       newPosition._id = this.positionId
+      console.log(this.imageId)
       this.positionsService.update(newPosition).subscribe(
         position => {
-          this.pictureService.updatePhotos(position._id, this.image, this.imageId).subscribe(
-            response => MaterialService.toast(response.message),
-            error => MaterialService.toast(error.error.message)
-          )
+          if (this.image) {
+            this.pictureService.updatePhotos(position._id, this.image, this.imageId).subscribe(
+              response => {
+                MaterialService.toast(response.message)
+                position = this.fetch(position)
+              },
+              error => MaterialService.toast(error.error.message)
+            )
+          } else {
+            position.imageSrc = this.imagePreview
+            position.imageId = this.imageId
+          }
+
           const idx = this.positions.findIndex(p => p._id === position._id)
           this.positions[idx] = position
           MaterialService.toast('Изменения сохранены')
@@ -193,10 +204,16 @@ export class PositionsFormComponent implements OnInit, AfterViewInit, OnDestroy 
       if (mdx < 0) {
         this.positionsService.create(newPosition).subscribe(
           position => {
-            this.pictureService.uploadPhotos(position._id, this.image).subscribe(
-              response => MaterialService.toast(response.message),
-              error => MaterialService.toast(error.error.message)
-            )
+            if (this.image) {
+              this.pictureService.uploadPhotos(position._id, this.image).subscribe(
+                response => {
+                  MaterialService.toast(response.message)
+                  position = this.fetch(position)
+                },
+                error => MaterialService.toast(error.error.message)
+              )
+            }
+
             MaterialService.toast('Позиция создана')
             this.positions.push(position)
             this.positions.sort((a, b) => Intl.Collator().compare(a.name, b.name))
