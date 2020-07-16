@@ -4,6 +4,7 @@ import { Position } from 'src/app/shared/interfaces';
 import { MaterialService, MaterialInstance } from 'src/app/shared/classes/material.service';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
 import { AuthService } from 'src/app/shared/services/auth.service'
+import { PictureService } from 'src/app/shared/services/picture.service';
 
 @Component({
   selector: 'app-positions-form',
@@ -28,13 +29,19 @@ export class PositionsFormComponent implements OnInit, AfterViewInit, OnDestroy 
   data = {}
   image: File
   imagePreview = ''
+  imageId = ''
+  pictures: Array<any> = []
+  foto: any = {}
 
   form: FormGroup
   height: number
-  constructor(private positionsService: PositionsService) { }
+  constructor(private positionsService: PositionsService,
+    private pictureService: PictureService,
+    private authService: AuthService) { }
 
   ngOnInit(): void {
     this.height = 0.5 * window.innerHeight
+    this.shop = this.authService.getShop()
     this.form = new FormGroup({
       name: new FormControl(null, [Validators.required, Validators.maxLength(50)]),
       cost: new FormControl(null, [Validators.required, Validators.min(1)]),
@@ -45,9 +52,39 @@ export class PositionsFormComponent implements OnInit, AfterViewInit, OnDestroy 
     this.loading = true
     this.positionsService.fetch(this.categoryId).subscribe(positions => {
       this.positions = positions.filter(position => position.shop === this.shop).sort((a, b) => Intl.Collator().compare(a.name, b.name))
+      this.positions.forEach((position: Position) => {
+        this.fetch(position._id)
+      })
       this.loading = false
     })
+  }
 
+  private fetch(albumId: string) {
+    const idx = this.positions.findIndex(p => p._id === albumId)
+    this.pictureService.getPhotoId(albumId).subscribe(pictures => {
+      pictures.forEach((picture: { filename: string; contentType: any; _id: any; }) => {
+        this.pictureService.getPhoto(picture.filename, picture.contentType).subscribe(data => {
+          let reader = new FileReader();
+          reader.addEventListener('load', () => {
+            // Сохраните URL-адрес изображения и содержание изображения для нашего просмотра
+            // Если пользователь нажимает на изображение, мы будем использовать URL, чтобы открыть изображение в полноэкранном режиме
+            this.foto = {
+              id: picture._id,
+              url: `/api/pictures/${picture.filename}`,
+              picture: reader.result
+            }
+            //в массиве всегда 1 фото
+            this.positions[idx].imageSrc = this.foto.picture
+            this.positions[idx].imageId = this.foto.id
+            this.positions[idx].url = this.foto.url
+          }, false)
+          if (data) {
+            let blob = new Blob([data], { type: picture.contentType })
+            reader.readAsDataURL(blob);
+          }
+        })
+      })
+    })
   }
 
   @HostListener('window:resize', ['$event'])
@@ -73,6 +110,8 @@ export class PositionsFormComponent implements OnInit, AfterViewInit, OnDestroy 
       exposition: position.exposition,
     })
     this.imagePreview = position.imageSrc
+    this.imageId = position.imageId ? position.imageId : ''
+    console.log(this.imageId)
     this.modal.open()
     MaterialService.updateTextInputs()
   }
@@ -98,6 +137,10 @@ export class PositionsFormComponent implements OnInit, AfterViewInit, OnDestroy 
     if (decision) {
       this.positionsService.delete(position).subscribe(
         response => {
+          this.pictureService.deletePhotos(position._id).subscribe(
+            response => MaterialService.toast(response.message),
+            error => MaterialService.toast(error.error.message)
+          )
           const idx = this.positions.findIndex(p => p._id === position._id)
           this.positions.splice(idx, 1)
           MaterialService.toast(response.message)
@@ -132,8 +175,12 @@ export class PositionsFormComponent implements OnInit, AfterViewInit, OnDestroy 
 
     if (this.positionId) {
       newPosition._id = this.positionId
-      this.positionsService.update(newPosition, this.image).subscribe(
+      this.positionsService.update(newPosition).subscribe(
         position => {
+          this.pictureService.updatePhotos(position._id, this.image, this.imageId).subscribe(
+            response => MaterialService.toast(response.message),
+            error => MaterialService.toast(error.error.message)
+          )
           const idx = this.positions.findIndex(p => p._id === position._id)
           this.positions[idx] = position
           MaterialService.toast('Изменения сохранены')
@@ -144,8 +191,12 @@ export class PositionsFormComponent implements OnInit, AfterViewInit, OnDestroy 
     } else {
       let mdx = this.positions.findIndex(p => p.name === newPosition.name)
       if (mdx < 0) {
-        this.positionsService.create(newPosition, this.image).subscribe(
+        this.positionsService.create(newPosition).subscribe(
           position => {
+            this.pictureService.uploadPhotos(position._id, this.image).subscribe(
+              response => MaterialService.toast(response.message),
+              error => MaterialService.toast(error.error.message)
+            )
             MaterialService.toast('Позиция создана')
             this.positions.push(position)
             this.positions.sort((a, b) => Intl.Collator().compare(a.name, b.name))

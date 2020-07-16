@@ -5,6 +5,16 @@ const fs = require('fs')
 const { promisify } = require('util')
 const unlinkAsync = promisify(fs.unlink)
 
+const mongoose = require('mongoose')
+
+const conn = mongoose.connection
+
+let gridFSBucket
+conn.once('open', function () {
+    gridFSBucket = new mongoose.mongo.GridFSBucket(conn.db)
+    console.log('category set');
+})
+
 module.exports.getAll = async function (req, res) {
     try {
         const categories = await Category.find({
@@ -44,6 +54,19 @@ module.exports.remove = async function (req, res) {
     //проверяем права пользователя на категорию и присутствие других магазинов
     if ((category.user == req.user.id) && !elseShop) {
         //если категория создана пльзователем и её не используют позиций с других складов-магазинов
+
+        const pictures = await gridFSBucket.find({ aliases: req.params.id }).toArray()
+        // Сначала удалите все фотографии категории в gridfs
+        if (pictures) {
+            for (let picture of pictures) {
+                try {
+                    await gridFSBucket.delete(new mongoose.Types.ObjectId(picture._id))//удаление фото
+                } catch (e) {
+                    errorHandler(res, e)
+                }
+            }
+        }
+        // удалите фотографию категории в gridfs
         if (category.imageSrc) {
             try {
                 await unlinkAsync(category.imageSrc)//удаление фото
@@ -51,6 +74,7 @@ module.exports.remove = async function (req, res) {
                 console.log(res, e)
             }
         }
+
         try {
             await Category.remove({
                 _id: req.params.id

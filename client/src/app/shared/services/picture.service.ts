@@ -34,11 +34,29 @@ export class PictureService {
     return this.http.post<Message>(`/api/pictures/write`, fd)
   }
 
+  updatePhotos(albumId: string, image?: File, imageId?: string): Observable<Message> {
+    const fd = new FormData()
+    if (image) {
+      fd.append('image', image, image.name)
+      fd.append('albumId', albumId)
+      fd.append('imageId', imageId)
+    }
+    return this.http.patch<Message>(`/api/pictures/write/${albumId}`, fd)
+  }
+
   //Delete photo
   //@param pictureId picture ID to delete
   deletePhoto(pictureId: string): Observable<Message> {
     let headers = new HttpHeaders();
     headers = headers.set('Content-type', 'application/json');
     return this.http.delete<Message>(`/api/pictures/${pictureId}`, { headers: headers });
+  }
+
+  //Delete many photo
+  //@param albumId picture ID to delete
+  deletePhotos(albumId: string): Observable<Message> {
+    let headers = new HttpHeaders();
+    headers = headers.set('Content-type', 'application/json');
+    return this.http.delete<Message>(`/api/pictures/album/${albumId}`, { headers: headers });
   }
 }

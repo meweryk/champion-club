@@ -20,6 +20,8 @@ export class CategoriesFormComponent implements OnInit {
   form: FormGroup
   image: File
   imagePreview = ''
+  imageId = ''
+  pictures: Array<any> = []
   isNew = true
   category: Category
 
@@ -64,7 +66,9 @@ export class CategoriesFormComponent implements OnInit {
             this.form.patchValue({
               name: category.name
             })
-            this.imagePreview = category.imageSrc
+            this.fetch(category._id)
+
+            //this.imagePreview = category.imageSrc
             MaterialService.updateTextInputs()
           }
 
@@ -72,6 +76,32 @@ export class CategoriesFormComponent implements OnInit {
         },
         error => MaterialService.toast(error.error.message)
       )
+  }
+
+  private fetch(albumId: string) {
+    this.pictureService.getPhotoId(albumId).subscribe(pictures => {
+      pictures.forEach((picture: { filename: string; contentType: any; _id: any; }) => {
+        this.pictureService.getPhoto(picture.filename, picture.contentType).subscribe(data => {
+          let reader = new FileReader();
+          reader.addEventListener('load', () => {
+            // Сохраните URL-адрес изображения и содержание изображения для нашего просмотра
+            // Если пользователь нажимает на изображение, мы будем использовать URL, чтобы открыть изображение в полноэкранном режиме
+            this.pictures.push({
+              id: picture._id,
+              url: `/api/pictures/${picture.filename}`,
+              picture: reader.result
+            })
+            //в массиве всегда 1 фото
+            this.imagePreview = this.pictures[0].picture
+            this.imageId = this.pictures[0].id
+          }, false)
+          if (data) {
+            let blob = new Blob([data], { type: picture.contentType })
+            reader.readAsDataURL(blob);
+          }
+        })
+      })
+    })
   }
 
   triggerClick() {
@@ -110,20 +140,27 @@ export class CategoriesFormComponent implements OnInit {
 
     if (this.isNew) {
       //create
-      obs$ = this.categoriesService.create(this.form.value.name, this.image)
+      obs$ = this.categoriesService.create(this.form.value.name)
     } else {
       //update
-      obs$ = this.categoriesService.update(this.category._id, this.form.value.name, this.image)
+      obs$ = this.categoriesService.update(this.category._id, this.form.value.name)
     }
 
     obs$.subscribe(
       (category: Category) => {
         this.category = category
         //add gridfs
-        this.pictureService.uploadPhotos(category._id, this.image).subscribe(
-          response => MaterialService.toast(response.message),
-          error => MaterialService.toast(error.error.message)
-        )
+        if (this.isNew) {
+          this.pictureService.uploadPhotos(category._id, this.image).subscribe(
+            response => MaterialService.toast(response.message),
+            error => MaterialService.toast(error.error.message)
+          )
+        } else {
+          this.pictureService.updatePhotos(category._id, this.image, this.imageId).subscribe(
+            response => MaterialService.toast(response.message),
+            error => MaterialService.toast(error.error.message)
+          )
+        }
         //end add gridfs
         MaterialService.toast('Изменения сохранены.')
         this.form.enable()

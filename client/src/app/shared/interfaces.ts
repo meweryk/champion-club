@@ -29,6 +29,8 @@ export interface Position {
   shop?: string
   exposition?: string
   imageSrc?: string
+  imageId?: string
+  url?: string,
   phone?: string
   email?: string
 }
@@ -114,3 +116,4 @@ export interface Picture {
   aliases: string
   metadata?: string
 }
+

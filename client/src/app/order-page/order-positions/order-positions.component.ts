@@ -7,6 +7,7 @@ import { ActivatedRoute, Params } from '@angular/router';
 import { switchMap, map } from 'rxjs/operators';
 import { MaterialService, MaterialInstance } from 'src/app/shared/classes/material.service';
 import { Meta, Title } from '@angular/platform-browser';
+import { PictureService } from 'src/app/shared/services/picture.service';
 
 @Component({
   selector: 'app-order-positions',
@@ -22,9 +23,11 @@ export class OrderPositionsComponent implements OnInit {
   allShops: string[]
   searchShop = ''
   searchVid = ''
+  foto: any = {}
 
   constructor(private route: ActivatedRoute,
     private positionsService: PositionsService,
+    private pictureService: PictureService,
     private order: OrderService,
     private title: Title,
     private meta: Meta) { }
@@ -48,11 +51,38 @@ export class OrderPositionsComponent implements OnInit {
           (positions: Position[]) => {
             return positions.map(position => {
               position.quantity = 1
+              position = this.fetch(position)
               return position
             })
           }
         )
       )
+  }
+
+  private fetch(position: Position) {
+    let imageScreen: string
+    this.pictureService.getPhotoId(position._id).subscribe(pictures => {
+      pictures.forEach((picture: { filename: string; contentType: any; _id: any; }) => {
+        this.pictureService.getPhoto(picture.filename, picture.contentType).subscribe(data => {
+          let reader = new FileReader();
+          reader.addEventListener('load', () => {
+            // Сохраните URL-адрес изображения и содержание изображения для нашего просмотра
+            // Если пользователь нажимает на изображение, мы будем использовать URL, чтобы открыть изображение в полноэкранном режиме
+            this.foto = {
+              id: picture._id,
+              url: `/api/pictures/${picture.filename}`,
+              picture: reader.result
+            }
+            position.imageSrc = this.foto.picture
+          }, false)
+          if (data) {
+            let blob = new Blob([data], { type: picture.contentType })
+            reader.readAsDataURL(blob);
+          }
+        })
+      })
+    })
+    return position
   }
 
   @HostListener('window:resize', ['$event'])

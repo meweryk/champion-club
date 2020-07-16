@@ -17,5 +17,10 @@ router.get('/:filename', controller.getPicture)
 //Remove a file from MongoDB
 router.delete('/:id', passport.authenticate('jwt', { session: false }), controller.remove)
 
+//Remove a files from MongoDB
+router.delete('/album/:id', passport.authenticate('jwt', { session: false }), controller.removeAll)
+
+router.patch('/write/:albumId', passport.authenticate('jwt', { session: false }), upload.single('image'), controller.update)
+
 
 module.exports = router
