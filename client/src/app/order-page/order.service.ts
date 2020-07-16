@@ -16,7 +16,6 @@ export class OrderService {
       quantity: +(position.quantity).toFixed(3),
       rank: position.rank,
       exposition: position.exposition,
-      imageSrc: position.imageSrc,
       _id: position._id,
       shopSeller: position.shop,
       userSeller: position.user,
