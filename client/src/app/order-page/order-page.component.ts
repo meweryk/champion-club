@@ -17,6 +17,7 @@ import { Title, Meta } from '@angular/platform-browser';
 export class OrderPageComponent implements OnInit, OnDestroy, AfterViewInit {
 
   @ViewChild('modal') modalRef: ElementRef
+  @ViewChild('floating') floatingRef: ElementRef
   aSub: Subscription
   changeAuth: boolean
 
@@ -79,6 +80,7 @@ export class OrderPageComponent implements OnInit, OnDestroy, AfterViewInit {
 
   ngAfterViewInit() {
     this.modal = MaterialService.initModal(this.modalRef)
+    MaterialService.initializeFloatingButton(this.floatingRef)
   }
 
   removePosition(orderPosition: OrderPosition) {

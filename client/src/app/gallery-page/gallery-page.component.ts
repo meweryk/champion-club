@@ -16,6 +16,7 @@ import { Title, Meta } from '@angular/platform-browser';
 })
 export class GalleryPageComponent implements OnInit, AfterViewInit, OnDestroy {
   @ViewChild('modal') modalRef: ElementRef
+  @ViewChild('floating') floatingRef: ElementRef
   modal: MaterialInstance
   loading = false
 
@@ -59,6 +60,7 @@ export class GalleryPageComponent implements OnInit, AfterViewInit, OnDestroy {
 
   ngAfterViewInit() {
     this.modal = MaterialService.initModal(this.modalRef)
+    MaterialService.initializeFloatingButton(this.floatingRef)
   }
 
   onCancel() {
