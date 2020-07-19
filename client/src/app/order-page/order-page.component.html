@@ -7,10 +7,24 @@
       <i class="tiny material-icons">keyboard_arrow_right</i>
       Выбрать продукцию
     </h5>
-    <button class="waves-effect waves-light btn-small grey darken-1" (click)="open()"
-      [disabled]="allPosition.list.length === 0">
-      <i class="material-icons">shopping_basket</i>
-    </button>
+    <div class="right">
+      <button class="waves-effect waves-light btn-small grey darken-1" (click)="open()"
+        [disabled]="allPosition.list.length === 0">
+        <i class="material-icons">shopping_basket</i>
+      </button>
+    </div>
+
+    <ul id="dropdown1" class="dropdown-content">
+      <li>
+        <div class="social instagram">
+          <a href="#" target="_blank"><i class="fa fa-instagram fa-2x"></i></a>
+        </div>
+      </li>
+      <li><a href="#!">two</a></li>
+      <li class="divider"></li>
+      <li><a href="#!">three</a></li>
+    </ul>
+
   </div>
 
   <router-outlet></router-outlet>
@@ -79,3 +93,30 @@
     </div>
   </div>
 </div>
+
+<footer style="height: 60px; width: 100%;">
+
+  <div class="container">
+    <div style="width: auto; margin: auto;">
+      <div class="social instagram">
+        <a href="https://www.instagram.com/zp.evgen/?hl=ru" title="страница в instagram" target="_blank"><i
+            class="fa fa-instagram fa-2x"></i></a>
+      </div>
+
+      <div class="social gmail">
+        <a href="mailto:pr.zp26@gmail.com?subject=sportpit-zp" title="Задавайте вопросы по электронной почте"
+          target="_blank">
+          <i class="fa fa-envelope fa-2x"></i>
+        </a>
+      </div>
+
+      <div class="social phone">
+        <a title="Консультация по телефону" href="tel:+380994028701">
+          <i class="fa fa-phone fa-2x"></i>
+        </a>
+      </div>
+    </div>
+
+  </div>
+
+</footer>

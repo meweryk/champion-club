@@ -176,7 +176,6 @@ export class PositionsFormComponent implements OnInit, AfterViewInit, OnDestroy 
 
     if (this.positionId) {
       newPosition._id = this.positionId
-      console.log(this.imageId)
       this.positionsService.update(newPosition).subscribe(
         position => {
           if (this.image) {
