@@ -72,13 +72,14 @@
 
     <ul class="row grey-text text-darken-1">
       <li class="valign-wrapper pb5">
-        <span class="bold">Заказчик:</span>&nbsp;<span>{{selectedOrder.shopBuyer}} -
-          {{selectedOrder.nicname}}</span>
+        <b>Поставщик:</b>&nbsp;<span>{{selectedOrder.list[0].shopSeller}}</span>
       </li>
       <li class="valign-wrapper pb5">
-        <b>Заказчик:&nbsp;</b>{{selectedOrder.nicname}}&nbsp;<a *ngIf="selectedOrder.phoneBuyer"
+        <b>Заказчик:&nbsp;</b>{{selectedOrder.shopBuyer}} - {{selectedOrder.nicname}}&nbsp;<a
+          *ngIf="selectedOrder.phoneBuyer && selectedOrder.shopBuyer != shop"
           class="collection-item collection-item-icon" href="tel: {{phone}}">
-          <i class="material-icons">phone</i></a>&nbsp;<a *ngIf="selectedOrder.emailBuyer"
+          <i class="material-icons">phone</i></a>&nbsp;<a
+          *ngIf="selectedOrder.emailBuyer && selectedOrder.shopBuyer != shop"
           class="collection-item collection-item-icon"
           href="mailto:{{email}}?subject=по заказу {{selectedOrder.order}} от {{selectedOrder.date | date:'dd.MM.yyyy'}}">
           <i class="material-icons">email</i></a>

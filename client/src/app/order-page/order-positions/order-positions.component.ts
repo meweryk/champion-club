@@ -8,6 +8,7 @@ import { switchMap, map } from 'rxjs/operators';
 import { MaterialService, MaterialInstance } from 'src/app/shared/classes/material.service';
 import { Meta, Title } from '@angular/platform-browser';
 import { PictureService } from 'src/app/shared/services/picture.service';
+import { AuthService } from 'src/app/shared/services/auth.service';
 
 @Component({
   selector: 'app-order-positions',
@@ -17,7 +18,7 @@ import { PictureService } from 'src/app/shared/services/picture.service';
 
 export class OrderPositionsComponent implements OnInit {
   positions$: Observable<Position[]>
-
+  thisShop: string
   height: number
   nameCategory: string
   allShops: string[]
@@ -26,6 +27,7 @@ export class OrderPositionsComponent implements OnInit {
   foto: any = {}
 
   constructor(private route: ActivatedRoute,
+    private authService: AuthService,
     private positionsService: PositionsService,
     private pictureService: PictureService,
     private order: OrderService,
@@ -33,6 +35,7 @@ export class OrderPositionsComponent implements OnInit {
     private meta: Meta) { }
 
   ngOnInit(): void {
+    this.thisShop = this.authService.getShop()
     this.nameCategory = this.route.snapshot.params['nameCategory']
     this.title.setTitle(`${this.nameCategory}`)
     this.meta.addTags([
@@ -91,7 +94,12 @@ export class OrderPositionsComponent implements OnInit {
   }
 
   addToOrder(position: Position) {
-    MaterialService.toast(`Добавлено х${position.quantity}`)
-    this.order.add(position)
+    if (position.shop === this.thisShop) {
+      MaterialService.toast('Вы не можете покупать сами у себя.')
+    } else {
+      MaterialService.toast(`Добавлено х${position.quantity}`)
+      this.order.add(position)
+    }
+
   }
 }
