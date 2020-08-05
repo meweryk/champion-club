@@ -5,7 +5,7 @@ import { OrderService } from '../order.service';
 import { PositionsService } from 'src/app/shared/services/positions.service';
 import { ActivatedRoute, Params } from '@angular/router';
 import { switchMap, map } from 'rxjs/operators';
-import { MaterialService, MaterialInstance } from 'src/app/shared/classes/material.service';
+import { MaterialService } from 'src/app/shared/classes/material.service';
 import { Meta, Title } from '@angular/platform-browser';
 import { PictureService } from 'src/app/shared/services/picture.service';
 import { AuthService } from 'src/app/shared/services/auth.service';

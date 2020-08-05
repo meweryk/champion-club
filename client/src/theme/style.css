@@ -77,6 +77,7 @@ nav .brand-logo {
 
 nav ul li.active {
   background-color: rgba(48, 22, 0, 0.5);
+  color: #ffce74;
 }
 
 p {
