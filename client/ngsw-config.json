@@ -44,14 +44,25 @@
     {
       "name": "api-freshness",
       "urls": [
-        "https://champion-zp.herokuapp.com//login",
-        "https://champion-zp.herokuapp.com//category"
+        "https://champion-zp.herokuapp.com//login"
       ],
       "cacheConfig": {
         "strategy": "freshness",
         "maxSize": 5,
         "maxAge": "1h",
         "timeout": "3s"
+      }
+    },
+    {
+      "name": "api-performance",
+      "urls": [
+        "https://champion-zp.herokuapp.com//category",
+        "https://champion-zp.herokuapp.com//order"
+      ],
+      "cacheConfig": {
+        "strategy": "performance",
+        "maxSize": 100,
+        "maxAge": "3d"
       }
     }
   ]
