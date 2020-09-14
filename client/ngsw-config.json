@@ -56,8 +56,9 @@
     {
       "name": "api-performance",
       "urls": [
-        "https://champion-zp.herokuapp.com//category",
-        "https://champion-zp.herokuapp.com//order"
+        "/category*",
+        "/order*",
+        "/gallery*"
       ],
       "cacheConfig": {
         "strategy": "performance",

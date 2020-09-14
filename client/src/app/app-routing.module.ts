@@ -7,7 +7,7 @@ import { AuthGuard } from './shared/classes/auth.guard'
 const routes: Routes = [
   {
     path: '', component: SiteLayoutComponent, children: [
-      { path: '', redirectTo: '/start', pathMatch: 'full' },
+      { path: '**', redirectTo: '/start', pathMatch: 'full' },
       { path: 'start', loadChildren: () => import('./start-page/start.module').then(m => m.StartModule) },
       { path: 'home', loadChildren: () => import('./home-page/home.module').then(m => m.HomeModule) },
       { path: 'order', loadChildren: () => import('./order-page/order.module').then(m => m.OrderModule) },
