@@ -12,6 +12,7 @@ export class HomePageComponent implements OnInit, AfterViewInit, OnDestroy {
   @ViewChild('parallax2') parallax2Ref: ElementRef
   @ViewChild('parallax3') parallax3Ref: ElementRef
   @ViewChild('parallax4') parallax4Ref: ElementRef
+  @ViewChild('floating') floatingRef: ElementRef
 
   parallax1: MaterialInstance
   parallax2: MaterialInstance
@@ -37,6 +38,7 @@ export class HomePageComponent implements OnInit, AfterViewInit, OnDestroy {
     this.parallax2 = MaterialService.initParallax(this.parallax2Ref)
     this.parallax3 = MaterialService.initParallax(this.parallax3Ref)
     this.parallax4 = MaterialService.initParallax(this.parallax4Ref)
+    MaterialService.initializeFloatingButton(this.floatingRef)
   }
 
   ngOnDestroy() {
