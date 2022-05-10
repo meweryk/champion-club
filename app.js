@@ -17,6 +17,13 @@ const picturesRoutes = require('./routes/pictures')
 const keys = require('./config/keys')
 const app = express()
 
+// set up rate limiter: maximum of five requests per minute
+const RateLimit = require('express-rate-limit');
+const limiter = new RateLimit({
+  windowMs: 1*60*1000, // 1 minute
+  max: 5
+})
+
 mongoose.Promise = global.Promise
 // connection
 mongoose.connect(keys.mongoURI, {})
@@ -24,6 +31,9 @@ mongoose.connect(keys.mongoURI, {})
         console.log('MongoDB connected.')
     })
     .catch(error => console.log(error))
+
+// apply rate limiter to all requests
+app.use(limiter);
 
 app.use(compression())
 
