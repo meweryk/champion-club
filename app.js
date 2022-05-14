@@ -26,7 +26,7 @@ const limiter = new RateLimit({
 
 mongoose.Promise = global.Promise
 // connection
-mongoose.connect(keys.mongoURI, {
+mongoose.connect('mongodb+srv://Ivashchenko:WyMcJf8AWg83OqMw@cluster0-hc5cb.gcp.mongodb.net/fitnessdb?retryWrites=true&w=majority', {
   autoIndex: false
 })
     .then(() => {
