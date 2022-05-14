@@ -26,7 +26,9 @@ const limiter = new RateLimit({
 
 mongoose.Promise = global.Promise
 // connection
-mongoose.connect(keys.mongoURI, {})
+mongoose.connect(keys.mongoURI, {
+  autoIndex: false
+})
     .then(() => {
         console.log('MongoDB connected.')
     })
