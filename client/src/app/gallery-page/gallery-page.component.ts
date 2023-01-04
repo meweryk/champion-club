@@ -1,7 +1,7 @@
 import { Component, OnInit, ViewChild, ElementRef, AfterViewInit, OnDestroy } from '@angular/core';
 import { MaterialInstance, MaterialService } from '../shared/classes/material.service';
 import { AlbumService } from '../shared/services/album.service';
-import { FormGroup, FormControl, Validators } from '@angular/forms';
+import { UntypedFormGroup, UntypedFormControl, Validators } from '@angular/forms';
 import { Album } from '../shared/interfaces';
 import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
@@ -27,7 +27,7 @@ export class GalleryPageComponent implements OnInit, AfterViewInit, OnDestroy {
   trainer: boolean
   myEmail: string
 
-  form: FormGroup
+  form: UntypedFormGroup
 
   constructor(private albumService: AlbumService,
     private auth: AuthService,
@@ -45,9 +45,9 @@ export class GalleryPageComponent implements OnInit, AfterViewInit, OnDestroy {
       { name: 'description', content: 'Фотогалерея клуба Чемпион' }
     ])
 
-    this.form = new FormGroup({
-      albumName: new FormControl(null, [Validators.required, Validators.maxLength(20)]),
-      albumDescription: new FormControl(null, Validators.maxLength(4000))
+    this.form = new UntypedFormGroup({
+      albumName: new UntypedFormControl(null, [Validators.required, Validators.maxLength(20)]),
+      albumDescription: new UntypedFormControl(null, Validators.maxLength(4000))
     })
 
     this.albums$ = this.albumService.getAlbums()

@@ -1,7 +1,7 @@
 import { Component, OnInit, Input, ViewChild, ElementRef, HostListener, OnChanges, OnDestroy } from '@angular/core';
 import { Order, OrderPosition, Delivery } from '../shared/interfaces';
 import { MaterialInstance, MaterialService } from '../shared/classes/material.service';
-import { FormGroup, Validators, FormBuilder } from '@angular/forms';
+import { UntypedFormGroup, Validators, UntypedFormBuilder } from '@angular/forms';
 import { AuthService } from '../shared/services/auth.service';
 
 import { DeliveriesServise } from '../shared/services/deliveries.service';
@@ -28,7 +28,7 @@ export class InvoicePageComponent implements OnInit, OnChanges, OnDestroy {
 
   loader = false
 
-  form: FormGroup = this._formBuilder.group({
+  form: UntypedFormGroup = this._formBuilder.group({
     order: '',
     shop: ['', Validators.required],
     shopBuyer: ['', Validators.required],
@@ -37,7 +37,7 @@ export class InvoicePageComponent implements OnInit, OnChanges, OnDestroy {
     imageSrc: null
   })
 
-  constructor(private _formBuilder: FormBuilder,
+  constructor(private _formBuilder: UntypedFormBuilder,
     private auth: AuthService,
     private invoice: InvoiceServise,
     private deliveriesService: DeliveriesServise,

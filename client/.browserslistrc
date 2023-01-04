@@ -5,6 +5,11 @@
 # You can see what browsers were selected by your queries by running:
 #   npx browserslist
 
+# Browsers that we support
+
+defaults and supports es6-module
+maintained node versions
+
 > 0.5%
 last 2 versions
 Firefox ESR

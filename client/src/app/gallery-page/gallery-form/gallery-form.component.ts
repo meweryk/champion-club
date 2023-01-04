@@ -6,7 +6,7 @@ import { Album } from 'src/app/shared/interfaces'
 import { Title, Meta } from '@angular/platform-browser'
 import { AlbumService } from 'src/app/shared/services/album.service'
 import { PictureService } from 'src/app/shared/services/picture.service'
-import { FormGroup } from '@angular/forms';
+import { UntypedFormGroup } from '@angular/forms';
 import { AuthService } from 'src/app/shared/services/auth.service';
 
 
@@ -30,7 +30,7 @@ export class GalleryFormComponent implements OnInit, AfterViewInit, OnDestroy {
   name: string
   description: string
 
-  form: FormGroup
+  form: UntypedFormGroup
 
   loading = false
   albumId: string

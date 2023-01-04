@@ -2,7 +2,7 @@ import { Component, OnInit, Input, ViewChild, ElementRef, AfterViewInit, OnDestr
 import { PositionsService } from 'src/app/shared/services/positions.service';
 import { Position } from 'src/app/shared/interfaces';
 import { MaterialService, MaterialInstance } from 'src/app/shared/classes/material.service';
-import { FormGroup, FormControl, Validators } from '@angular/forms';
+import { UntypedFormGroup, UntypedFormControl, Validators } from '@angular/forms';
 import { AuthService } from 'src/app/shared/services/auth.service'
 import { PictureService } from 'src/app/shared/services/picture.service';
 
@@ -33,7 +33,7 @@ export class PositionsFormComponent implements OnInit, AfterViewInit, OnDestroy 
   pictures: Array<any> = []
   foto: any = {}
 
-  form: FormGroup
+  form: UntypedFormGroup
   height: number
   constructor(private positionsService: PositionsService,
     private pictureService: PictureService,
@@ -42,12 +42,12 @@ export class PositionsFormComponent implements OnInit, AfterViewInit, OnDestroy 
   ngOnInit(): void {
     this.height = 0.5 * window.innerHeight
     this.shop = this.authService.getShop()
-    this.form = new FormGroup({
-      name: new FormControl(null, [Validators.required, Validators.maxLength(50)]),
-      cost: new FormControl(null, [Validators.required, Validators.min(1)]),
-      stock: new FormControl(null, [Validators.required, Validators.min(0)]),
-      rank: new FormControl(null, Validators.required),
-      exposition: new FormControl(null, Validators.maxLength(4000)),
+    this.form = new UntypedFormGroup({
+      name: new UntypedFormControl(null, [Validators.required, Validators.maxLength(50)]),
+      cost: new UntypedFormControl(null, [Validators.required, Validators.min(1)]),
+      stock: new UntypedFormControl(null, [Validators.required, Validators.min(0)]),
+      rank: new UntypedFormControl(null, Validators.required),
+      exposition: new UntypedFormControl(null, Validators.maxLength(4000)),
     })
     this.loading = true
     this.positionsService.fetch(this.categoryId).subscribe(positions => {

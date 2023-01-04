@@ -19,23 +19,22 @@ const app = express()
 
 // set up rate limiter: maximum of five requests per minute
 const RateLimit = require('express-rate-limit');
-const limiter = new RateLimit({
-  windowMs: 1*60*1000, // 1 minute
-  max: 5
+const limiter = RateLimit({
+    windowMs: 1 * 60 * 1000, // 1 minute
+    max: 5
 })
+// apply rate limiter to all requests
+app.use(limiter);
 
 mongoose.Promise = global.Promise
 // connection
 mongoose.connect(keys.mongoURI, {
-  autoIndex: false
+    autoIndex: false
 })
     .then(() => {
         console.log('MongoDB connected.')
     })
     .catch(error => console.log(error))
-
-// apply rate limiter to all requests
-app.use(limiter);
 
 app.use(compression())
 

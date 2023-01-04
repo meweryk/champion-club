@@ -1,6 +1,6 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
 import { MaterialService } from '../shared/classes/material.service';
-import { FormGroup, FormControl, Validators } from '@angular/forms';
+import { UntypedFormGroup, UntypedFormControl, Validators } from '@angular/forms';
 import { AuthService } from '../shared/services/auth.service';
 import { Router, ActivatedRoute, Params } from '@angular/router';
 import { Subscription } from 'rxjs';
@@ -12,7 +12,7 @@ import { Title, Meta } from '@angular/platform-browser';
   styleUrls: ['./login-page.component.css']
 })
 export class LoginPageComponent implements OnInit, OnDestroy {
-  form: FormGroup
+  form: UntypedFormGroup
   aSub: Subscription
   loader = false
 
@@ -30,9 +30,9 @@ export class LoginPageComponent implements OnInit, OnDestroy {
 
   ngOnInit(): void {
     this.loader = false
-    this.form = new FormGroup({
-      email: new FormControl(null, [Validators.required, Validators.email]),
-      password: new FormControl(null, [Validators.required, Validators.minLength(6)])
+    this.form = new UntypedFormGroup({
+      email: new UntypedFormControl(null, [Validators.required, Validators.email]),
+      password: new UntypedFormControl(null, [Validators.required, Validators.minLength(6)])
     })
 
     this.route.queryParams.subscribe((params: Params) => {
